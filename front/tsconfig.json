@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.build.json",
+    "compilerOptions": {
+        "target": "esnext",
+        "baseUrl": "./src",
+    },
+    "exclude": [
+        "node_modules",
+    ]
+}

@@ -1,0 +1,53 @@
+@import "../variables.less";
+
+.header {
+    position: relative;
+    border-bottom: 1px solid #DCDEDD;
+
+    &__content {
+        padding: 4px 0;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+    }
+
+    &__section {
+        display: flex;
+        padding: 16px 0;
+        align-items: center;
+
+        &_nav_left {
+            flex-grow: 1;
+            padding-left: 32px;
+
+            .header__link {
+                margin-right: 16px;
+            }
+        }
+
+        &_nav_right {
+            flex-grow: 1;
+            justify-content: flex-end;
+            padding-right: 32px;
+
+            .header__link {
+                margin-left: 16px;
+            }
+        }
+
+        &_logo .header__link {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    &__link {
+        font-size: 13px;
+        font-weight: 400;
+
+        &:hover {
+            color: @hover-color;
+        }
+    }
+}

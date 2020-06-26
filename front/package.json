@@ -1,0 +1,45 @@
+{
+  "name": "0xbc01n",
+  "version": "0.1.0",
+  "description": "Yet Another 0xbc01n App",
+  "main": "index.js",
+  "author": "Dmitry & Nazariy",
+  "license": "MIT",
+  "scripts": {
+    "bundle": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production",
+    "check-types": "tsc"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "html-webpack-plugin": "^3.2.0",
+    "less-loader": "^5.0.0",
+    "tslint": "^6.0.0",
+    "tslint-immutable": "^6.0.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-router": "^5.1.8",
+    "@types/react-router-dom": "^5.1.5",
+    "css-loader": "^3.4.2",
+    "less": "^3.11.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "style-loader": "^1.1.3",
+    "typescript": "^3.7.5"
+  }
+}
