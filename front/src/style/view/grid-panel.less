@@ -1,0 +1,20 @@
+@import "../variables.less";
+
+.grid-panel {
+  display: flex;
+  border-bottom: 1px solid #DCDEDD;
+  padding: 8px 0;
+  line-height: 1;
+  align-items: center;
+
+  &__section {
+    .number {
+      color: #009E74;
+      font-weight: bold;
+      margin-right: 4px;
+    }
+    &_left {
+      flex-grow: 1;
+    }
+  }
+}
