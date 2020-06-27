@@ -6,7 +6,6 @@ import Container from './view/container';
 import Footer from './view/footer';
 import Header from './view/header';
 import Routes from './routes';
-import Main from './view/main';
 
 import ApplicationController from './controller/provider';
 
@@ -19,9 +18,7 @@ const App = () => {
 				<Container>
 					<BrowserRouter>
 						<Header/>
-						<Main>
-							<Routes/>
-						</Main>
+						<Routes/>
 						<Footer/>
 					</BrowserRouter>
 				</Container>

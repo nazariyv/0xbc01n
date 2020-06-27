@@ -5,7 +5,8 @@ module.exports = {
   entry: './src/index',
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
@@ -24,6 +25,10 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
+    hot: true
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Main: React.FC = ({ children }) => (
-    <div className="main">
+    <div className='main'>
         {children}
     </div>
 );
