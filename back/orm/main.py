@@ -1,12 +1,7 @@
-from sqlalchemy import create_engine  # type: ignore
-
-from back.orm import Base
+from back.orm.user import create_table as create_user_table
 
 
 def main():
     # TODO: change for proper db in the future
-    engine = create_engine(
-        "mysql+mysqldb://<user>:<password>@<host>[:<port>]/<dbname>", echo=True
-    )
-
-    Base.metadata.create_all(engine)
+    # Base.metadata.create_all(engine)
+    create_user_table()
