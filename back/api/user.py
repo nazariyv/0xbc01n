@@ -36,7 +36,12 @@ class User:
         all_users = []
 
         for user in self.session.query(UserORM).order_by(UserORM.created):
-            all_users.append(user.__to_dict())
+            l.debug(f"{user=}")
+
+            u = user.__dict__
+            del u["_sa_instance_state"]
+            # l.debug(f"{user.__dict__=}")
+            all_users.append(user.__dict__)
 
         resp.body = json.dumps(all_users)
         resp.code = 200
