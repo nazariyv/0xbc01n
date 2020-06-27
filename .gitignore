@@ -1,6 +1,8 @@
-planning/
 .playground/
 .vscode/
+.idea/
+*.sql
+yarn.lock
 
 # ----- FRONT ----
 front/node_modules

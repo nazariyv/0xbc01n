@@ -10,7 +10,7 @@ Call to authenticate the user (?Dima: user presses login -> (a) they do not have
 
 ```json
 {
-  userEthAddr: "0xaa2212999b2321"
+  "userEthAddr": "0xaa2212999b2321"
 }
 ```
 
@@ -20,7 +20,7 @@ Call to authenticate the user (?Dima: user presses login -> (a) they do not have
 
 ```json
 {
-  userId: "base64encodedstring",
+  "userId": "base64encodedstring",
 }
 ```
 
