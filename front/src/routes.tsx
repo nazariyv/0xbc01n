@@ -1,19 +1,28 @@
 import React from 'react';
 import {Switch, Route} from "react-router-dom";
 
+import {ROUTES} from './types/type';
+import MainPage from './view/pages/main';
+
 const Routes = () => (
     <Switch>
-        <Route path="/">
-            <div>1</div>
+        <Route exact path={ROUTES.MAIN}>
+            <MainPage/>
         </Route>
-        <Route path="/foo">
-            <div>1</div>
+        <Route exact path={ROUTES.MARKETPLACE}>
+            <div>MARKETPLACE</div>
         </Route>
-        <Route path="/bar">
-            <div>1</div>
+        <Route exact path={ROUTES.EXPLORE}>
+            <div>EXPLORE</div>
         </Route>
-        <Route path="/baz">
-            <div>1</div>
+        <Route exact path={ROUTES.BOUNTY}>
+            <div>BOUNTY</div>
+        </Route>
+        <Route exact path={ROUTES.BOUNTY_EDIT}>
+            <div>BOUNTY_EDIT</div>
+        </Route>
+        <Route exact path={ROUTES.CREATE}>
+            <div>CREATE</div>
         </Route>
     </Switch>
 );
