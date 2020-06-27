@@ -1,2 +1,3 @@
 gunicorn==20.0.4
 sqlalchemy==1.3.18
+mysqlclient==1.4.6
