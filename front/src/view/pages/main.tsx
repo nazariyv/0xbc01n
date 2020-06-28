@@ -2,11 +2,16 @@ import React from 'react';
 
 import FilterView from '../filter';
 import GridView from '../grid';
+import Main from '../main';
+import Navigation from '../navigation';
 
 const MainPage: React.FC = ({ children }) => (
     <>
-        <FilterView/>
-        <GridView/>
+        <Navigation/>
+        <Main>
+            <FilterView/>
+            <GridView/>
+        </Main>
     </>
 );
 

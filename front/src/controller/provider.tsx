@@ -10,17 +10,16 @@ type ApplicationState = {
 
 class Application extends React.Component<ApplicationProps, ApplicationState> {
     state: ApplicationState = {
-        renderContext: defaultApplicationRepresentation,
+        renderContext: defaultApplicationRepresentation
     };
 
     authService = new AuthService();
 
     prepareData = () => {
-        //this.authService.update();
-        this.setState({ 
-            renderContext: { 
-                ...this.state.renderContext,
-            }, 
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext
+            }
         });
     };
 
@@ -31,8 +30,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     render () {
         const { renderContext } = this.state;
         const contextValues: ApplicationRepresentation = {
-            ...renderContext,
+            ...renderContext
         };
+
         return (
             <ApplicationContext.Provider value={contextValues}>
                 {this.props.children}

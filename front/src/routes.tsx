@@ -1,28 +1,33 @@
 import React from 'react';
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route} from 'react-router-dom';
 
 import {ROUTES} from './types/type';
+import BountyPage from './view/pages/bounty';
+import BountyCreatePage from './view/pages/bounty-create';
+import BountyEditPage from './view/pages/bounty-edit';
+import ExplorePage from './view/pages/explore';
 import MainPage from './view/pages/main';
+import MarketplacePage from './view/pages/marketplace';
 
 const Routes = () => (
     <Switch>
         <Route exact path={ROUTES.MAIN}>
-            <MainPage/>
+            <MainPage />
         </Route>
         <Route exact path={ROUTES.MARKETPLACE}>
-            <div>MARKETPLACE</div>
+            <MarketplacePage />
         </Route>
         <Route exact path={ROUTES.EXPLORE}>
-            <div>EXPLORE</div>
+            <ExplorePage />
         </Route>
         <Route exact path={ROUTES.BOUNTY}>
-            <div>BOUNTY</div>
+            <BountyPage />
         </Route>
         <Route exact path={ROUTES.BOUNTY_EDIT}>
-            <div>BOUNTY_EDIT</div>
+            <BountyEditPage />
         </Route>
         <Route exact path={ROUTES.CREATE}>
-            <div>CREATE</div>
+            <BountyCreatePage />
         </Route>
     </Switch>
 );
