@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Sequence  # type: ignore
 
-from back.orm.utils import all_natural_numbers
 from back.orm import Base, engine
 
 
