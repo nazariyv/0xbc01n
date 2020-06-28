@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter} from 'react-router-dom';
 
 import ErrorBoundary from './components/error-boundary';
 import Container from './view/container';
@@ -25,6 +25,6 @@ const App = () => {
 			</ApplicationController>
 		</ErrorBoundary>
 	);
-}
+};
 
 export default App;

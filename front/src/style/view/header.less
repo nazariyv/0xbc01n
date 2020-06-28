@@ -4,6 +4,20 @@
     position: relative;
     border-bottom: 1px solid #DCDEDD;
 
+    .user-menu {
+        display: flex;
+        cursor: pointer;
+
+        .text__overflow.color_green {
+            text-overflow: ellipsis;
+            width: 100px;
+            overflow: hidden;
+            color: #009E74;
+            font-weight: 500;
+            margin-left: 4px;
+        }
+    }
+
     &__content {
         padding: 4px 0;
         position: relative;
@@ -45,6 +59,7 @@
     &__link {
         font-size: 13px;
         font-weight: 400;
+        cursor: pointer;
 
         &:hover {
             color: @hover-color;

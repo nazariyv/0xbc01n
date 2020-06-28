@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {ROUTES} from '../types/type';
+import {ApplicationContext} from '../controller/context';
 
 const Header: React.FC = () => {
+    const {handleLogIn, user} = useContext(ApplicationContext);
     return (
         <div className='header'>
             <div className='header__content'>
@@ -15,9 +17,18 @@ const Header: React.FC = () => {
                 </div>
                 <div className='header__section header__section_nav_right'>
                     <Link className='header__link' to=''>Search</Link>
-                    <Link className='header__link' to=''>Log in</Link>
+                    {user && (
+                        <Link className='header__link' to={ROUTES.USER_PROFILE}>
+                            <div className='user-menu'>
+                                Hello <span className='text__overflow color_green'>{user.publicAddress}</span>
+                            </div>
+                        </Link>
+                    )}
+                    {user === undefined && (
+                        <div className='header__link' onClick={handleLogIn}>Log in</div>
+                    )}
                 </div>
-            </div>   
+            </div>
         </div>
     );
 };

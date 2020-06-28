@@ -6,7 +6,8 @@ export enum ROUTES {
     BOUNTY_EDIT = '/bounty/:bountyId/edit',
     CREATE = '/create',
     TERMS = '/terms',
-    PRIVACY = '/privacy'
+    PRIVACY = '/privacy',
+    USER_PROFILE = '/profile'
 }
 
 export enum COMPLEXITY {
@@ -24,6 +25,19 @@ export type Bounty = {
     complexity: COMPLEXITY;
 };
 
+export type User = {
+    publicAddress: string;
+    signature: string;
+    // Additional info
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+};
+
 export type ApplicationRepresentation = {
     bounties: Bounty[];
+    handleLogIn: () => void;
+    isLoading: boolean;
+    signInProgress: boolean;
+    user?: User;
 };
