@@ -51,6 +51,7 @@ class Bounty:
 
         resp.code = falcon.HTTP_201
 
+    # TODO: should put delete behind authorization (i.e. only issuer and admins are allowed to call this) + conditions (like it is completed)
     def on_delete(
         self, req: falcon.Request, resp: falcon.Response, bounty_id: uuid.UUID = None
     ):
