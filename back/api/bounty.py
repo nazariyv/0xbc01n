@@ -1,9 +1,9 @@
 import time
 import json
+import uuid
 import falcon  # type: ignore
 import logging
 from uuid import uuid4
-from sqlalchemy import update  # type: ignore
 
 from back.orm.utils import create_instance
 from back.orm.bounty import Bounty as BountyORM
@@ -16,44 +16,42 @@ class Bounty:
     def __init__(self, session):
         self.session = session
 
-    def on_put(self, req, resp):
-        # if req has params, then update the record if record in db and update is valid
-        if req.params:
-            if "id" in req.params:
-                # check that this bounty is in the db
-                if (
-                    len(
-                        self.session.query(BountyORM).filter(
-                            BountyORM.id == req.params["id"]
-                        )
-                    )
-                    == 1
-                ):
-                    # todo: validate the update
-                    update(BountyORM).where(BountyORM.id == req.params["id"]).values(
-                        **req.media
-                    )
-                    resp.code = falcon.HTTP_200
-                    return
+    def on_put(
+        self, req: falcon.Request, resp: falcon.Response, bounty_id: uuid.UUID = None
+    ):
+        if bounty_id:
+            # check that this bounty is in the db
+            qry = self.session.query(BountyORM).filter(BountyORM.id == str(bounty_id))
+
+            l.debug(f"{qry=}")
+            l.debug(f"{list(qry)=}")
+
+            if len(list(qry)) == 1:
+                l.info(f"found the bounty in db, updating with {req.media}")
+                # todo: validate the update
+                qry.update(req.media)
+                # self.session.commit()
+                resp.code = falcon.HTTP_201
+                return
 
         # if req has no query params, then generate a uuid
         # todo: check that this uuid is unique
         # ! prepend uuid with expiry, this way uuid is always unique AND we don't have to store expiry
         # and put the bounty into the db
-        id = uuid4()
+        id_ = uuid4()
         new_bounty = req.media
         l.debug(f"{new_bounty=}")
 
         bounty = create_instance(BountyORM, new_bounty)
-        bounty.id = str(id)
+        bounty.id = str(id_)
         bounty.created = int(time.time())
         l.debug(f"{bounty=}")
 
         self.session.add(bounty)
 
-        resp.code = falcon.HTTP_200
+        resp.code = falcon.HTTP_201
 
-    def on_get(self, req, resp):
+    def on_get(self, req: falcon.Request, resp: falcon.Response):
         all_bounties = []
 
         for bounty in self.session.query(BountyORM).order_by(BountyORM.created):

@@ -29,7 +29,7 @@ class User:
         # will commit to the db when flushed (automatically)
         self.session.add(user)
 
-        resp.code = falcon.HTTP_200
+        resp.code = falcon.HTTP_201
 
     # TODO: unprotected at all at the moment, so anyone could just query it
     def on_get(self, req, resp):
