@@ -6,7 +6,7 @@ import {Bounty} from '../types/type';
 const GridItem: React.FC<Bounty> = (props) => {
     const {id} = props;
     return (
-        <Link to={`/bounty/${id}`} className='pseudo-link'>
+        <Link to={`/bounty/${id}/description`} className='pseudo-link'>
             <div className='grid_item'>
                 <div className='grid_item__content'>
                     <div className='grid_item__section grid_item__section_left'>
