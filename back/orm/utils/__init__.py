@@ -11,4 +11,11 @@ def create_instance(cls, json_repr: Dict):
     return c
 
 
-__all__ = ["create_instance"]
+def all_natural_numbers():
+    n = 0
+    while True:
+        n += 1
+        yield n
+
+
+__all__ = ["create_instance", "all_natural_numbers"]

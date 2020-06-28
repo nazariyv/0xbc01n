@@ -29,7 +29,12 @@ class Bounty:
             if len(list(qry)) == 1:
                 l.info(f"found the bounty in db, updating with {req.media}")
                 # todo: validate the update
-                qry.update(req.media)
+                qry.update(
+                    {
+                        **req.media,
+                        "completed": 1 if req.media["completed"] == "1" else 0,
+                    }
+                )
                 # self.session.commit()
                 resp.code = falcon.HTTP_204
                 return
@@ -80,6 +85,10 @@ class Bounty:
 
             b = bounty.__dict__
             del b["_sa_instance_state"]
+            # ! hardcoding is not great
+            b["complexity"] = str(b["complexity"])
+            b["type"] = str(b["type"])
+
             all_bounties.append(bounty.__dict__)
 
         resp.body = json.dumps(all_bounties)
