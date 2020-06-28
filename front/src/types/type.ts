@@ -4,7 +4,9 @@ export enum ROUTES {
     EXPLORE = '/explore',
     BOUNTY = '/bounty/:bountyId',
     BOUNTY_EDIT = '/bounty/:bountyId/edit',
-    CREATE = '/create'
+    CREATE = '/create',
+    TERMS = '/terms',
+    PRIVACY = '/privacy'
 }
 
 export enum COMPLEXITY {

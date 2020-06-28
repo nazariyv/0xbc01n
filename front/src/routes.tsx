@@ -8,6 +8,8 @@ import BountyEditPage from './view/pages/bounty-edit';
 import ExplorePage from './view/pages/explore';
 import MainPage from './view/pages/main';
 import MarketplacePage from './view/pages/marketplace';
+import PrivacyPage from './view/pages/privacy';
+import TermsPage from './view/pages/terms';
 
 const Routes = () => (
     <Switch>
@@ -20,7 +22,7 @@ const Routes = () => (
         <Route exact path={ROUTES.EXPLORE}>
             <ExplorePage />
         </Route>
-        <Route exact path={ROUTES.BOUNTY}>
+        <Route path={ROUTES.BOUNTY}>
             <BountyPage />
         </Route>
         <Route exact path={ROUTES.BOUNTY_EDIT}>
@@ -28,6 +30,13 @@ const Routes = () => (
         </Route>
         <Route exact path={ROUTES.CREATE}>
             <BountyCreatePage />
+        </Route>
+        {/* Extra static pages */}
+        <Route exact path={ROUTES.TERMS}>
+            <TermsPage />
+        </Route>
+        <Route exact path={ROUTES.PRIVACY}>
+            <PrivacyPage />
         </Route>
     </Switch>
 );
