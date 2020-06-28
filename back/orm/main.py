@@ -1,9 +1,15 @@
-from back.orm.user import create_table as create_user_table
-from back.orm.bounty import create_table as create_bounty_table
+# from back.orm.tags import DEFAULT as default_tags
+from back.orm import session_scope, Base, engine
+from back.orm.tags import create_table as create_tags_table
 
 
 def main():
-    # TODO: change for proper db in the future
-    # Base.metadata.create_all(engine)
-    create_user_table()
-    create_bounty_table()
+    with session_scope() as sesh:
+        # need to create the tags table before the bounties, otherwise the association table cannot be created
+        create_tags_table()
+
+        Base.metadata.create_all(engine)
+
+        # # TODO: find better way to do this
+        # for tag in default_tags:
+        #     sesh.add(tag)

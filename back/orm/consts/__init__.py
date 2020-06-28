@@ -3,7 +3,7 @@ from enum import Enum, auto
 
 class Complexities(Enum):
     beginner = auto()
-    intermediat = auto()
+    intermediate = auto()
     advanced = auto()
 
 

@@ -56,26 +56,25 @@ class Bounty:
 
         resp.code = falcon.HTTP_201
 
-    # TODO: should put delete behind authorization (i.e. only issuer and admins are allowed to call this) + conditions (like it is completed)
-    def on_delete(
-        self, req: falcon.Request, resp: falcon.Response, bounty_id: uuid.UUID = None
-    ):
-        if not bounty_id:
-            l.info(f"nothing to delete, no {bounty_id} in the db")
-            return
+    # should put delete behind authorization (i.e. only issuer and admins are allowed to call this) + conditions (like it is completed)
+    # def on_delete(
+    #     self, req: falcon.Request, resp: falcon.Response, bounty_id: uuid.UUID = None
+    # ):
+    #     if not bounty_id:
+    #         l.info(f"nothing to delete, no {bounty_id} in the db")
+    #         return
 
-        # check that this bounty is in the db
-        qry = self.session.query(BountyORM).filter(BountyORM.id == str(bounty_id))
+    #     # check that this bounty is in the db
+    #     qry = self.session.query(BountyORM).filter(BountyORM.id == str(bounty_id))
 
-        l.debug(f"{qry=}")
-        l.debug(f"{list(qry)=}")
+    #     l.debug(f"{qry=}")
+    #     l.debug(f"{list(qry)=}")
 
-        if len(list(qry)) == 1:
-            l.info(f"found the bounty in db, deleting")
-            # todo: validate the update
-            qry.delete()
-            # self.session.commit()
-            resp.code = falcon.HTTP_204
+    #     if len(list(qry)) == 1:
+    #         l.info(f"found the bounty in db, deleting")
+    #         qry.delete()
+    #         # self.session.commit()
+    #         resp.code = falcon.HTTP_204
 
     def on_get(self, req: falcon.Request, resp: falcon.Response):
         all_bounties = []
