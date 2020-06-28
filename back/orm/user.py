@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String  # type: ignore
 
-from back.orm import Base, engine
+from back.orm import Base
 
 
 class User(Base):
@@ -16,7 +16,3 @@ class User(Base):
 
     def __repr__(self):
         return f"User(addr='{self.addr}', name='{self.name}', fullname='{self.fullname}', nickname='{self.nickname}, dob={self.dob}, about_me={self.about_me}')"
-
-
-def create_table():
-    Base.metadata.create_all(engine)
