@@ -40,8 +40,7 @@ class User:
 
             u = user.__dict__
             del u["_sa_instance_state"]
-            # l.debug(f"{user.__dict__=}")
             all_users.append(user.__dict__)
 
         resp.body = json.dumps(all_users)
-        resp.code = 200
+        resp.code = falcon.HTTP_200
