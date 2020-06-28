@@ -7,7 +7,7 @@ from uuid import uuid4
 
 from back.orm.utils import create_instance
 from back.orm.bounty import Bounty as BountyORM
-
+from back.orm.tags import Tag
 
 l = logging.getLogger("api.bounty")
 
@@ -22,20 +22,34 @@ class Bounty:
         if bounty_id:
             # check that this bounty is in the db
             qry = self.session.query(BountyORM).filter(BountyORM.id == str(bounty_id))
-
-            l.debug(f"{qry=}")
-            l.debug(f"{list(qry)=}")
+            tags = None
 
             if len(list(qry)) == 1:
                 l.info(f"found the bounty in db, updating with {req.media}")
+
                 # todo: validate the update
+                # todo: I don't like how the names are hardcoded here, and what if I delete them in the orher place, how will I remember that I have to delte them here when the codebase grows
+                completed = 0
+                if "completed" in req.media:
+                    completed = int(req.media["completed"])
+
+                if "tags" in req.media:
+                    tags = req.media["tags"].split(",")
+                    del req.media["tags"]
+
+                # TODO: there must be a better way to do this
                 qry.update(
-                    {
-                        **req.media,
-                        "completed": 1 if req.media["completed"] == "1" else 0,
-                    }
+                    {**req.media, "completed": completed,}
                 )
-                # self.session.commit()
+
+                if tags:
+                    bty = qry.first()
+                    for tag in tags:
+                        l.debug(f"{tag=}")
+                        # ! will throw if cannot convert. this is bad
+                        bty.tags.append(Tag(tag=tag))
+
+                self.session.commit()
                 resp.code = falcon.HTTP_204
                 return
 
@@ -53,6 +67,7 @@ class Bounty:
         l.debug(f"{bounty=}")
 
         self.session.add(bounty)
+        self.session.commit()
 
         resp.code = falcon.HTTP_201
 

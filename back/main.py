@@ -8,7 +8,7 @@ from back.orm.main import main as init_db
 
 init_db()
 
-from back.orm import session_scope
+from back.orm.database import session_scope
 
 app = falcon.API()
 co = ComplexityOptions()

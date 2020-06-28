@@ -28,6 +28,7 @@ class User:
 
         # will commit to the db when flushed (automatically)
         self.session.add(user)
+        self.session.commit()
 
         resp.code = falcon.HTTP_201
 
