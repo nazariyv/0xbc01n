@@ -9,6 +9,7 @@ import ExplorePage from './view/pages/explore';
 import MainPage from './view/pages/main';
 import MarketplacePage from './view/pages/marketplace';
 import PrivacyPage from './view/pages/privacy';
+import UserProfilePage from './view/pages/profile';
 import TermsPage from './view/pages/terms';
 
 const Routes = () => (
@@ -28,15 +29,19 @@ const Routes = () => (
         <Route exact path={ROUTES.BOUNTY_EDIT}>
             <BountyEditPage />
         </Route>
-        <Route exact path={ROUTES.CREATE}>
-            <BountyCreatePage />
-        </Route>
         {/* Extra static pages */}
         <Route exact path={ROUTES.TERMS}>
             <TermsPage />
         </Route>
         <Route exact path={ROUTES.PRIVACY}>
             <PrivacyPage />
+        </Route>
+        {/* Auth required */}
+        <Route exact path={ROUTES.CREATE}>
+            <BountyCreatePage />
+        </Route>
+        <Route exact path={ROUTES.USER_PROFILE}>
+            <UserProfilePage />
         </Route>
     </Switch>
 );
