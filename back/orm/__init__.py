@@ -1,22 +1,6 @@
-from sqlalchemy import create_engine  # type: ignore
-from sqlalchemy.orm import sessionmaker  # type: ignore
-from sqlalchemy.ext.declarative import declarative_base  # type: ignore
-from contextlib import contextmanager
-
-Base = declarative_base()
-engine = create_engine("sqlite:///:memory:", echo=True)
-Session = sessionmaker(bind=engine)
-
-
-@contextmanager
-def session_scope():
-    """Provide a transactional scope around a series of operations."""
-    session = Session()
-    try:
-        yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+# ! do not remove this file, or else, the tables won't create
+from .models.bounty import Bounty
+from .models.user import User
+from .models.tags_bounties import TagsBounties
+from .models.workers_bounties import WorkersBounties
+from .models.sample_submission import SampleSubmission

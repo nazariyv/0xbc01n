@@ -7,20 +7,6 @@ class Complexities(Enum):
     advanced = auto()
 
 
-class Tags(Enum):
-    react = auto()
-    go = auto()
-    python = auto()
-    cpp = auto()
-    csharp = auto()
-    c = auto()
-    rust = auto()
-    crypto = auto()
-    stocks = auto()
-    art = auto()
-    medicine = auto()
-
-
 class BountyTypes(Enum):
     contest = auto()
     traditional = auto()

@@ -4,5 +4,5 @@
 .pytest_cache/*
 **/*.md
 **/*.ini
-**/requirements.dev.txt
+# **/requirements.dev.txt
 **/.pylintrc

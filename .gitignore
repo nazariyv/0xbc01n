@@ -5,8 +5,8 @@
 yarn.lock
 
 # ----- FRONT ----
-front/node_modules
-front/.DS_Store
+node_modules/
+.DS_Store/
 
 # ------------ PYTHON -----------------
 # Byte-compiled / optimized / DLL files

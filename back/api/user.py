@@ -4,7 +4,7 @@ import time
 import json
 
 from back.orm.utils import create_instance
-from back.orm.user import User as UserORM
+from back.orm.models.user import User as UserORM
 
 l = logging.getLogger("api.user")
 
@@ -13,10 +13,14 @@ class User:
     def __init__(self, session):
         self.session = session
 
-    def on_put(self, req, resp):
-        # pull user from db
-        # if not in db, create, if validated
-        # else not validated
+    def on_put(self, req, resp, user_addr: str = None):
+        if user_addr:
+            qry = self.session.query(UserORM).filter(UserORM.addr == user_addr)
+            if len(list(qry)) == 1:
+                qry.update(req.media)
+                self.session.commit()
+                resp.status = falcon.HTTP_204
+                return
 
         new_user = req.media
         l.debug(f"{new_user=}")
@@ -28,8 +32,9 @@ class User:
 
         # will commit to the db when flushed (automatically)
         self.session.add(user)
+        self.session.commit()
 
-        resp.code = falcon.HTTP_201
+        resp.status = falcon.HTTP_201
 
     # TODO: unprotected at all at the moment, so anyone could just query it
     def on_get(self, req, resp):
@@ -43,4 +48,4 @@ class User:
             all_users.append(user.__dict__)
 
         resp.body = json.dumps(all_users)
-        resp.code = falcon.HTTP_200
+        resp.status = falcon.HTTP_200

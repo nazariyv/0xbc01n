@@ -1,21 +1,14 @@
-from sqlalchemy import Column, Integer, String, Boolean, Enum, Table, ForeignKey  # type: ignore
+from sqlalchemy import Column, Integer, String, Boolean, Enum, Sequence  # type: ignore
 from sqlalchemy.orm import relationship  # type: ignore
 
-from back.orm.consts import BountyTypes, Complexities, Tags
-from back.orm import Base
-
-bounty_tag_association_table = Table(
-    "bounty_tag_association_table",
-    Base.metadata,
-    Column("bounty_id", String, ForeignKey("bounties.id")),
-    Column("tag", Enum(Tags), ForeignKey("tags.tag")),
-)
+from back.orm.consts import BountyTypes, Complexities
+from back.orm.database import Base
 
 
 class Bounty(Base):
     __tablename__ = "bounties"
 
-    id = Column(String, primary_key=True)
+    id = Column(Integer, Sequence("id", start=1, increment=1), primary_key=True)
     title = Column(String)
     issuer = Column(String)
     price = Column(Integer)
@@ -26,7 +19,10 @@ class Bounty(Base):
     short_desc = Column(String)
     complexity = Column(Enum(Complexities))
     completed = Column(Boolean, default=0)
-    tags = relationship("Tag", secondary=bounty_tag_association_table)
+
+    tags = relationship("Tag", secondary="tags_bounties")
+    workers = relationship("User", secondary="workers_bounties")
+    sample_submissions = relationship("SampleSubmission")
 
     def __repr__(self):
         return (
