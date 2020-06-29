@@ -23,6 +23,15 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
+    hideModal = () => {
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                modalContent: undefined,
+            }
+        });
+    }
+
     handleLogIn = async () => {
         // Step 1: Check MetaMask
 
@@ -47,7 +56,19 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             window.alert('Please activate MetaMask');
             return;
         }
-
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                modalContent: (
+                    <>
+                        <h2>Sign in and verify address</h2>
+                        <p>After clicking "Done", a wallet dialogue will prompt you to verify your unique address.
+                            Once you verify, you'll be signed in to the network.</p>
+                    </>
+                ),
+                modalAction: this.hideModal
+            }
+        });
         const publicAddress = baseProvider.toLowerCase();
         // Step 2: Send here publicAddress to backend
         const nonceFromBack = 'ed5080e7-0795-4785-9ba1-af75aab20ba6';
@@ -67,6 +88,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             });
             // Step 4: Collect user information
         } catch (err) {
+            this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
         }
     }

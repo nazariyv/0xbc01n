@@ -5,7 +5,8 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
     handleLogIn: () => {},
     isLoading: false,
-    signInProgress: false,
+    modalContent: undefined,
+    modalAction: () => {},
     user: undefined
 };
 

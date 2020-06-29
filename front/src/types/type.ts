@@ -1,3 +1,5 @@
+import React from 'react';
+
 export enum ROUTES {
     MAIN = '/',
     MARKETPLACE = '/marketplace',
@@ -38,6 +40,7 @@ export type ApplicationRepresentation = {
     bounties: Bounty[];
     handleLogIn: () => void;
     isLoading: boolean;
-    signInProgress: boolean;
+    modalContent: React.ReactNode | undefined;
+    modalAction: () => void;
     user?: User;
 };
