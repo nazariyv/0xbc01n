@@ -1,4 +1,11 @@
-# note for self. to pip install mysqlclient, will need to have an installation of mysql in the first place
-# so this will be a multi-layered docker image
-# layer 1 db
-# layer 2 alpine python 3.8
+FROM python:3.8.3-alpine3.12
+
+WORKDIR /back
+
+COPY . /back
+
+RUN pip install -r requirements.txt --no-cache-dir --no-color
+
+WORKDIR /
+
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "back.main:app"]

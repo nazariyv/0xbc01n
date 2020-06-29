@@ -19,7 +19,7 @@ class User:
             if len(list(qry)) == 1:
                 qry.update(req.media)
                 self.session.commit()
-                resp.code = falcon.HTTP_204
+                resp.status = falcon.HTTP_204
                 return
 
         new_user = req.media
@@ -34,7 +34,7 @@ class User:
         self.session.add(user)
         self.session.commit()
 
-        resp.code = falcon.HTTP_201
+        resp.status = falcon.HTTP_201
 
     # TODO: unprotected at all at the moment, so anyone could just query it
     def on_get(self, req, resp):
@@ -48,4 +48,4 @@ class User:
             all_users.append(user.__dict__)
 
         resp.body = json.dumps(all_users)
-        resp.code = falcon.HTTP_200
+        resp.status = falcon.HTTP_200
