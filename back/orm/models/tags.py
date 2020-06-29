@@ -10,7 +10,7 @@ class Tag(Base):
 
     id = Column(Integer, Sequence("id", start=1, increment=1), primary_key=True)
     tag = Column(Enum(Tags))
-    bounties = relationship("Bounty", secondary="tagsbounties")
+    bounties = relationship("Bounty", secondary="tags_bounties")
 
     def __repr__(self):
         return f"Tag(id='{self.id}',tag='{self.tag}',bounties='{repr(self.bounties)}')"

@@ -5,6 +5,6 @@ from back.orm.consts import Tags
 
 
 class TagsBounties(Base):
-    __tablename__ = "tagsbounties"
+    __tablename__ = "tags_bounties"
     bounty_id = Column(String, ForeignKey("bounties.id"), primary_key=True)
     tag = Column(Enum(Tags), ForeignKey("tags.tag"), primary_key=True)

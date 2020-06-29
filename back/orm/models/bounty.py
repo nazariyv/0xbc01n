@@ -19,7 +19,8 @@ class Bounty(Base):
     short_desc = Column(String)
     complexity = Column(Enum(Complexities))
     completed = Column(Boolean, default=0)
-    tags = relationship("Tag", secondary="tagsbounties")
+    tags = relationship("Tag", secondary="tags_bounties")
+    workers = relationship("User", secondary="workers_bounties")
 
     def __repr__(self):
         return (

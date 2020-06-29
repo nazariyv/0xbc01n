@@ -2,7 +2,6 @@ import logging
 import falcon  # type: ignore
 import time
 import json
-from uuid import UUID
 
 from back.orm.utils import create_instance
 from back.orm.models.user import User as UserORM
@@ -14,9 +13,9 @@ class User:
     def __init__(self, session):
         self.session = session
 
-    def on_put(self, req, resp, user_id: UUID = None):
-        if user_id:
-            qry = self.session.query(UserORM).filter(UserORM.id == str(user_id))
+    def on_put(self, req, resp, user_addr: str = None):
+        if user_addr:
+            qry = self.session.query(UserORM).filter(UserORM.addr == user_addr)
             if len(list(qry)) == 1:
                 qry.update(req.media)
                 self.session.commit()
