@@ -4,8 +4,10 @@ WORKDIR /back
 
 COPY . /back
 
-RUN pip install -r requirements.txt --no-cache-dir --no-color
+RUN apk add build-base
+
+RUN pip install -r requirements.dev.txt --no-cache-dir --no-color
 
 WORKDIR /
 
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:5000", "back.main:app"]
+ENTRYPOINT ["/bin/sh", "back/entrypoint.sh"]
