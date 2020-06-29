@@ -2,9 +2,10 @@ import logging
 import falcon  # type: ignore
 import time
 import json
+from uuid import UUID
 
 from back.orm.utils import create_instance
-from back.orm.user import User as UserORM
+from back.orm.models.user import User as UserORM
 
 l = logging.getLogger("api.user")
 
@@ -13,10 +14,14 @@ class User:
     def __init__(self, session):
         self.session = session
 
-    def on_put(self, req, resp):
-        # pull user from db
-        # if not in db, create, if validated
-        # else not validated
+    def on_put(self, req, resp, user_id: UUID = None):
+        if user_id:
+            qry = self.session.query(UserORM).filter(UserORM.id == str(user_id))
+            if len(list(qry)) == 1:
+                qry.update(req.media)
+                self.session.commit()
+                resp.code = falcon.HTTP_204
+                return
 
         new_user = req.media
         l.debug(f"{new_user=}")

@@ -1,13 +1,12 @@
 import time
 import json
-import uuid
 import falcon  # type: ignore
 import logging
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 from back.orm.utils import create_instance
-from back.orm.bounty import Bounty as BountyORM
-from back.orm.tags import Tag
+from back.orm.models.bounty import Bounty as BountyORM
+from back.orm.models.tags import Tag as TagORM
 
 l = logging.getLogger("api.bounty")
 
@@ -17,7 +16,7 @@ class Bounty:
         self.session = session
 
     def on_put(
-        self, req: falcon.Request, resp: falcon.Response, bounty_id: uuid.UUID = None
+        self, req: falcon.Request, resp: falcon.Response, bounty_id: UUID = None
     ):
         if bounty_id:
             # check that this bounty is in the db
@@ -47,7 +46,7 @@ class Bounty:
                     for tag in tags:
                         l.debug(f"{tag=}")
                         # ! will throw if cannot convert. this is bad
-                        bty.tags.append(Tag(tag=tag))
+                        bty.tags.append(TagORM(tag=tag))
 
                 self.session.commit()
                 resp.code = falcon.HTTP_204
