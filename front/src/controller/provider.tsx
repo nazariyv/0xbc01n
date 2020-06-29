@@ -1,7 +1,8 @@
 import React from 'react';
 import Web3 from 'web3';
 import { defaultApplicationRepresentation, ApplicationContext } from './context';
-import { ApplicationRepresentation } from '../types/type';
+import { ApplicationRepresentation, User } from '../types/type';
+import apiService from '../service/api-service';
 
 type ApplicationProps = {};
 type ApplicationState = {
@@ -14,11 +15,23 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     };
 
     web3: Web3 | undefined = undefined;
+    api = new apiService('');
 
-    prepareData = () => {
+    getCurrentUser = (users: User[]) => {
+        const storedPa = window.localStorage.getItem('pa');
+        return users.find(user => user.addr === storedPa || '');
+    }
+
+    prepareData = async () => {
+        const bounties = await this.api.getBounties();
+        const users = await this.api.getUsers();
+        const currentUser = this.getCurrentUser(users);
         this.setState({
             renderContext: {
-                ...this.state.renderContext
+                ...this.state.renderContext,
+                user: currentUser,
+                bounties,
+                users
             }
         });
     }
@@ -28,6 +41,17 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             renderContext: {
                 ...this.state.renderContext,
                 modalContent: undefined,
+            }
+        });
+    }
+
+    createBounty = async (formData: any) => {
+        await this.api.putCreateBounty(formData);
+        const bounties = await this.api.getBounties();
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bounties,
             }
         });
     }
@@ -70,7 +94,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             }
         });
         const publicAddress = baseProvider.toLowerCase();
-        // Step 2: Send here publicAddress to backend
+        await this.api.putCreateUser(publicAddress);
+        window.localStorage.setItem('pa', publicAddress);
         const nonceFromBack = 'ed5080e7-0795-4785-9ba1-af75aab20ba6';
         // Step 3: MetaMask confirmation modal to sign message
         try {
@@ -83,7 +108,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             this.setState({
                 renderContext: {
                     ...this.state.renderContext,
-                    user: {publicAddress, signature}
+                    user: {addr: publicAddress, signature},
+                    modalContent: undefined,
                 }
             });
             // Step 4: Collect user information
@@ -91,6 +117,22 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
         }
+    }
+
+    actionAuthRequired = () => {
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                modalContent: (
+                    <>
+                        <h2>Sign in to use the Network</h2>
+                        <p>In order for you to use certain features of the network like creating and fulfilling bounties,
+                            commenting, and viewing your network stats, please sign in using your secure wallet.</p>
+                    </>
+                ),
+                modalAction: this.hideModal
+            }
+        });
     }
 
     componentDidMount () {
@@ -101,7 +143,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         const { renderContext } = this.state;
         const contextValues: ApplicationRepresentation = {
             ...renderContext,
-            handleLogIn: this.handleLogIn
+            handleLogIn: this.handleLogIn,
+            actionAuthRequired: this.actionAuthRequired,
+            createBounty: this.createBounty
         };
 
         return (

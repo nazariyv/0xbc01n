@@ -1,19 +1,30 @@
-import React from 'react';
-
+import React, {useContext} from 'react';
+import {ApplicationContext} from '../controller/context';
+import {Bounty} from '../types/type';
 import GridPanel from './grid-panel';
 import GridItem from './grid-item';
 
-const Grid: React.FC = () => (
-    <div className='grid'>
-        <GridPanel/>
-        <div className='grid__content'>
-            <GridItem id='123'/>
-            <GridItem id='ed3'/>
-            <GridItem id='1sd3'/>
-            <GridItem id='1432d3'/>
-            <GridItem id='12sdf3d'/>
+const Grid: React.FC = () => {
+    const {bounties} = useContext(ApplicationContext);
+
+    if (bounties.length === 0) {
+        return (
+            <>
+                Empty
+            </>
+        );
+    }
+
+    return (
+        <div className='grid'>
+            <GridPanel/>
+            <div className='grid__content'>
+                {bounties.map((bounty: Bounty) => (
+                    <GridItem key={bounty.id} {...bounty}/>
+                ))}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default Grid;

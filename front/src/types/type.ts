@@ -12,23 +12,20 @@ export enum ROUTES {
     USER_PROFILE = '/profile'
 }
 
-export enum COMPLEXITY {
-    BEGINNER = 'Beginner',
-    INTERMEDIATE = 'Intermediate',
-    ADVANCED = 'Advanced'
-}
-
 export type Bounty = {
     id: string;
     title: string;
-    price: string;
-    description: string;
-    tags: string[];
-    complexity: COMPLEXITY;
+    short_desc: string;
+    price: number;
+    issuer: string;
+    type: string;
+    expiry: number;
+    desc: string;
+    complexity: string;
 };
 
 export type User = {
-    publicAddress: string;
+    addr: string;
     signature: string;
     // Additional info
     firstName?: string;
@@ -39,8 +36,11 @@ export type User = {
 export type ApplicationRepresentation = {
     bounties: Bounty[];
     handleLogIn: () => void;
+    createBounty: (formData: any) => void;
+    actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
     modalAction: () => void;
+    users: User[];
     user?: User;
 };

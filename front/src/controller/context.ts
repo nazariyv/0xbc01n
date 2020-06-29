@@ -4,9 +4,12 @@ import { ApplicationRepresentation } from '../types/type';
 export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
     handleLogIn: () => {},
+    createBounty: (formData: any) => {},
+    actionAuthRequired: () => {},
     isLoading: false,
-    modalContent: undefined,
     modalAction: () => {},
+    modalContent: undefined,
+    users: [],
     user: undefined
 };
 

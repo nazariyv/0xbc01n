@@ -9,7 +9,7 @@ const UserProfilePage: React.FC = ({ children }) => {
             <div className='bounty__create_form'>
                 <form>
                     <div className='form__row'>
-                        <div className='header'>Hi {user && user.publicAddress}, it is your profile</div>
+                        <div className='header'>Hi {user && user.addr}, it is your profile</div>
                     </div>
                     <div className='form__row'>
                         <div className='title'>What would you like people to know about you?</div>
