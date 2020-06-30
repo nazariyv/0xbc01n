@@ -20,7 +20,10 @@ const Header: React.FC = () => {
                     {user && (
                         <Link className='header__link' to={ROUTES.USER_PROFILE}>
                             <div className='user-menu'>
-                                Hello <span className='text__overflow color_green'>{user.addr}</span>
+                                Hello
+                                <span className='text__overflow color_green'>
+                                    {user.nickname ? user.nickname : user.addr}
+                                </span>
                             </div>
                         </Link>
                     )}

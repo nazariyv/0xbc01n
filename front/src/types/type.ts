@@ -12,6 +12,18 @@ export enum ROUTES {
     USER_PROFILE = '/profile'
 }
 
+export const COMPLEXITIES: Record<string, string> = {
+    BEGINNER: 'Beginner',
+    INTERMEDIATE: 'Intermediate',
+    ADVANCED: 'Advanced'
+};
+
+export const BOUNTY_TYPES: Record<string, string> = {
+    CONTEST: 'Contest',
+    TRADITIONAL: 'Traditional',
+    COOPERATIVE: 'Cooperative'
+};
+
 export type Bounty = {
     id: string;
     title: string;
@@ -26,9 +38,10 @@ export type Bounty = {
 
 export type User = {
     addr: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
+    name?: string;
+    fullname?: string;
+    nickname?: string;
+    about_me?: string;
 };
 
 export type ApplicationRepresentation = {
@@ -36,6 +49,7 @@ export type ApplicationRepresentation = {
     handleLogIn: () => void;
     createBounty: (formData: any) => void;
     updateUser: (addr: string, formData: any) => void;
+    startWorkOnBounty: (bountyId: string, addr: string) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;

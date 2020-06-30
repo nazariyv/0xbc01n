@@ -5,26 +5,26 @@ const Filter: React.FC = () => (
         <div className='filter__content'>
             <div className='title'>Refine by</div>
             <div className='filter__row'>
-                <div className='filter__row_label'>Stage</div>
+                <div className='filter__row_label'>Bounty Type</div>
                 <div className='filter__row_field'>
                     <div className='filter__row_field'>
-                        <label htmlFor='active'>
-                            Active
-                            <input type='checkbox' value='false' name='active' id='active'/>
+                        <label htmlFor='contest'>
+                            Contest
+                            <input type='checkbox' value='false' name='contest' id='contest'/>
                         </label>
-                        <label htmlFor='completed'>
-                            Completed
-                            <input type='checkbox' value='false' name='completed' id='completed'/>
+                        <label htmlFor='traditional'>
+                            Traditional
+                            <input type='checkbox' value='false' name='traditional' id='traditional'/>
                         </label>
-                        <label htmlFor='expired'>
-                            Expired
-                            <input type='checkbox' value='false' name='expired' id='expired'/>
+                        <label htmlFor='cooperative'>
+                            Cooperative
+                            <input type='checkbox' value='false' name='cooperative' id='cooperative'/>
                         </label>
                     </div>
                 </div>
             </div>
             <div className='filter__row'>
-                <div className='filter__row_label'>Difficulty</div>
+                <div className='filter__row_label'>Complexity</div>
                 <div className='filter__row_field'>
                     <label htmlFor='beginner'>
                         Beginner
@@ -34,9 +34,9 @@ const Filter: React.FC = () => (
                         Intermediate
                         <input type='checkbox' value='false' name='intermediate' id='intermediate'/>
                     </label>
-                    <label htmlFor='expert'>
-                        Expert
-                        <input type='checkbox' value='false' name='expert' id='expert'/>
+                    <label htmlFor='advanced'>
+                        Advanced
+                        <input type='checkbox' value='false' name='advanced' id='advanced'/>
                     </label>
                 </div>
             </div>

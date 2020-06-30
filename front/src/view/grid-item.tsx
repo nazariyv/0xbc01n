@@ -1,12 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {Bounty} from '../types/type';
+import {Bounty, BOUNTY_TYPES, COMPLEXITIES} from '../types/type';
 
 const GridItem: React.FC<Bounty> = (props) => {
     const {id, title, short_desc, price, expiry, type, complexity} = props;
     const now = new Date();
     const diffDays = new Date(expiry).getDate() - now.getDate();
+    const typeKey =  type.split('.').pop().toUpperCase();
+    const complexityKey = complexity.split('.').pop().toUpperCase();
     return (
         <Link to={`/bounty/${id}/description`} className='pseudo-link'>
             <div className='grid_item'>
@@ -37,20 +39,20 @@ const GridItem: React.FC<Bounty> = (props) => {
                             </div>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Experience Level</div>
-                                <div className='value'>{complexity}</div>
+                                <div className='value'>{COMPLEXITIES[complexityKey]}</div>
                             </div>
                             <div className='grid_item__info_item'>
-                                <div className='label'>-</div>
-                                <div className='value'>Applicants</div>
+                                <div className='label'>Applicants</div>
+                                <div className='value'>-</div>
                             </div>
                             <div className='grid_item__info_item'>
-                                <div className='label'>{type}</div>
-                                <div className='value'>Type</div>
+                                <div className='label'>Type</div>
+                                <div className='value'>{BOUNTY_TYPES[typeKey]}</div>
                             </div>
                         </div>
                     </div>
                     <div className='grid_item__section grid_item__section_right'>
-                        <div className='price l'>{price}</div>
+                        <div className='price l'>{price}&nbsp;OCEAN</div>
                         {/*<div className='price m'>22489,00 USD</div>
                         <div className='price s'>20047,16 EUR</div>
                         <div className='price xs'>18226,69 GBP</div>*/}
