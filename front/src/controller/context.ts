@@ -5,6 +5,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
     handleLogIn: () => {},
     createBounty: (formData: any) => {},
+    updateUser: (addr: string, formData: any) => {},
     actionAuthRequired: () => {},
     isLoading: false,
     modalAction: () => {},

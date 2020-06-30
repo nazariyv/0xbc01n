@@ -4,7 +4,9 @@ import {Link} from 'react-router-dom';
 import {Bounty} from '../types/type';
 
 const GridItem: React.FC<Bounty> = (props) => {
-    const {id} = props;
+    const {id, title, short_desc, price, expiry, type, complexity} = props;
+    const now = new Date();
+    const diffDays = new Date(expiry).getDate() - now.getDate();
     return (
         <Link to={`/bounty/${id}/description`} className='pseudo-link'>
             <div className='grid_item'>
@@ -15,48 +17,43 @@ const GridItem: React.FC<Bounty> = (props) => {
                                 <img src='https://gitcoin.co/dynamic/avatar/keep-network' className='img'/>
                             </div>
                             <div className='grid_item__header_info'>
-                                <div className='grid_item__title'>Data Bounty Platform Using Ocean Protocol</div>
-                                <div className='grid_item__description'>
-                                    Data bounty platforms are apps where data consumers can request data they need
-                                    and set the price they are wiling to pay for it. Goal of this bounty is for some
-                                    awesome developer like yourself to build this platform using Ocean Protocol,
-                                    suggest and implement appropriate dispute resolution mechanism and operate and grow this
-                                    platform.
-                                </div>
+                                <div className='grid_item__title'>{title}</div>
+                                <div className='grid_item__description'>{short_desc}</div>
                             </div>
                         </div>
                         <div className='grid_item__tags tags'>
                             <div className='tag'>privacy</div>
                             <div className='tag'>oceanprotocol</div>
                             <div className='tag'>databounty</div>
-                            <div className='tag'>marketplaces</div>
-                            <div className='tag'>disputeresolution</div>
                         </div>
                         <div className='grid_item__info'>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Status</div>
-                                <div className='value'>Ready to work</div>
+                                <div className='value'>-</div>
                             </div>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Time Left</div>
-                                <div className='value'>11 Days</div>
+                                <div className='value'>{diffDays} Days</div>
                             </div>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Experience Level</div>
-                                <div className='value'>Intermediate</div>
-
+                                <div className='value'>{complexity}</div>
                             </div>
                             <div className='grid_item__info_item'>
-                                <div className='label'>3</div>
+                                <div className='label'>-</div>
                                 <div className='value'>Applicants</div>
+                            </div>
+                            <div className='grid_item__info_item'>
+                                <div className='label'>{type}</div>
+                                <div className='value'>Type</div>
                             </div>
                         </div>
                     </div>
                     <div className='grid_item__section grid_item__section_right'>
-                        <div className='price l'>100 ETH</div>
-                        <div className='price m'>22489,00 USD</div>
+                        <div className='price l'>{price}</div>
+                        {/*<div className='price m'>22489,00 USD</div>
                         <div className='price s'>20047,16 EUR</div>
-                        <div className='price xs'>18226,69 GBP</div>
+                        <div className='price xs'>18226,69 GBP</div>*/}
                     </div>
                 </div>
             </div>

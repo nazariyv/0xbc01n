@@ -56,9 +56,20 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
-    handleLogIn = async () => {
-        // Step 1: Check MetaMask
+    updateUser = async (addr: string, formData: any) => {
+        await this.api.putUpdateUser(addr, formData);
+        const users = await this.api.getUsers();
+        const currentUser = this.getCurrentUser(users);
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                user: currentUser,
+                users
+            }
+        });
+    }
 
+    handleLogIn = async () => {
         if (!(window as any).ethereum) {
             window.alert('Please install MetaMask first.');
             return;
@@ -67,7 +78,6 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         if (!this.web3) {
             try {
                 (window as any).ethereum.enable();
-                // injected provider given by MetaMask
                 this.web3 = await new Web3((window as any).ethereum);
             } catch (error) {
                 window.alert('You need to allow MetaMask.');
@@ -97,14 +107,12 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         await this.api.putCreateUser(publicAddress);
         window.localStorage.setItem('pa', publicAddress);
         const nonceFromBack = 'ed5080e7-0795-4785-9ba1-af75aab20ba6';
-        // Step 3: MetaMask confirmation modal to sign message
         try {
             const signature = await this.web3!.eth.personal.sign(
                 `Hi there! Your special nonce: ${nonceFromBack}`,
                 publicAddress,
                 ''
             );
-            // Done hide login menu and show user profile
             this.setState({
                 renderContext: {
                     ...this.state.renderContext,
@@ -112,7 +120,6 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                     modalContent: undefined,
                 }
             });
-            // Step 4: Collect user information
         } catch (err) {
             this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
@@ -145,7 +152,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             ...renderContext,
             handleLogIn: this.handleLogIn,
             actionAuthRequired: this.actionAuthRequired,
-            createBounty: this.createBounty
+            createBounty: this.createBounty,
+            updateUser: this.updateUser
         };
 
         return (

@@ -1,13 +1,35 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import Main from '../main';
 import {ApplicationContext} from '../../controller/context';
+import { useHistory } from 'react-router-dom';
 
 const UserProfilePage: React.FC = ({ children }) => {
-    const {user} = useContext(ApplicationContext);
+    const {user, updateUser} = useContext(ApplicationContext);
+    const history = useHistory();
+    const onFormSubmit = useCallback((evt) => {
+        evt.preventDefault();
+
+        const formData: Record<string, any> = {};
+        const formFields = evt.target.querySelectorAll('.form__field');
+
+        formFields.forEach((elem: HTMLInputElement) => {
+            if (elem && elem.name) {
+                formData[elem.name] = elem.value;
+            }
+        });
+        if (user) {
+            updateUser(user.addr, formData);
+            history.push('/');
+        }
+    }, []);
+    const onCancel = useCallback(() => {
+        history.push('/');
+    }, [history]);
+
     return (
         <Main>
             <div className='bounty__create_form'>
-                <form>
+                <form onSubmit={onFormSubmit}>
                     <div className='form__row'>
                         <div className='header'>Hi {user && user.addr}, it is your profile</div>
                     </div>
@@ -19,10 +41,10 @@ const UserProfilePage: React.FC = ({ children }) => {
                     </div>
                     <div className='form__row'>
                         <div className='form__label'>
-                            <label htmlFor='first_name'>First name</label>
+                            <label htmlFor='firstName'>First name</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input' id='first_name' name='first_name'/>
+                            <input type='text' className='form__input form__field' id='firstName' name='firstName'/>
                         </div>
                     </div>
                     <div className='form__row'>
@@ -30,27 +52,7 @@ const UserProfilePage: React.FC = ({ children }) => {
                             <label htmlFor='last_name'>Last name</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input' id='last_name' name='last_name'/>
-                        </div>
-                    </div>
-                    <div className='form__row_separator'/>
-                    <div className='form__row'>
-                        <div className='title'>What are some of your professional or technical skills?</div>
-                        <div className='description'>
-                            Enter or select the skills for which you are proficient. This will help others on the
-                            network be confident in your ability to fulfill certain types of bounties.
-                        </div>
-                    </div>
-                    <div className='form__row'>
-                        <div className='form__label'>
-                            <label htmlFor='skills'>Skills</label>
-                        </div>
-                        <div className='form__field'>
-                            <select className='form__select' id='skills' name='skills'>
-                                <option value='html'>HTML</option>
-                                <option value='JavaScript'>JavaScript</option>
-                                <option value='Design'>Design</option>
-                            </select>
+                            <input type='text' className='form__input form__field' id='lastName' name='lastName'/>
                         </div>
                     </div>
                     <div className='form__row_separator'/>
@@ -64,11 +66,11 @@ const UserProfilePage: React.FC = ({ children }) => {
                             <label htmlFor='email'>Contact email</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input' id='email' name='email'/>
+                            <input type='text' className='form__input form__field' id='email' name='email'/>
                         </div>
                     </div>
                     <div className='button_container'>
-                        <button className='secondary-button form_button_space'>
+                        <button className='secondary-button form_button_space' onClick={onCancel}>
                             Cancel
                         </button>
                         <button type='submit' className='action-button'>

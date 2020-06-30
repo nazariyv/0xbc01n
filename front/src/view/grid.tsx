@@ -5,13 +5,23 @@ import GridPanel from './grid-panel';
 import GridItem from './grid-item';
 
 const Grid: React.FC = () => {
-    const {bounties} = useContext(ApplicationContext);
+    const {bounties, isLoading} = useContext(ApplicationContext);
+    if (isLoading) {
+        return (
+            <div className='wrapper'>
+                <div className='loader'/>
+            </div>
+        );
+    }
 
     if (bounties.length === 0) {
         return (
-            <>
-                Empty
-            </>
+            <div className='grid__empty'>
+                <div>
+                    <h2>Sorry, you don't have any bounties</h2>
+                    <p>Please try again or change filter criteria.</p>
+                </div>
+            </div>
         );
     }
 

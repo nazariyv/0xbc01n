@@ -26,8 +26,6 @@ export type Bounty = {
 
 export type User = {
     addr: string;
-    signature: string;
-    // Additional info
     firstName?: string;
     lastName?: string;
     email?: string;
@@ -37,6 +35,7 @@ export type ApplicationRepresentation = {
     bounties: Bounty[];
     handleLogIn: () => void;
     createBounty: (formData: any) => void;
+    updateUser: (addr: string, formData: any) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;

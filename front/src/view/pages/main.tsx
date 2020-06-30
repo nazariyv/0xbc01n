@@ -1,5 +1,4 @@
 import React from 'react';
-
 import FilterView from '../filter';
 import GridView from '../grid';
 import Main from '../main';
