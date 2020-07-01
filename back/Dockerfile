@@ -1,4 +1,6 @@
-FROM python:3.8.3-slim
+FROM python:3.8.3-alpine3.12
+
+RUN apk add --virtual build-dependencies build-base gcc
 
 WORKDIR /back
 
