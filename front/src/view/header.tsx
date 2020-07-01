@@ -16,16 +16,18 @@ const Header: React.FC = () => {
                     <Link className='header__link' to={ROUTES.MAIN}>0xbc01n</Link>
                 </div>
                 <div className='header__section header__section_nav_right'>
-                    <Link className='header__link' to=''>Search</Link>
                     {user && (
-                        <Link className='header__link' to={ROUTES.USER_PROFILE}>
-                            <div className='user-menu'>
-                                Hello
-                                <span className='text__overflow color_green'>
-                                    {user.nickname ? user.nickname : user.addr}
-                                </span>
-                            </div>
-                        </Link>
+                        <>
+                            <Link className='header__link' to={ROUTES.USER_DASHBOARD}>Dashboard</Link>
+                            <Link className='header__link' to={ROUTES.USER_PROFILE}>
+                                <div className='user-menu'>
+                                    Hello
+                                    <span className='text__overflow color_green'>
+                                        {user.nickname ? user.nickname : user.addr}
+                                    </span>
+                                </div>
+                            </Link>
+                        </>
                     )}
                     {user === undefined && (
                         <div className='header__link' onClick={handleLogIn}>Log in</div>

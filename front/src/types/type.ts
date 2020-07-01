@@ -9,7 +9,8 @@ export enum ROUTES {
     CREATE = '/create',
     TERMS = '/terms',
     PRIVACY = '/privacy',
-    USER_PROFILE = '/profile'
+    USER_PROFILE = '/profile',
+    USER_DASHBOARD = '/dashboard'
 }
 
 export const COMPLEXITIES: Record<string, string> = {
@@ -25,7 +26,7 @@ export const BOUNTY_TYPES: Record<string, string> = {
 };
 
 export type Bounty = {
-    id: string;
+    id: number;
     title: string;
     short_desc: string;
     price: number;
@@ -50,10 +51,12 @@ export type ApplicationRepresentation = {
     createBounty: (formData: any) => void;
     updateUser: (addr: string, formData: any) => void;
     startWorkOnBounty: (bountyId: string, addr: string) => void;
+    getBountiesUserWorksOn: (addr: string) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
     modalAction: () => void;
     users: User[];
     user?: User;
+    userBounties: Record<User['addr'], Bounty>;
 };

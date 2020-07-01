@@ -5,6 +5,7 @@ import {ROUTES} from './types/type';
 import BountyPage from './view/pages/bounty';
 import BountyCreatePage from './view/pages/bounty-create';
 import BountyEditPage from './view/pages/bounty-edit';
+import Dashboard from './view/pages/dashboard';
 import ExplorePage from './view/pages/explore';
 import MainPage from './view/pages/main';
 import MarketplacePage from './view/pages/marketplace';
@@ -42,6 +43,9 @@ const Routes = () => (
         </Route>
         <Route exact path={ROUTES.USER_PROFILE}>
             <UserProfilePage />
+        </Route>
+        <Route exact path={ROUTES.USER_DASHBOARD}>
+            <Dashboard />
         </Route>
     </Switch>
 );

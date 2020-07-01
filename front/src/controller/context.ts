@@ -7,12 +7,14 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     createBounty: (formData: any) => {},
     updateUser: (addr: string, formData: any) => {},
     startWorkOnBounty: (bountyId: string, addr: string) => {},
+    getBountiesUserWorksOn: (addr: string) => {},
     actionAuthRequired: () => {},
     isLoading: false,
     modalAction: () => {},
     modalContent: undefined,
     users: [],
-    user: undefined
+    user: undefined,
+    userBounties: {}
 };
 
 export const ApplicationContext = React.createContext<ApplicationRepresentation>(
