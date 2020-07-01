@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useCallback, useEffect} from 'react';
 import {Switch, Route, NavLink, useRouteMatch, useParams} from 'react-router-dom';
 import {ApplicationContext} from '../../controller/context';
 import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
@@ -6,10 +6,15 @@ import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
 import Main from '../main';
 
 const BountyPage: React.FC = () => {
-    const {bounties, user, startWorkOnBounty} = useContext(ApplicationContext);
+    const {bounties, user, startWorkOnBounty, getBountiesUserWorksOn} = useContext(ApplicationContext);
     const { path, url } = useRouteMatch();
     const {bountyId} = useParams();
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
+
+    // useEffect(() => {
+    //     user && getBountiesUserWorksOn(user.addr);
+    // }, []);
+
     if (bountyInfo) {
         const {title, short_desc, price, expiry, type, complexity, desc, issuer} = bountyInfo;
         const now = new Date();

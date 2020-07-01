@@ -82,6 +82,19 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
+    getBountiesUserWorksOn = async (addr: string) => {
+        const userBounties = await this.api.getBountiesUserWorksOn(addr);
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                userBounties: {
+                    ...this.state.renderContext.userBounties,
+                    [addr]: userBounties,
+                }
+            }
+        });
+    }
+
     handleLogIn = async () => {
         if (!(window as any).ethereum) {
             window.alert('Please install MetaMask first.');
@@ -167,7 +180,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             actionAuthRequired: this.actionAuthRequired,
             createBounty: this.createBounty,
             updateUser: this.updateUser,
-            startWorkOnBounty: this.startWorkOnBounty
+            startWorkOnBounty: this.startWorkOnBounty,
+            getBountiesUserWorksOn: this.getBountiesUserWorksOn
         };
 
         return (
