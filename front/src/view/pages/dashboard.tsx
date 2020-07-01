@@ -7,7 +7,28 @@ const Dashboard: React.FC = () => {
     return (
         <div className='dashboard'>
             <div className='dashboard__content'>
-                dashboard
+                <div className='dashboard_row'>
+                    <div className='widget l'>
+                        <div className='widget__title'>My Bounties</div>
+                        <div className='widget__content'>
+                            content
+                        </div>
+                    </div>
+                    <div className='widget l'>
+                        <div className='widget__title'>My Activity</div>
+                        <div className='widget__content'>
+                            content
+                        </div>
+                    </div>
+                </div>
+                <div className='dashboard_row'>
+                    <div className='widget xl'>
+                        <div className='widget__title'>Submissions</div>
+                        <div className='widget__content'>
+                            content
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

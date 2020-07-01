@@ -1,8 +1,10 @@
 import React from 'react';
 import Web3 from 'web3';
+import OceanService from '../service/ocean-service';
 import { defaultApplicationRepresentation, ApplicationContext } from './context';
 import { ApplicationRepresentation, User } from '../types/type';
 import apiService from '../service/api-service';
+import oceanService from '../service/ocean-service';
 
 type ApplicationProps = {};
 type ApplicationState = {
@@ -16,6 +18,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
     web3: Web3 | undefined = undefined;
     api = new apiService('');
+    oceanService: OceanService | undefined = undefined;
 
     getCurrentUser = (users: User[]) => {
         const storedPa = window.localStorage.getItem('pa');
@@ -69,7 +72,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
-    startWorkOnBounty = async (bountyId: string, addr: string) => {
+    startWorkOnBounty = async (bountyId: number, addr: string) => {
         await this.api.postUserStartWorkOnBounty(bountyId, addr);
         const users = await this.api.getUsers();
         const bounties = await this.api.getBounties();
@@ -84,6 +87,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
     getBountiesUserWorksOn = async (addr: string) => {
         const userBounties = await this.api.getBountiesUserWorksOn(addr);
+        console.log('userBounties ', userBounties);
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
@@ -112,6 +116,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         }
 
         const baseProvider = await this.web3.eth.getCoinbase();
+        this.oceanService = new OceanService(this.web3);
         if (!baseProvider) {
             window.alert('Please activate MetaMask');
             return;
