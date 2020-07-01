@@ -52,7 +52,6 @@ export type ApplicationRepresentation = {
     updateUser: (addr: string, formData: any) => void;
     startWorkOnBounty: (bountyId: number, addr: string) => void;
     getBountiesUserWorksOn: (addr: string) => void;
-    registerAsset: (asset: any) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
