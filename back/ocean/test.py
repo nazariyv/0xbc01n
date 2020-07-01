@@ -9,37 +9,96 @@ load_dotenv()
 from ocean_keeper.utils import get_account
 from ocean_keeper.contract_handler import ContractHandler
 
+from squid_py.ocean.keeper import SquidKeeper as Keeper
 from squid_py import Ocean, ConfigProvider, Config
+from squid_py.brizo import BrizoProvider
 from ocean_utils.agreements.service_types import ServiceTypes
+from ocean_keeper.utils import add_ethereum_prefix_and_hash_msg
 from ocean_utils.agreements.service_agreement import ServiceAgreement
 
-# keeper.path should point to the artifact folder which is assumed here to be the default path created by barge
+
 config_dict = {
     "keeper-contracts": {
         # Point to an Ethereum RPC client. Note that Squid learns the name of the network to work with from this client.
-        "keeper.url": "http://localhost:8545",
+        "keeper.url": "http://localhost:8545/",
         # Specify the keeper contracts artifacts folder (has the smart contracts definitions json files). When you
-        # install the package, the artifacts are automatically picked up from the `keeper-contracts` Python
+        # install the package, the artifacts are automatically picked up from the keeper-contracts Python
         # dependency unless you are using a local ethereum network.
         "keeper.path": "~/.ocean/keeper-contracts/artifacts",
-        "secret_store.url": "http://localhost:12001",
-        "parity.url": "http://localhost:8545",
-        "parity.address": "0x00bd138abd70e2f00903268f3db08f2d25677c9e",
-        "parity.password": "node0",
-        "parity.address1": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
-        "parity.password1": "secret",
+        "secret_store.url": "http://localhost:12001/",
+        "parity.url": "http://localhost:8545/",
+        "parity.address": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
+        "parity.password": "secret",
+        # "parity.address": "0x00bd138abd70e2f00903268f3db08f2d25677c9e",
+        # "parity.password": "node0",
     },
     "resources": {
         # aquarius is the metadata store. It stores the assets DDO/DID-document
-        "aquarius.url": "http://localhost:5000",
+        "aquarius.url": "http://172.15.0.15:5000/",
         # Brizo is the publisher's agent. It serves purchase and requests for both data access and compute services
-        "brizo.url": "http://localhost:8030",
+        "brizo.url": "http://localhost:8030/",
+        "provider.address": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
         # points to the local database file used for storing temporary information (for instance, pending service agreements).
         "storage.path": "squid_py.db",
         # Where to store downloaded asset files
         "downloads.path": "consume-downloads",
     },
 }
+
+# config_dict = {
+#     "keeper-contracts": {
+#         # Point to an Ethereum RPC client. Note that Squid learns the name of the network to work with from this client.
+#         "keeper.url": "http://localhost:8545/",
+#         # Specify the keeper contracts artifacts folder (has the smart contracts definitions json files). When you
+#         # install the package, the artifacts are automatically picked up from the keeper-contracts Python
+#         # dependency unless you are using a local ethereum network.
+#         "keeper.path": "~/.ocean/keeper-contracts/artifacts",
+#         "secret_store.url": "http://localhost:12001/",
+#         "parity.url": "http://localhost:8545/",
+#         # "parity.address": "0x00bd138abd70e2f00903268f3db08f2d25677c9e",
+#         # "parity.password": "node0",
+#         "parity.address": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
+#         "parity.password": "secret",
+#     },
+#     "resources": {
+#         # aquarius is the metadata store. It stores the assets DDO/DID-document
+#         "aquarius.url": "http://172.15.0.15:5000/",
+#         # Brizo is the publisher's agent. It serves purchase and requests for both data access and compute services
+#         "brizo.url": "http://localhost:8030/",
+#         # points to the local database file used for storing temporary information (for instance, pending service agreements).
+#         "storage.path": "squid_py.db",
+#         # Where to store downloaded asset files
+#         "downloads.path": "consume-downloads",
+#     },
+# }
+
+# # keeper.path should point to the artifact folder which is assumed here to be the default path created by barge
+# config_dict = {
+#     "keeper-contracts": {
+#         # Point to an Ethereum RPC client. Note that Squid learns the name of the network to work with from this client.
+#         "keeper.url": "http://localhost:8545",
+#         # Specify the keeper contracts artifacts folder (has the smart contracts definitions json files). When you
+#         # install the package, the artifacts are automatically picked up from the `keeper-contracts` Python
+#         # dependency unless you are using a local ethereum network.
+#         "keeper.path": "~/.ocean/keeper-contracts/artifacts",
+#         "secret_store.url": "http://localhost:12001",
+#         "parity.url": "http://localhost:8545",
+#         "parity.address": "0x00bd138abd70e2f00903268f3db08f2d25677c9e",
+#         "parity.password": "node0",
+#         "parity.address1": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
+#         "parity.password1": "secret",
+#     },
+#     "resources": {
+#         # aquarius is the metadata store. It stores the assets DDO/DID-document
+#         "aquarius.url": "http://aquarius:5000",
+#         # Brizo is the publisher's agent. It serves purchase and requests for both data access and compute services
+#         "brizo.url": "http://localhost:8030",
+#         # points to the local database file used for storing temporary information (for instance, pending service agreements).
+#         "storage.path": "squid_py.db",
+#         # Where to store downloaded asset files
+#         "downloads.path": "consume-downloads",
+#     },
+# }
 
 metadata = {
     "main": {
@@ -116,15 +175,45 @@ event = ocean.keeper.lock_reward_condition.subscribe_condition_fulfilled(
 assert event, "no event for LockRewardCondition.Fulfilled"
 print("lockreward success")
 
-print(f"{service_agreement_id=},{ddo.did=},{service.index=},{consumer_account=},{config.downloads_path=}")
-
-assert ocean.assets.consume(
-    service_agreement_id,
-    ddo.did,
-    service.index,
-    consumer_account,
-    config.downloads_path,
+print(
+    f"{service_agreement_id=},{ddo.did=},{service.index=},{consumer_account=},{config.downloads_path=}"
 )
+
+
+brizo = BrizoProvider.get_brizo()
+sa = ServiceAgreement.from_ddo(ServiceTypes.ASSET_ACCESS, ddo)
+endpoint = sa.service_endpoint
+signature = Keeper.get_instance().sign_hash(
+    add_ethereum_prefix_and_hash_msg(service_agreement_id), account
+)
+
+print(f"{signature=}")
+print(f"{endpoint=}")
+print(f"{account=}")
+
+#  def _create_consume_url(service_endpoint, agreement_id, account, _file=None,
+#                             signature=None, index=None):
+
+url = brizo._create_consume_url(
+    endpoint, service_agreement_id, account, signature=signature, index=0
+)
+
+print(f"{url=}")
+
+# brizo = BrizoProvider.get_brizo()
+
+# brizo._create_consume_url(service_endpoint, service_agreement_id)
+
+# def _create_consume_url(service_endpoint, agreement_id, account, _file=None,
+#                         signature=None, index=None):
+
+# assert ocean.assets.consume(
+#     service_agreement_id,
+#     ddo.did,
+#     service.index,
+#     consumer_account,
+#     config.downloads_path,
+# )
 print("asset consumed")
 
 # after a short wait (seconds to minutes) the asset data files should be available in the `downloads.path` defined in config
