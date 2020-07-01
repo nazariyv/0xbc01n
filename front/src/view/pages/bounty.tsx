@@ -6,14 +6,16 @@ import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
 import Main from '../main';
 
 const BountyPage: React.FC = () => {
-    const {bounties, user, startWorkOnBounty, getBountiesUserWorksOn} = useContext(ApplicationContext);
+    const {bounties, user, startWorkOnBounty, getBountiesUserWorksOn, userBounties} = useContext(ApplicationContext);
     const { path, url } = useRouteMatch();
     const {bountyId} = useParams();
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
 
-    // useEffect(() => {
-    //     user && getBountiesUserWorksOn(user.addr);
-    // }, []);
+    useEffect(() => {
+        if (user) {
+            getBountiesUserWorksOn(user.addr);
+        }
+    }, [user, userBounties]);
 
     if (bountyInfo) {
         const {title, short_desc, price, expiry, type, complexity, desc, issuer} = bountyInfo;
