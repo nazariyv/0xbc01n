@@ -1,6 +1,6 @@
 from typing import Dict
 
-# TODO: missing pylint types
+# TODO: missing mypy types
 def create_instance(cls, json_repr: Dict):
     c = cls()
 
