@@ -16,7 +16,9 @@ class WorkersBounties:
             l.warning("url of the request does not contain the user address")
             return
 
-        all_worked_bounties = self.session.query(WorkersBountiesORM).filter(WorkersBountiesORM.worker_id == user_addr)
+        all_worked_bounties = self.session.query(WorkersBountiesORM).filter(
+            WorkersBountiesORM.worker_id == user_addr
+        )
 
         all_of_them = []
 
