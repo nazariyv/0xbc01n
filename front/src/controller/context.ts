@@ -7,7 +7,6 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     createBounty: (formData: any) => {},
     updateUser: (addr: string, formData: any) => {},
     startWorkOnBounty: (bountyId: number, addr: string) => {},
-    registerAsset: (asset: any) => {},
     getBountiesUserWorksOn: (addr: string) => {},
     actionAuthRequired: () => {},
     isLoading: false,
