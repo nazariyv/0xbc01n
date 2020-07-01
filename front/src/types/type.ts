@@ -50,13 +50,14 @@ export type ApplicationRepresentation = {
     handleLogIn: () => void;
     createBounty: (formData: any) => void;
     updateUser: (addr: string, formData: any) => void;
-    startWorkOnBounty: (bountyId: string, addr: string) => void;
+    startWorkOnBounty: (bountyId: number, addr: string) => void;
     getBountiesUserWorksOn: (addr: string) => void;
+    registerAsset: (asset: any) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
     modalAction: () => void;
     users: User[];
     user?: User;
-    userBounties: Record<User['addr'], Bounty>;
+    userBounties: [];
 };

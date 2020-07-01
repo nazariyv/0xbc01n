@@ -18,7 +18,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
     web3: Web3 | undefined = undefined;
     api = new apiService('');
-    oceanService: OceanService | undefined = undefined;
+    oceanService = new OceanService();
 
     getCurrentUser = (users: User[]) => {
         const storedPa = window.localStorage.getItem('pa');
@@ -29,10 +29,12 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         const bounties = await this.api.getBounties();
         const users = await this.api.getUsers();
         const currentUser = this.getCurrentUser(users);
+        const userBounties = currentUser && await this.api.getBountiesUserWorksOn(currentUser.addr) || [];
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
                 user: currentUser,
+                userBounties,
                 bounties,
                 users
             }
@@ -97,6 +99,10 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 }
             }
         });
+    }
+
+    registerAsset = async (asset: any) => {
+        await this.oceanService.registerAsset(asset);
     }
 
     handleLogIn = async () => {
@@ -186,7 +192,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             createBounty: this.createBounty,
             updateUser: this.updateUser,
             startWorkOnBounty: this.startWorkOnBounty,
-            getBountiesUserWorksOn: this.getBountiesUserWorksOn
+            getBountiesUserWorksOn: this.getBountiesUserWorksOn,
+            registerAsset: this.registerAsset
         };
 
         return (

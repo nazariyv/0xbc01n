@@ -6,7 +6,8 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     handleLogIn: () => {},
     createBounty: (formData: any) => {},
     updateUser: (addr: string, formData: any) => {},
-    startWorkOnBounty: (bountyId: string, addr: string) => {},
+    startWorkOnBounty: (bountyId: number, addr: string) => {},
+    registerAsset: (asset: any) => {},
     getBountiesUserWorksOn: (addr: string) => {},
     actionAuthRequired: () => {},
     isLoading: false,
@@ -14,7 +15,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     modalContent: undefined,
     users: [],
     user: undefined,
-    userBounties: {}
+    userBounties: []
 };
 
 export const ApplicationContext = React.createContext<ApplicationRepresentation>(

@@ -8,6 +8,9 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  node: {
+    fs: "empty"
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },

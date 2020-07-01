@@ -2,5 +2,5 @@
 back-dev:
 	docker build ./back/ -t dbp:latest
 	docker run -p 5050:5000 \
-	-v /home/naz/git/0xbc01n-priv/back/db:/back/db \
+	-v /Users/divanov/Documents/GitHub/0xbc01n-priv/back/db:/back/db \
 	dbp

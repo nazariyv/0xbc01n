@@ -47,7 +47,7 @@ class ApiService {
     }
 
     getBountiesUserWorksOn = async (publicAddress: User['addr']) => {
-        const response = await fetch(`/api/user/${publicAddress}`,{method: 'GET'});
+        const response = await fetch(`/api/user/${publicAddress}/works_bounties`,{method: 'GET'});
         try {
             return await response.json();
         } catch (e) {
