@@ -21,7 +21,7 @@ const UserProfilePage: React.FC = ({ children }) => {
             updateUser(user.addr, formData);
             history.push('/');
         }
-    }, []);
+    }, [user]);
     const onCancel = useCallback(() => {
         history.push('/');
     }, [history]);
@@ -41,32 +41,34 @@ const UserProfilePage: React.FC = ({ children }) => {
                     </div>
                     <div className='form__row'>
                         <div className='form__label'>
-                            <label htmlFor='firstName'>First name</label>
+                            <label htmlFor='name'>Name</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input form__field' id='firstName' name='firstName'/>
+                            <input type='text' className='form__input form__field' id='name' name='name' value={user && user.name}/>
                         </div>
                     </div>
                     <div className='form__row'>
                         <div className='form__label'>
-                            <label htmlFor='last_name'>Last name</label>
+                            <label htmlFor='fullname'>Full name</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input form__field' id='lastName' name='lastName'/>
-                        </div>
-                    </div>
-                    <div className='form__row_separator'/>
-                    <div className='form__row'>
-                        <div className='title'>Where would you like to receive status notifications about your bounties
-                            and fulfillments?
+                            <input type='text' className='form__input form__field' id='fullname' name='fullname' value={user && user.fullname}/>
                         </div>
                     </div>
                     <div className='form__row'>
                         <div className='form__label'>
-                            <label htmlFor='email'>Contact email</label>
+                            <label htmlFor='nickname'>Nick name</label>
                         </div>
                         <div className='form__field'>
-                            <input type='text' className='form__input form__field' id='email' name='email'/>
+                            <input type='text' className='form__input form__field' id='nickname' name='nickname' value={user && user.nickname}/>
+                        </div>
+                    </div>
+                    <div className='form__row'>
+                        <div className='form__label'>
+                            <label htmlFor='about_me'>About me</label>
+                        </div>
+                        <div className='form__field'>
+                            <textarea className='form__textarea form__field' id='about_me' name='about_me'  value={user && user.about_me}/>
                         </div>
                     </div>
                     <div className='button_container'>

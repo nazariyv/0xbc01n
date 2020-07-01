@@ -76,31 +76,31 @@ const BountyCreatePage: React.FC = ({ children }) => {
                         </div>
                     </div>
                     <div className='form__row'>
-                        <div className='form__label'>Difficulty</div>
+                        <div className='form__label'>Complexity</div>
                         <div className='form__field radio_group'>
                             <label htmlFor='beginner'>
-                                <input type='radio' className='form__field' id='beginner' name='difficult' value='beginner'/>
+                                <input type='radio' className='form__field' id='beginner' name='complexity' value='beginner'/>
                                 Beginner
                             </label>
                             <label htmlFor='intermediate'>
-                                <input type='radio' className='form__field' id='intermediate' name='difficult' value='intermediate'/>
+                                <input type='radio' className='form__field' id='intermediate' name='complexity' value='intermediate'/>
                                 Intermediate
                             </label>
                             <label htmlFor='expert'>
-                                <input type='radio' className='form__field' id='expert' name='difficult' value='expert'/>
+                                <input type='radio' className='form__field' id='expert' name='complexity' value='advanced'/>
                                 Expert
                             </label>
                         </div>
                     </div>
                     <div className='form__row'>
                         <div className='form__label'>
-                            <label htmlFor='type'>Bounty category</label>
+                            <label htmlFor='type'>Bounty Type</label>
                         </div>
                         <div className='form__row'>
                             <select className='form__select form__field' id='type' name='type'>
-                                <option value='html'>HTML</option>
-                                <option value='JavaScript'>JavaScript</option>
-                                <option value='Design'>Design</option>
+                                <option value='contest'>Contest</option>
+                                <option value='traditional'>Traditional</option>
+                                <option value='cooperative'>Cooperative</option>
                             </select>
                         </div>
                     </div>

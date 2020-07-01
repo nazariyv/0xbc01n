@@ -40,8 +40,13 @@
     margin-bottom: 8px;
   }
 
+  &__section_left {
+    flex-grow: 1;
+  }
+
   &__section_right {
     width: 300px;
+    text-align: right;
 
     .price {
       background: #d7f5e8;
@@ -81,10 +86,12 @@
     &_item {
       display: flex;
       margin-right: 24px;
+      flex-direction: column;
 
       .label {
         color: #656969;
         margin-right: 4px;
+        margin-bottom: 6px;
       }
 
       .value {
