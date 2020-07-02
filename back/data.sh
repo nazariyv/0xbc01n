@@ -49,7 +49,7 @@ http --ignore-stdin PUT localhost:8080/api/bounty title='Surrounded prosperous i
 issuer=0x465DCa9995D6c2a81A9Be80fBCeD5a770dEE3daE price=40000 expiry=1693455693 type='cooperative' complexity='beginner'
 
 # editing bounty
-http --ignore-stdin PUT localhost:8080/api/bounty/2 tags='react,nextjs'  # if you do not supply list will give 500 right now
+# http --ignore-stdin PUT localhost:8080/api/bounty/2 tags='react,nextjs'  # if you do not supply list will give 500 right now
 
 # both users start work on bounty tushonka
 # ! authorization in the future

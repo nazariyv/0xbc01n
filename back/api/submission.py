@@ -91,11 +91,6 @@ class BountySubmissions:
         submissions = self.session.query(SubmissionORM).filter(SubmissionORM.bounty_id == bounty_id)
         qry_len = len(list(submissions))
 
-        if not qry_len == 1:
-            l.warn("could not find such a user")
-            resp.status = falcon.HTTP_400
-            return
-
         all_subs = []
 
         for sub in submissions:

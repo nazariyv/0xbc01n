@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Enum, Sequence  # type: ignore
+from sqlalchemy import Column, Integer, String, Boolean, Enum, Sequence, ForeignKey  # type: ignore
 from sqlalchemy.orm import relationship  # type: ignore
 
 from back.orm.consts import BountyTypes, Complexities
@@ -18,7 +18,7 @@ class Bounty(Base):
     desc = Column(String)
     short_desc = Column(String)
     complexity = Column(Enum(Complexities))
-    completed = Column(Boolean, default=0)
+    winner_did = Column(String)
 
     tags = relationship("Tag", secondary="tags_bounties")
     workers = relationship("User", secondary="workers_bounties")
@@ -29,5 +29,5 @@ class Bounty(Base):
             f"Bounty(id='{self.id}',title='{self.title}',issuer='{self.issuer}',"
             f"price='{self.price}',expiry='{self.expiry}',type='{self.type}',"
             f"desc='{self.desc}',short_desc='{self.short_desc}',"
-            f"complexity='{self.complexity}',completed='{self.completed}')"
+            f"complexity='{self.complexity}',winner_did='{self.winner_did}')"
         )
