@@ -1,4 +1,4 @@
-import React, {useContext, useCallback, useEffect} from 'react';
+import React, {useContext, useCallback, useEffect, useState} from 'react';
 import {Switch, Route, NavLink, useRouteMatch, useParams} from 'react-router-dom';
 import {ApplicationContext} from '../../controller/context';
 import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
@@ -15,8 +15,10 @@ const BountyPage: React.FC = () => {
         getBountySubmissions,
         bountySubmissions
     } = useContext(ApplicationContext);
+
     const { path, url } = useRouteMatch();
     const {bountyId} = useParams();
+    const [isSubmissionSend, setSubmissionSend] = useState<boolean>(false);
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
     const currentUserWorkOnThisBounty = userBounties.filter(({bounty_id}) => bounty_id === Number(bountyId)).length !== 0;
 
@@ -41,8 +43,8 @@ const BountyPage: React.FC = () => {
             }
         });
 
-        console.log(formData);
-        // submitSubmissionForBounty(Number(bountyId), formData);
+        submitSubmissionForBounty(Number(bountyId), formData);
+        setSubmissionSend(true);
     });
 
     if (bountyInfo) {
@@ -101,41 +103,48 @@ const BountyPage: React.FC = () => {
                                         </div>
                                     </Route>
                                     <Route path={`${path}/fulfill`}>
-                                        <div className='tabs_content'>
-                                            <h2>Enter Submission Details</h2>
-                                            <p>Enter and submit the details for your bounty submission, including any links to content
-                                                that may be required for fulfillment as indicated by the bounty description.</p>
-                                            <div className='form__wrapper'>
-                                                <form onSubmit={sedSubmission}>
-                                                    <div className='form__row'>
-                                                        <input type='hidden' className='form__field' id='addr' name='addr' value={user && user.addr}/>
-                                                        <input type='hidden' className='form__field' id='price' name='price' value={bountyInfo.price}/>
-                                                        <input type='hidden' className='form__field' id='name' name='name' value={bountyInfo.title}/>
-                                                        <div className='form__label'>
-                                                            <label htmlFor='name'>Sample url</label>
-                                                        </div>
-                                                        <div className='form__field'>
-                                                            <input type='text' className='form__input form__field' id='sample_url' name='sample_url'/>
-                                                        </div>
-                                                    </div>
-                                                    <div className='form__row'>
-                                                        <div className='form__label'>
-                                                            <label htmlFor='full_dataset_url'>Full url</label>
-                                                        </div>
-                                                        <div className='form__field'>
-                                                            <input type='text' className='form__input form__field' id='full_dataset_url' name='full_dataset_url'/>
-                                                        </div>
-                                                    </div>
-                                                    <div className='form__row'>
-                                                        <div className='button_container'>
-                                                            <button type='submit' className='action-button'>
-                                                                Submit
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                        {isSubmissionSend && (
+                                            <div className='tabs_content__empty'>
+                                                Your submission was send
                                             </div>
-                                        </div>
+                                        )}
+                                        {!isSubmissionSend && (
+                                            <div className='tabs_content'>
+                                                <h2>Enter Submission Details</h2>
+                                                <p>Enter and submit the details for your bounty submission, including any links to content
+                                                    that may be required for fulfillment as indicated by the bounty description.</p>
+                                                <div className='form__wrapper'>
+                                                    <form onSubmit={sedSubmission}>
+                                                        <div className='form__row'>
+                                                            <input type='hidden' className='form__field' id='addr' name='addr' value={user && user.addr}/>
+                                                            <input type='hidden' className='form__field' id='price' name='price' value={bountyInfo.price}/>
+                                                            <input type='hidden' className='form__field' id='name' name='name' value={bountyInfo.title}/>
+                                                            <div className='form__label'>
+                                                                <label htmlFor='name'>Sample url</label>
+                                                            </div>
+                                                            <div className='form__field'>
+                                                                <input type='text' className='form__input form__field' id='sample_url' name='sample_url'/>
+                                                            </div>
+                                                        </div>
+                                                        <div className='form__row'>
+                                                            <div className='form__label'>
+                                                                <label htmlFor='full_dataset_url'>Full url</label>
+                                                            </div>
+                                                            <div className='form__field'>
+                                                                <input type='text' className='form__input form__field' id='full_dataset_url' name='full_dataset_url'/>
+                                                            </div>
+                                                        </div>
+                                                        <div className='form__row'>
+                                                            <div className='button_container'>
+                                                                <button type='submit' className='action-button'>
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        )}
                                     </Route>
                                 </Switch>
                             </div>
