@@ -157,7 +157,7 @@ const BountyPage: React.FC = () => {
                                 <div className='founder__info_title'>Funder information</div>
                                 <div className='founder__info_block'>
                                     <div className='founder__info_avatar'>
-                                        <img src='https://gitcoin.co/dynamic/avatar/keep-network' className='img'/>
+                                        <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img'/>
                                     </div>
                                     <div className='founder__info_detail'>
                                         <div>{issuer}</div>

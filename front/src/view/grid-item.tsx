@@ -16,7 +16,7 @@ const GridItem: React.FC<Bounty> = (props) => {
                     <div className='grid_item__section grid_item__section_left'>
                         <div className='grid_item__header'>
                             <div className='grid_item__header_avatar'>
-                                <img src='https://gitcoin.co/dynamic/avatar/keep-network' className='img'/>
+                                <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img'/>
                             </div>
                             <div className='grid_item__header_info'>
                                 <div className='grid_item__title'>{title}</div>
