@@ -1,5 +1,4 @@
 version: "3"
-working_dir: /
 services:
   backend:
     build:
@@ -7,4 +6,11 @@ services:
     ports:
       - "5050:5000"
     volumes:
-      - back/db:/back/db
+      - ./back/db:/back/db
+  frontend:
+    build:
+      context: front
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend

@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
+    "serve-prod": "webpack --mode production && cd dist && http-server",
     "check-types": "tsc"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "core-js": "^3.6.5",
     "css-loader": "^3.4.2",
     "fs": "0.0.1-security",
+    "http-server": "^0.12.3",
     "less": "^3.11.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
