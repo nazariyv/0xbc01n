@@ -15,64 +15,6 @@ from back.ocean import Oceaned, Metadata
 l = logging.getLogger("api.bounty")
 
 
-class Submission:
-    def __init__(self, session):
-        self.session = session
-
-    def on_post(
-        self, req: falcon.Request, resp: falcon.Response, bounty_id: int = None
-    ):
-        if not all(
-            fld in req.media
-            for fld in ["name", "addr", "full_dataset_url", "sample_url", "price"]
-        ):
-            resp.status = falcon.HTTP_400
-            return
-
-        # if not bounty_id:
-        #     resp.status = falcon.HTTP_400
-        #     return
-
-        # usr_qry = self.session.query(UserORM).filter(UserORM.addr == resp.media["addr"])
-
-        # if not len(list(usr_qry)) == 1:
-        #     resp.status = falcon.HTTP_500
-        #     return
-
-        # bty_qry = self.session.query(BountyORM).filter(BountyORM.id == bounty_id)
-
-        # if not len(list(bty_qry)) == 1:
-        #     resp.status = falcon.HTTP_500
-        #     return
-
-        # bty = bty_qry.first()
-        # usr = usr_qry.first()
-
-        # ! TODO: in the future need to use usr to make submissions. not doing that now because don't know how keyfiles are generated in test.py
-
-        created = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-
-        oceaned = Oceaned()
-
-        l.info("registering the asset")
-
-        ddo = oceaned.register_asset(
-            Metadata(
-                name=req.media["name"],
-                created=created,
-                addr=req.media["addr"],
-                price=req.media["price"],
-                full_url=req.media["full_dataset_url"],
-                sample_url=req.media["sample_url"],
-            )
-        )
-
-        resp.status = falcon.HTTP_201
-        resp.body = json.dumps(ddo.did)
-
-        # ! TODO: save the submission to the db if everything is good
-
-
 class Bounty:
     def __init__(self, session):
         self.session = session

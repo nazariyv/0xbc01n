@@ -10,13 +10,9 @@ class Submission(Base):
     created = Column(Integer)
     name = Column(String)
     price = Column(Integer, nullable=False)
-    full_dataset_url = Column(String, nullable=False, unique=True)
-    sample_url = Column(String, nullable=False, unique=True)
     did = Column(String, nullable=False, unique=True)
 
     def __repr__(self):
         return (
-            f"Submission(name='{self.name}',addr='{self.addr},bounty_id='{self.bounty_id}',"
-            f"full_dataset_url='{self.full_dataset_url}',"
-            f"sample_url='{self.sample_url}',did='{self.did}')"
+            f"Submission(name='{self.name}',addr='{self.addr}',bounty_id='{self.bounty_id}',did='{self.did}')"
         )
