@@ -1,1 +1,1 @@
-back/data.sh & gunicorn -b 127.0.0.1:8080 back.main:app
+back/data.sh & gunicorn -b 0.0.0.0:8080 back.main:app
