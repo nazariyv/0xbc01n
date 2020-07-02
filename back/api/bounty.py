@@ -30,10 +30,6 @@ class Bounty:
 
                 # todo: validate the update
                 # todo: I don't like how the names are hardcoded here, and what if I delete them in the orher place, how will I remember that I have to delte them here when the codebase grows
-                completed = 0
-                if "completed" in req.media:
-                    completed = int(req.media["completed"])
-
                 if "tags" in req.media:
                     if "," in req.media["tags"]:
                         tags = req.media["tags"].split(",")
@@ -41,10 +37,7 @@ class Bounty:
                         tags = [req.media["tags"].strip().lower()]
                     del req.media["tags"]
 
-                # TODO: there must be a better way to do this
-                qry.update(
-                    {**req.media, "completed": completed,}
-                )
+                qry.update(req.media)
 
                 if tags:
                     bty = qry.first()
