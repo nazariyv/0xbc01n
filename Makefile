@@ -5,3 +5,5 @@ back-dev:
 	docker run -p 5050:5000 \
 	-v $(THISDIR)/back/db:/back/db \
 	dbp
+start:
+	docker-compose up
