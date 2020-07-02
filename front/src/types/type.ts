@@ -62,6 +62,7 @@ export type ApplicationRepresentation = {
     getBountiesUserWorksOn: (addr: string) => void;
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => void;
     getBountySubmissions: (bountyId: number) => void;
+    handleLogOut: () => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;

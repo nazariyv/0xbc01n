@@ -10,6 +10,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     getBountiesUserWorksOn: (addr: string) => {},
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => {},
     getBountySubmissions: (bountyId: number) => {},
+    handleLogOut: () => {},
     actionAuthRequired: () => {},
     isLoading: false,
     modalAction: () => {},

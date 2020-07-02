@@ -30,6 +30,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
+                modalContent: undefined,
                 user: currentUser,
                 userBounties,
                 bounties,
@@ -133,6 +134,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             window.alert('Please activate MetaMask');
             return;
         }
+
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
@@ -146,30 +148,34 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 modalAction: this.hideModal
             }
         });
+
         const publicAddress = baseProvider.toLowerCase();
-        await this.api.putCreateUser(publicAddress);
+        const users = await this.api.getUsers();
+        const currentUser = users.find((user: User) => user.addr === publicAddress);
+        if (!currentUser) {
+            await this.api.putCreateUser(publicAddress);
+        }
+
         window.localStorage.setItem('pa', publicAddress);
         const nonceFromBack = 'ed5080e7-0795-4785-9ba1-af75aab20ba6';
+
         try {
-            const signature = await this.web3!.eth.personal.sign(
+            await this.web3!.eth.personal.sign(
                 `Hi there! Your special nonce: ${nonceFromBack}`,
                 publicAddress,
                 ''
             );
-            this.setState({
-                renderContext: {
-                    ...this.state.renderContext,
-                    user: {addr: publicAddress, signature},
-                    modalContent: undefined,
-                }
-            });
+            await this.prepareData();
         } catch (err) {
             this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
         }
     };
 
-    handleLogOut = async () => {};
+    handleLogOut = () => {
+        window.localStorage.removeItem('pa');
+        window.location.reload();
+    }
 
     actionAuthRequired = () => {
         this.setState({
@@ -202,7 +208,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             startWorkOnBounty: this.startWorkOnBounty,
             getBountiesUserWorksOn: this.getBountiesUserWorksOn,
             submitSubmissionForBounty: this.submitSubmissionForBounty,
-            getBountySubmissions: this.getBountySubmissions
+            getBountySubmissions: this.getBountySubmissions,
+            handleLogOut: this.handleLogOut,
         };
 
         return (

@@ -106,3 +106,31 @@
   }
 
 }
+
+.pseudo-link:last-child .item_wrapper {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+.item {
+  flex-grow: 1;
+
+  &_wrapper {
+    display: flex;
+    margin: 0 0 20px;
+    border-bottom: 1px solid #cacaca;
+    padding-bottom: 20px;
+
+    &:hover .item__title {
+      color: #037362;
+    }
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+}

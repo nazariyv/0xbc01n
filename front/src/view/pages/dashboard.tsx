@@ -1,10 +1,25 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {ApplicationContext} from '../../controller/context';
+import {Bounty} from '../../types/type';
 
 const Dashboard: React.FC = () => {
-    const {user, userBounties, bounties} = useContext(ApplicationContext);
-    const currentUserBounties = bounties.filter(({issuer}) => user.addr === issuer);
+    const {user, userBounties, bounties, bountySubmissions} = useContext(ApplicationContext);
+    const currentUserBounties = bounties.filter(({issuer}: Bounty) => user.addr === issuer);
+    let currentUserHaveSubmission: Bounty[] = [];
+    let currentUserWorkOnBounties: Bounty[] = [];
+    userBounties.forEach(({bounty_id}) => {
+         const bounty = bounties.find(item => item.id === bounty_id);
+         if (bounty) {
+             currentUserWorkOnBounties.push(bounty);
+         }
+    });
+    currentUserBounties.forEach((item) => {
+        if(bountySubmissions[item.id]) {
+            currentUserHaveSubmission.push(bountySubmissions[item.id]);
+        }
+    });
+
     return (
         <div className='dashboard'>
             <div className='dashboard__content'>
@@ -13,7 +28,17 @@ const Dashboard: React.FC = () => {
                         <div className='widget__title'>My Bounties</div>
                         {currentUserBounties.length !== 0 && (
                             <div className='widget__content'>
-                                content
+                                {currentUserBounties.map(bounty => (
+                                    <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
+                                        <div className='item_wrapper'>
+                                            <div className='item'>
+                                                <div className='item__title'>{bounty.title}</div>
+                                                <div>{bounty.short_desc}</div>
+                                            </div>
+                                            <div className='extra'>{bounty.price}&nbsp;OCEAN</div>
+                                        </div>
+                                    </Link>
+                                ))}
                             </div>
                         )}
                         {currentUserBounties.length === 0 && (
@@ -28,7 +53,17 @@ const Dashboard: React.FC = () => {
                         <div className='widget__title'>My Activity</div>
                         {userBounties.length !== 0 && (
                             <div className='widget__content'>
-                                content
+                                {currentUserWorkOnBounties.map(bounty => (
+                                    <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
+                                        <div className='item_wrapper'>
+                                            <div className='item'>
+                                                <div className='item__title'>{bounty.title}</div>
+                                                <div>{bounty.short_desc}</div>
+                                            </div>
+                                            <div className='extra'>{bounty.price}&nbsp;OCEAN</div>
+                                        </div>
+                                    </Link>
+                                ))}
                             </div>
                         )}
                         {userBounties.length === 0 && (
@@ -42,14 +77,17 @@ const Dashboard: React.FC = () => {
                 <div className='dashboard_row'>
                     <div className='widget xl'>
                         <div className='widget__title'>Submissions</div>
-                        <div className='widget__content'>
-                            content
-                        </div>
-                        <div className='widget__content_empty'>
-                            <h2>You have received 0 submissions</h2>
-                            <p>It looks like you don't have any submissions.
-                                Come back after you have received a fulfillment!</p>
-                        </div>
+                        {currentUserHaveSubmission.length !== 0 && (
+                            <div className='widget__content'>
+                                content
+                            </div>
+                        )}
+                        {currentUserHaveSubmission.length === 0 && (
+                            <div className='widget__content_empty'>
+                                <h2>You have received 0 submissions</h2>
+                                <p>It looks like you don't have any submissions. Come back after you have received a fulfillment!</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

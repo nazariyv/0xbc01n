@@ -24,12 +24,14 @@ const BountyPage: React.FC = () => {
 
     useEffect(() => {
         getBountySubmissions(Number(bountyId));
-    }, []);
+    }, [bountyId]);
 
-    const handleStartWork = useCallback((bountyId, addr) => {
-        startWorkOnBounty(bountyId, addr);
-        getBountiesUserWorksOn(addr);
-    }, []);
+    const handleStartWork = useCallback(() => {
+        if (user) {
+            startWorkOnBounty(bountyId, user.addr);
+            getBountiesUserWorksOn(user.addr);
+        }
+    }, [bountyId, user]);
 
     const sedSubmission = useCallback((evt) => {
         evt.preventDefault();
@@ -77,7 +79,7 @@ const BountyPage: React.FC = () => {
                                 )}
                                 <div className='spacer'/>
                                 {user && user.addr !== bountyInfo.issuer && !currentUserWorkOnThisBounty && (
-                                    <button className='action-button' onClick={() => handleStartWork(bountyId, user.addr)}>
+                                    <button className='action-button' onClick={handleStartWork}>
                                         Start Work
                                     </button>
                                 )}

@@ -4,13 +4,13 @@ import {ROUTES} from '../types/type';
 import {ApplicationContext} from '../controller/context';
 
 const Header: React.FC = () => {
-    const {handleLogIn, user} = useContext(ApplicationContext);
+    const {handleLogIn, user, handleLogOut} = useContext(ApplicationContext);
     return (
         <div className='header'>
             <div className='header__content'>
                 <div className='header__section header__section_nav_left'>
-                    <Link className='header__link' to={ROUTES.EXPLORE}>Explore</Link>
-                    <Link className='header__link' to={ROUTES.MARKETPLACE}>Marketplace</Link>
+                    <Link className='header__link' to={ROUTES.MAIN}>Explore</Link>
+                    {/*<Link className='header__link' to={ROUTES.MARKETPLACE}>Marketplace</Link>*/}
                 </div>
                 <div className='header__section header__section_logo'>
                     <Link className='header__link' to={ROUTES.MAIN}>0xbc01n</Link>
@@ -27,6 +27,7 @@ const Header: React.FC = () => {
                                     </span>
                                 </div>
                             </Link>
+                            <div onClick={handleLogOut} className='header__link'>Logout</div>
                         </>
                     )}
                     {user === undefined && (
