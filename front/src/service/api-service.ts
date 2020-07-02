@@ -1,4 +1,4 @@
-import {Bounty, User} from '../types/type';
+import {Bounty, User, SubmissionData} from '../types/type';
 
 class ApiService {
     constructor (private endpoint: string) {}
@@ -115,18 +115,27 @@ class ApiService {
         }
     }
 
-    postUserSubmitsSampleDataset = async (bountyId: Bounty['id'], publicAddress: User['addr'], ipfsUrl: string) => {
-        const response = await fetch(`/api/bounty/${bountyId}/submit_sample`,
+    postUserSubmitsToBounty = async (bountyId: Bounty['id'], data: SubmissionData) => {
+        const response = await fetch(`/api/bounty/${bountyId}/fulfill`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ addr: publicAddress, ipfs_url: ipfsUrl })
+                body: JSON.stringify(data)
             }
         );
         try {
             return await response;
+        } catch (e) {
+            throw new Error('Server error');
+        }
+    }
+
+    getSubmissionsForBounty = async (bountyId: Bounty['id']) => {
+        const response = await fetch(`/api/bounty/${bountyId}/submissions`, {method: 'GET'});
+        try {
+            return await response.json();
         } catch (e) {
             throw new Error('Server error');
         }

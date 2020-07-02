@@ -1,16 +1,29 @@
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useCallback, useEffect} from 'react';
 import {Switch, Route, NavLink, useRouteMatch, useParams} from 'react-router-dom';
 import {ApplicationContext} from '../../controller/context';
 import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
 import Main from '../main';
 
 const BountyPage: React.FC = () => {
-    const {bounties, user, startWorkOnBounty, userBounties, getBountiesUserWorksOn} = useContext(ApplicationContext);
+    const {
+        bounties,
+        user,
+        startWorkOnBounty,
+        userBounties,
+        getBountiesUserWorksOn,
+        submitSubmissionForBounty,
+        getBountySubmissions,
+        bountySubmissions
+    } = useContext(ApplicationContext);
     const { path, url } = useRouteMatch();
     const {bountyId} = useParams();
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
     const currentUserWorkOnThisBounty = userBounties.filter(({bounty_id}) => bounty_id === Number(bountyId)).length !== 0;
-    console.log(userBounties);
+
+    useEffect(() => {
+        getBountySubmissions(Number(bountyId));
+    }, []);
+
     const handleStartWork = useCallback((bountyId, addr) => {
         startWorkOnBounty(bountyId, addr);
         getBountiesUserWorksOn(addr);
@@ -18,6 +31,18 @@ const BountyPage: React.FC = () => {
 
     const sedSubmission = useCallback((evt) => {
         evt.preventDefault();
+
+        const formData: Record<string, any> = {};
+        const formFields = evt.target.querySelectorAll('.form__field');
+
+        formFields.forEach((elem: HTMLInputElement) => {
+            if (elem && elem.name) {
+                formData[elem.name] = elem.value;
+            }
+        });
+
+        console.log(formData);
+        // submitSubmissionForBounty(Number(bountyId), formData);
     });
 
     if (bountyInfo) {
@@ -83,6 +108,9 @@ const BountyPage: React.FC = () => {
                                             <div className='form__wrapper'>
                                                 <form onSubmit={sedSubmission}>
                                                     <div className='form__row'>
+                                                        <input type='hidden' className='form__field' id='addr' name='addr' value={user && user.addr}/>
+                                                        <input type='hidden' className='form__field' id='price' name='price' value={bountyInfo.price}/>
+                                                        <input type='hidden' className='form__field' id='name' name='name' value={bountyInfo.title}/>
                                                         <div className='form__label'>
                                                             <label htmlFor='name'>Sample url</label>
                                                         </div>
@@ -92,18 +120,10 @@ const BountyPage: React.FC = () => {
                                                     </div>
                                                     <div className='form__row'>
                                                         <div className='form__label'>
-                                                            <label htmlFor='name'>Full url</label>
+                                                            <label htmlFor='full_dataset_url'>Full url</label>
                                                         </div>
                                                         <div className='form__field'>
-                                                            <input type='text' className='form__input form__field' id='full_url' name='full_url'/>
-                                                        </div>
-                                                    </div>
-                                                    <div className='form__row'>
-                                                        <div className='form__label'>
-                                                            <label htmlFor='about_me'>Description</label>
-                                                        </div>
-                                                        <div className='form__field'>
-                                                            <textarea className='form__textarea form__field' id='desc' name='desc'/>
+                                                            <input type='text' className='form__input form__field' id='full_dataset_url' name='full_dataset_url'/>
                                                         </div>
                                                     </div>
                                                     <div className='form__row'>

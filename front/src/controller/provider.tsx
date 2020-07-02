@@ -1,7 +1,7 @@
 import React from 'react';
 import Web3 from 'web3';
 import { defaultApplicationRepresentation, ApplicationContext } from './context';
-import { ApplicationRepresentation, User } from '../types/type';
+import { ApplicationRepresentation, User, SubmissionData } from '../types/type';
 import apiService from '../service/api-service';
 
 type ApplicationProps = {};
@@ -86,11 +86,28 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
     getBountiesUserWorksOn = async (addr: string) => {
         const userBounties = await this.api.getBountiesUserWorksOn(addr);
-        console.log('userBounties ', userBounties);
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
                 userBounties
+            }
+        });
+    }
+
+    submitSubmissionForBounty = async (bountyId: number, data: SubmissionData) => {
+        await this.api.postUserSubmitsToBounty(bountyId, data);
+        await this.getBountySubmissions(bountyId);
+    }
+
+    getBountySubmissions = async (bountyId: number) => {
+        const bountySubmissions = await this.api.getSubmissionsForBounty(bountyId);
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bountySubmissions: {
+                    ...this.state.renderContext.bountySubmissions,
+                    [bountyId]: bountySubmissions,
+                }
             }
         });
     }
@@ -150,7 +167,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
         }
-    }
+    };
+
+    handleLogOut = async () => {};
 
     actionAuthRequired = () => {
         this.setState({
@@ -181,7 +200,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             createBounty: this.createBounty,
             updateUser: this.updateUser,
             startWorkOnBounty: this.startWorkOnBounty,
-            getBountiesUserWorksOn: this.getBountiesUserWorksOn
+            getBountiesUserWorksOn: this.getBountiesUserWorksOn,
+            submitSubmissionForBounty: this.submitSubmissionForBounty,
+            getBountySubmissions: this.getBountySubmissions
         };
 
         return (

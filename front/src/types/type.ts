@@ -45,6 +45,14 @@ export type User = {
     about_me?: string;
 };
 
+export type SubmissionData = {
+    name: string;
+    addr: string;
+    full_dataset_url: string;
+    sample_url: string;
+    price: number;
+};
+
 export type ApplicationRepresentation = {
     bounties: Bounty[];
     handleLogIn: () => void;
@@ -52,6 +60,8 @@ export type ApplicationRepresentation = {
     updateUser: (addr: string, formData: any) => void;
     startWorkOnBounty: (bountyId: number, addr: string) => void;
     getBountiesUserWorksOn: (addr: string) => void;
+    submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => void;
+    getBountySubmissions: (bountyId: number) => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
@@ -59,4 +69,5 @@ export type ApplicationRepresentation = {
     users: User[];
     user?: User;
     userBounties: [];
+    bountySubmissions: Record<string, any>;
 };
