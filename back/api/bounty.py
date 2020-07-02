@@ -8,7 +8,7 @@ from back.orm.utils import create_instance
 from back.orm.models.bounty import Bounty as BountyORM
 from back.orm.models.tags import Tag as TagORM
 from back.orm.models.user import User as UserORM
-from back.orm.models.sample_submission import SampleSubmission as SampleSubmissionORM
+# from back.orm.models.sample_submission import SampleSubmission as SampleSubmissionORM
 
 l = logging.getLogger("api.bounty")
 

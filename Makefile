@@ -6,4 +6,4 @@ back-dev:
 	-v $(THISDIR)/back/db:/back/db \
 	dbp
 start-dev:
-	docker-compose up
+	docker-compose up --build

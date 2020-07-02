@@ -16,7 +16,7 @@ class User(Base):
     about_me = Column(String)
 
     bounties = relationship("Bounty", secondary="workers_bounties")
-    sample_submissions = relationship("SampleSubmission")
+    # sample_submissions = relationship("SampleSubmission")
 
     def __repr__(self):
         return f"User(addr='{self.addr}',name='{self.name}',fullname='{self.fullname}',nickname='{self.nickname},dob={self.dob},about_me={self.about_me}')"
