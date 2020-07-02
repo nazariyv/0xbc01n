@@ -16,5 +16,5 @@ class DataMeta(Base):
     bounties = relationship("Bounty", secondary="workers_bounties")
     sample_submissions = relationship("SampleSubmission")
 
-    def __repr__(self):
-        return f"DataMeta(addr='{self.addr}',name='{self.name}',fullname='{self.fullname}',nickname='{self.nickname},dob={self.dob},about_me={self.about_me}')"
+    # def __repr__(self):
+    #     return f"DataMeta(addr='{self.addr}',name='{self.name}',fullname='{self.fullname}',nickname='{self.nickname},dob={self.dob},about_me={self.about_me}')"

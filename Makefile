@@ -2,8 +2,8 @@ THISDIR=$(PWD)
 
 back-dev:
 	docker build ./back/ -t dbp:latest
-	docker run -p 5050:5000 \
+	docker run -p 5050:8080 \
 	-v $(THISDIR)/back/db:/back/db \
 	dbp
-start:
-	docker-compose up --build
+start-dev:
+	docker-compose up

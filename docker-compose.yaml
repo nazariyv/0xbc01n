@@ -23,5 +23,8 @@ services:
       - backend
     depends_on:
       - backend
+    volumes:
+      - ./front/src:/front/src
+      - ./front/index.html:/front.index.html
     tty: true
     stdin_open: true
