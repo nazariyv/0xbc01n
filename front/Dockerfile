@@ -2,8 +2,11 @@ FROM node:12.18.2-alpine3.12
 
 WORKDIR /front
 
-COPY . /front/
+COPY package.json /front
+COPY yarn.lock /front
 
 RUN yarn install
 
-ENTRYPOINT [ "yarn", "run", "serve-prod" ]
+COPY . /front
+
+ENTRYPOINT [ "yarn", "run", "start" ]

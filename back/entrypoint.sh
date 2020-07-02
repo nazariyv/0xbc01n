@@ -1,1 +1,1 @@
-back/data.sh & gunicorn -b 0.0.0.0:5000 back.main:app
+back/data.sh & gunicorn -b 0.0.0.0:8080 back.main:app
