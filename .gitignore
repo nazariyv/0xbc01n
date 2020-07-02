@@ -4,6 +4,7 @@
 *.sql
 yarn.lock\
 .env
+db
 
 # ----- FRONT ----
 node_modules/
