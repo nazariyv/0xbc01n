@@ -1,0 +1,19 @@
+{
+    "main": {
+        "name": "Ocean protocol white paper",
+        "dateCreated": "2012-02-01T10:55:11Z",
+        "author": "Mario",
+        "license": "Public Domain",
+        "price": "0",
+        "files": [
+            {
+                "index": 0,
+                "contentType": "text/text",
+                "checksumType": "MD5",
+                "contentLength": "12057507",
+                "url": "https://raw.githubusercontent.com/oceanprotocol/barge/master/README.md"
+            }
+        ],
+        "type": "dataset"
+    }
+}

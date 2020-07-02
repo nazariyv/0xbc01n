@@ -8,7 +8,7 @@
   "scripts": {
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --display-reasons --display-error-details --history-api-fallback --progress --colors -d --hot --inline --host=0.0.0.0",
+    "start": "webpack-dev-server --display-reasons --display-error-details --history-api-fallback --progress --colors -d --hot --inline --host=0.0.0.0 --port=80",
     "build": "webpack --mode production",
     "serve-prod": "webpack --mode production && cd dist && http-server",
     "check-types": "tsc"

@@ -22,7 +22,7 @@ class Bounty(Base):
 
     tags = relationship("Tag", secondary="tags_bounties")
     workers = relationship("User", secondary="workers_bounties")
-    # sample_submissions = relationship("SampleSubmission")
+    submissions = relationship("Submission", backref="bounties")
 
     def __repr__(self):
         return (

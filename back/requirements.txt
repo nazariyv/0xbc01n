@@ -2,3 +2,5 @@ falcon==2.0.0
 gunicorn==20.0.4
 sqlalchemy==1.3.18
 python-dotenv==0.13.0
+web3==4.5.0
+squid-py==0.9.3
