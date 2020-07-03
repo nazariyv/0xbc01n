@@ -107,7 +107,7 @@ const BountyPage: React.FC = () => {
                                     <Route path={`${path}/fulfill`}>
                                         {isSubmissionSend && (
                                             <div className='tabs_content__empty'>
-                                                Your submission was send
+                                                Your submission was sent
                                             </div>
                                         )}
                                         {!isSubmissionSend && (
