@@ -1,13 +1,18 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import {Bounty, BOUNTY_TYPES, COMPLEXITIES} from '../types/type';
+import { Bounty, BOUNTY_TYPES, COMPLEXITIES } from '../types/type';
 
 const GridItem: React.FC<Bounty> = (props) => {
-    const {id, title, short_desc, price, expiry, type, complexity} = props;
-    const now = new Date();
-    const diffDays = new Date(expiry).getDate() - now.getDate();
-    const typeKey =  type.split('.').pop().toUpperCase();
+    const { id, title, short_desc, price, expiry, type, complexity } = props;
+    const daysDiff = (dt1, dt2) => {
+        var diffTime = (dt1.getTime() - dt2.getTime());
+        var daysDiff = diffTime / (1000 * 3600 * 24);
+        return parseInt(daysDiff, 10);
+    }
+    const diffDays = daysDiff(new Date(expiry * 1000), new Date());
+    // const diffDays = new Date(expiry * 1000).getDate() - now.getDate();
+    const typeKey = type.split('.').pop().toUpperCase();
     const complexityKey = complexity.split('.').pop().toUpperCase();
     return (
         <Link to={`/bounty/${id}/description`} className='pseudo-link'>
@@ -16,7 +21,7 @@ const GridItem: React.FC<Bounty> = (props) => {
                     <div className='grid_item__section grid_item__section_left'>
                         <div className='grid_item__header'>
                             <div className='grid_item__header_avatar'>
-                                <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img'/>
+                                <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img' />
                             </div>
                             <div className='grid_item__header_info'>
                                 <div className='grid_item__title'>{title}</div>
