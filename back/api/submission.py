@@ -92,10 +92,11 @@ class Submission:
         new_submission = SubmissionORM(
             addr=addr,
             bounty_id=bty.id,
-            created=time.time(),
+            created=int(time.time()),
             name=req.media["name"],
             price=req.media["price"],
             did=ddo.did,
+            sample_url=req.media["sample_url"],
         )
         bty.submissions.append(new_submission)
         self.session.commit()

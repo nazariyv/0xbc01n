@@ -12,9 +12,10 @@ class Submission(Base):
     name = Column(String)
     price = Column(Integer, nullable=False)
     did = Column(String, nullable=False, unique=True)
+    sample_url = Column(String)
 
     def __repr__(self):
         return (
             f"Submission(name='{self.name}',addr='{self.addr}',"
-            f"bounty_id='{self.bounty_id}',did='{self.did}')"
+            f"bounty_id='{self.bounty_id}',did='{self.did}',sample_url='{self.sample_url}')"
         )
