@@ -53,6 +53,8 @@ this will forward your host's `5050` port to the backend inside of docker runnin
 
 ### Backend
 
+API docs: https://documenter.getpostman.com/view/3718078/T17FCUqu?version=latest
+
 ### Frontend
 
 ## YouTube video
