@@ -210,7 +210,6 @@ class PickWinner:
         # !!!!
         # !!! NOT CORRECT
 
-
         # ! in prod we would get a signature to confirm that consumer owns the consumer account
         # ! for this hack, I will just pull out the private key from the dict above ;)
         consumer_account = Account(addr, private_key=PKS[addr])

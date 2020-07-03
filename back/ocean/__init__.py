@@ -37,6 +37,7 @@ def Metadata(
         "additionalInformation": {"links": [{"url": sample_url},],},
     }
 
+
 class Oceaned:
     def __init__(self):
         config_dict = dict()

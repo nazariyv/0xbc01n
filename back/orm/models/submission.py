@@ -5,7 +5,12 @@ from back.orm.database import Base
 
 class Submission(Base):
     __tablename__ = "submissions"
-    id = Column(Integer, Sequence("id", start=1, increment=1), primary_key=True, autoincrement=True)
+    id = Column(
+        Integer,
+        Sequence("id", start=1, increment=1),
+        primary_key=True,
+        autoincrement=True,
+    )
     addr = Column(String, ForeignKey("users.addr"))
     bounty_id = Column(Integer, ForeignKey("bounties.id"))
     created = Column(Integer)

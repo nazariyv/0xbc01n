@@ -40,4 +40,6 @@ app.add_route("/api/bounty/{bounty_id:int}/start_work", bsw)
 app.add_route("/api/bounty/{bounty_id:int}/fulfill", s)
 # ! TODO: need to hide this behind authorization
 app.add_route("/api/bounty/{bounty_id:int}/submissions", bs)
-app.add_route("/api/bounty/{bounty_id:int}/submission/{submission_id:int}/is_winner", pw)
+app.add_route(
+    "/api/bounty/{bounty_id:int}/submission/{submission_id:int}/is_winner", pw
+)
