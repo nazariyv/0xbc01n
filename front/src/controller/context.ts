@@ -11,6 +11,8 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => {},
     pickBountyWinner: (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => {},
     getBountySubmissions: (bountyId: number) => {},
+    onSort: (fieldId: string) => {},
+    onFilter: (filter: any, type: string) => {},
     handleLogOut: () => {},
     actionAuthRequired: () => {},
     isLoading: false,
@@ -19,7 +21,9 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     users: [],
     user: undefined,
     userBounties: [],
-    bountySubmissions: {}
+    sortKey: 'created',
+    bountySubmissions: {},
+    filterFields: [],
 };
 
 export const ApplicationContext = React.createContext<ApplicationRepresentation>(

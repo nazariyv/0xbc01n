@@ -193,6 +193,47 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         window.location.reload();
     }
 
+    handleSort = (fieldId: string) => {
+        const bountiesSorted = this.state.renderContext.bounties
+            .slice(0)
+            .sort((a, b) => b[fieldId] - a[fieldId]);
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bounties: bountiesSorted,
+                sortKey: fieldId
+            }
+        });
+    }
+
+    handleFilter = (field: any, type: string) => {
+        let filterFields = this.state.renderContext.filterFields.slice(0);
+        const filterIndex = filterFields.findIndex((item) => item.name === field.name);
+        if (filterIndex !== -1) {
+            filterFields.splice(filterIndex, 1);
+        } else {
+            filterFields.push(field);
+        }
+        console.log(filterFields);
+        const bountiesFiltered = this.state.renderContext.bounties.slice(0).filter((item) => {
+            for (let i = 0; i < filterFields.length -1; i++) {
+                const filter = filterFields[i];
+                if (item[filter.id] === filter.name) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        console.log(bountiesFiltered);
+
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                filterFields,
+            }
+        });
+    }
+
     actionAuthRequired = () => {
         this.setState({
             renderContext: {
@@ -226,7 +267,9 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             submitSubmissionForBounty: this.submitSubmissionForBounty,
             getBountySubmissions: this.getBountySubmissions,
             handleLogOut: this.handleLogOut,
-            pickBountyWinner: this.pickBountyWinner
+            pickBountyWinner: this.pickBountyWinner,
+            onSort: this.handleSort,
+            onFilter: this.handleFilter
         };
 
         return (

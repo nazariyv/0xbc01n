@@ -1,17 +1,29 @@
-import React, {useContext} from 'react';
+import React, {useContext, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import {ROUTES} from '../types/type';
 import {ApplicationContext} from '../controller/context';
 
-const Navigation: React.FC = () => {
-    const {actionAuthRequired, user} = useContext(ApplicationContext);
+const FILTERS = [
+    { fieldId: 'created', name: 'Most Recent' },
+    { fieldId: 'expiry', name: 'Expiry' },
+    { fieldId: 'price', name: 'High Value' }
+];
 
+const Navigation: React.FC = () => {
+    const {actionAuthRequired, user, sortKey, onSort} = useContext(ApplicationContext);
+    const handleClick = useCallback((key) => onSort(key), [onSort]);
     return (
         <div className='navigation'>
             <div className='quick_filters'>
-                <div className='quick_filters_item active'>Most Recent</div>
-                <div className='quick_filters_item'>High Value</div>
-                <div className='quick_filters_item'>Expiry</div>
+                {FILTERS.map(item => (
+                    <div
+                        key={item.fieldId}
+                        onClick={() => handleClick(item.fieldId)}
+                        className={`quick_filters_item ${sortKey === item.fieldId && 'active'}`}
+                    >
+                        {item.name}
+                    </div>
+                ))}
             </div>
             <div className='extra'>
                 {user && (

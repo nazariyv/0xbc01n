@@ -73,6 +73,7 @@ export type ApplicationRepresentation = {
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => void;
     pickBountyWinner: (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => void;
     getBountySubmissions: (bountyId: number) => void;
+    onSort: (fieldId: string) => void;
     handleLogOut: () => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
@@ -82,4 +83,7 @@ export type ApplicationRepresentation = {
     user?: User;
     userBounties: Bounty[];
     bountySubmissions: Record<string, any>;
+    sortKey?: string;
+    onFilter: (filter: any, type: string) => void;
+    filterFields: [];
 };
