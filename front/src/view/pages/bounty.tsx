@@ -21,7 +21,7 @@ const BountyPage: React.FC = () => {
     const [isSubmissionSend, setSubmissionSend] = useState<boolean>(false);
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
     const currentUserWorkOnThisBounty = userBounties.filter(({bounty_id}) => bounty_id === Number(bountyId)).length !== 0;
-    const applicantsCount = bountySubmissions[bountyId] && bountySubmissions[bountyId].length;
+    const countOfSubmission = bountySubmissions[bountyId] && bountySubmissions[bountyId].length;
 
     useEffect(() => {
         getBountySubmissions(Number(bountyId));
@@ -178,11 +178,11 @@ const BountyPage: React.FC = () => {
                                     <div className='label'>Type</div>
                                 </div>
                                 <div className='bounty__info_item'>
-                                    <div className='value'>{applicantsCount ? <>applicantsCount</> : <>-</>}</div>
+                                    <div className='value'>-</div>
                                     <div className='label'>Applicants</div>
                                 </div>
                                 <div className='bounty__info_item'>
-                                    <div className='value'>-</div>
+                                    <div className='value'>{countOfSubmission ? <>{countOfSubmission}</> : <>-</>}</div>
                                     <div className='label'>Work Submitted</div>
                                 </div>
                             </div>

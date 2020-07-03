@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../../controller/context';
 import {Bounty, Submission} from '../../types/type';
@@ -33,6 +33,10 @@ const Dashboard: React.FC = () => {
                 isLoading: false
             });
         }
+    }, []);
+
+    const onApprove = useCallback((bountyId, submissionId, addr) => {
+        pickBountyWinner(bountyId, submissionId, addr);
     }, []);
 
     const hasUsrSubmissions = Object.keys(bountySubmissions).length !== 0;
@@ -96,7 +100,26 @@ const Dashboard: React.FC = () => {
                         <div className='widget__title'>Submissions</div>
                         {hasUsrSubmissions && (
                             <div className='widget__content'>
-                                content
+                                {Object.keys(bountySubmissions).map((key) => {
+                                    return bountySubmissions[key].map(item => (
+                                        <div className='submission' key={item.id}>
+                                            <div className='submission_content'>
+                                                <div className='submission__meta'>
+                                                    Author: <b>{item.addr}</b>
+                                                </div>
+                                                <div className='submission__title'>{item.name}</div>
+                                                <div className='submission_short_url'>
+                                                    <input type='text' className='form__input' value={item.sample_url} />
+                                                </div>
+                                            </div>
+                                            <div className='submission_extra'>
+                                                <button className='action-button' onClick={() => onApprove(item.bounty_id, item.id, item.addr)}>
+                                                    Approve
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ));
+                                })}
                             </div>
                         )}
                         {!hasUsrSubmissions && (
