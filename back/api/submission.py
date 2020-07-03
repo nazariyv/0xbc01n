@@ -8,8 +8,20 @@ from back.orm.models.bounty import Bounty as BountyORM
 from back.orm.models.user import User as UserORM
 from back.orm.models.submission import Submission as SubmissionORM
 from back.ocean import Oceaned, Metadata
+from ocean_keeper.account import Account
 
 l = logging.getLogger("api.submission")
+
+ACC1_ADDR = "0xe2DD09d719Da89e5a3D0F2549c7E24566e947260"
+ACC2_ADDR = "0xBE5449a6A97aD46c8558A3356267Ee5D2731ab5e"
+ACC3_ADDR = "0xA78deb2Fa79463945C247991075E2a0e98Ba7A09"
+
+# ! TODO: REMOVE THESE IN PROD. THESE ARE FROM SPREE SEED PHRASE. RUNNING OUT OF TIME THUS THEY ARE HERE
+PKS = {
+    ACC1_ADDR: 0xC594C6E5DEF4BAB63AC29EED19A134C130388F74F019BC74B8F4389DF2837A58,
+    ACC2_ADDR: 0xEF4B441145C1D0F3B4BC6D61D29F5C6E502359481152F869247C7A4244D45209,
+    ACC3_ADDR: 0x5D75837394B078CE97BC289FA8D75E21000573520BFA7784A9D28CCAAE602BF8,
+}
 
 
 class Submission:
@@ -26,11 +38,18 @@ class Submission:
             resp.status = falcon.HTTP_400
             return
 
+        addr = req.media["addr"]
+
+        if not addr in [ACC1_ADDR, ACC2_ADDR, ACC3_ADDR]:
+            l.warn("this tool is an alpha version, and currently only supports the first three spree accounts")
+            resp.status = falcon.HTTP_400
+            return
+
         if not bounty_id:
             resp.status = falcon.HTTP_400
             return
 
-        usr_qry = self.session.query(UserORM).filter(UserORM.addr == str(req.media["addr"]))
+        usr_qry = self.session.query(UserORM).filter(UserORM.addr == str(addr))
 
         if not len(list(usr_qry)) == 1:
             resp.status = falcon.HTTP_500
@@ -51,21 +70,27 @@ class Submission:
 
         oceaned = Oceaned()
 
+        # bounty hunter that has collected the data, is now publishing it
+        # the url to it is encrypted
+        # however, the bounty creator has access to the sample dataset
+        # if he is satisfied with it, they can pay the price below, at which
+        # point we transfer the ownership to bounty creator
         ddo = oceaned.register_asset(
-            Metadata(
+            metadata=Metadata(
                 name=req.media["name"],
                 created=created,
-                addr=req.media["addr"],
+                addr=addr,
                 price=req.media["price"],
                 full_url=req.media["full_dataset_url"],
                 sample_url=req.media["sample_url"],
-            )
+            ),
+            publisher_account=Account(addr, private_key=PKS[addr]),
         )
 
         # !!!!! DO NOT ADD FULL URL HERE, IT MUST BE ENCRYPTED. THAT IS WHAT OCEAN PROTOCOL IS FOR
         # TODO: THIS CREATED IS NOT THE SAME AS THE ONE ABOVE THAT GOES INTO AQUARIUS
         new_submission = SubmissionORM(
-            addr=req.media["addr"],
+            addr=addr,
             bounty_id=bty.id,
             created=time.time(),
             name=req.media["name"],

@@ -5,27 +5,9 @@ from typing import Dict
 
 load_dotenv()
 
-from ocean_keeper.utils import get_account
+# from ocean_keeper.utils import get_account
+from ocean_keeper.account import Account
 from squid_py import Ocean, ConfigProvider, Config
-
-
-class Oceaned:
-    def __init__(self):
-        config_dict = dict()
-        with open("/back/ocean/config.json", "r") as f:
-            config_dict = json.loads(f.read())
-        ConfigProvider.set_config(Config("", config_dict))
-        self.ocean = Ocean()
-
-    def register_asset(self, metadata):
-        account = get_account(0)
-        ddo = self.ocean.assets.create(
-            metadata,
-            account,
-            providers=["0x068Ed00cF0441e4829D9784fCBe7b9e26D4BD8d0"],
-            use_secret_store=False,
-        )
-        return ddo
 
 
 def Metadata(
@@ -54,3 +36,21 @@ def Metadata(
         },
         "additionalInformation": {"links": [{"url": sample_url},],},
     }
+
+class Oceaned:
+    def __init__(self):
+        config_dict = dict()
+        with open("/back/ocean/config.json", "r") as f:
+            config_dict = json.loads(f.read())
+        ConfigProvider.set_config(Config("", config_dict))
+        self.ocean = Ocean()
+
+    def register_asset(self, metadata: Metadata, publisher_account: Account):
+        ddo = self.ocean.assets.create(
+            metadata,
+            publisher_account,
+            providers=["0x068Ed00cF0441e4829D9784fCBe7b9e26D4BD8d0"],
+            # owner_address=publisher_account.address,
+            use_secret_store=False,
+        )
+        return ddo
