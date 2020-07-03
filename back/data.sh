@@ -3,9 +3,9 @@ sleep 5
 # creating users
 http --ignore-stdin PUT localhost:8080/api/user addr=0xe2DD09d719Da89e5a3D0F2549c7E24566e947260 \
 name=Naz fullname='Nazariy Va' about_me='codes ALL the time'
-http --ignore-stdin PUT localhost:8080/api/user addr=0x50c3374fd62dd09F18ccc01e1c20f5dE66cD6dEA \
+http --ignore-stdin PUT localhost:8080/api/user addr=0xBE5449a6A97aD46c8558A3356267Ee5D2731ab5e \
 name=Dima fullname='Dima Iv' about_me='best front end developer'
-http --ignore-stdin PUT localhost:8080/api/user addr=0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8 \
+http --ignore-stdin PUT localhost:8080/api/user addr=0xA78deb2Fa79463945C247991075E2a0e98Ba7A09 \
 name=Vasia fullname='Vasia' nickname='Pupkin' about_me='best front end developer'
 http --ignore-stdin PUT localhost:8080/api/user addr=0xe49b55119D6a74783CA23482e8dc5a3DE21085f5 \
 name=Petia fullname='Petka' about_me='I am boring'

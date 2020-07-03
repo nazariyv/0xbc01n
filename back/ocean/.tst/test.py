@@ -14,9 +14,9 @@ from ocean_keeper.contract_handler import ContractHandler
 
 from squid_py.ocean.keeper import SquidKeeper as Keeper
 from squid_py import Ocean, ConfigProvider, Config
-from squid_py.brizo import BrizoProvider
 from ocean_utils.agreements.service_types import ServiceTypes
 from ocean_keeper.utils import add_ethereum_prefix_and_hash_msg
+from squid_py.brizo import BrizoProvider
 from ocean_utils.agreements.service_agreement import ServiceAgreement
 
 
