@@ -116,6 +116,9 @@ class ApiService {
     }
 
     postUserSubmitsToBounty = async (bountyId: Bounty['id'], data: SubmissionData) => {
+        // TODO: REMOVE THESE IN PROD. THESE ARE FROM SPREE SEED PHRASE. RUNNING OUT OF TIME THUS THEY ARE HERE
+        data.addr = '0xe2DD09d719Da89e5a3D0F2549c7E24566e947260';
+        console.log('postUserSubmitsToBounty >> data >>> ', data);
         const response = await fetch(`/api/bounty/${bountyId}/fulfill`,
             {
                 method: 'POST',
