@@ -1,4 +1,4 @@
-import {Bounty, User, SubmissionData} from '../types/type';
+import {Bounty, User, SubmissionData, Submission} from '../types/type';
 
 class ApiService {
     constructor (private endpoint: string) {}
@@ -136,6 +136,23 @@ class ApiService {
         const response = await fetch(`/api/bounty/${bountyId}/submissions`, {method: 'GET'});
         try {
             return await response.json();
+        } catch (e) {
+            throw new Error('Server error');
+        }
+    }
+
+    postBountyCreatorPickWinner = async (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => {
+        const response = await fetch(`/api/bounty/${bountyId}/submission/${submissionId}/is_winner`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ addr: publicAddress })
+            }
+        );
+        try {
+            return await response;
         } catch (e) {
             throw new Error('Server error');
         }

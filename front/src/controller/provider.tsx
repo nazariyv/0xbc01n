@@ -1,7 +1,7 @@
 import React from 'react';
 import Web3 from 'web3';
 import { defaultApplicationRepresentation, ApplicationContext } from './context';
-import { ApplicationRepresentation, User, SubmissionData } from '../types/type';
+import {ApplicationRepresentation, User, SubmissionData, Bounty, Submission} from '../types/type';
 import apiService from '../service/api-service';
 
 type ApplicationProps = {};
@@ -113,6 +113,22 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
+    pickBountyWinner = async (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => {
+        await this.api.postBountyCreatorPickWinner(bountyId, submissionId, publicAddress);
+        const bountySubmissions = await this.api.getSubmissionsForBounty(bountyId);
+        const bounties = await this.api.getBounties();
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bounties,
+                bountySubmissions: {
+                    ...this.state.renderContext.bountySubmissions,
+                    [bountyId]: bountySubmissions
+                }
+            }
+        });
+    }
+
     handleLogIn = async () => {
         if (!(window as any).ethereum) {
             window.alert('Please install MetaMask first.');
@@ -170,7 +186,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             this.hideModal();
             throw new Error('You need to sign the message to be able to log in.');
         }
-    };
+    }
 
     handleLogOut = () => {
         window.localStorage.removeItem('pa');
@@ -210,6 +226,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             submitSubmissionForBounty: this.submitSubmissionForBounty,
             getBountySubmissions: this.getBountySubmissions,
             handleLogOut: this.handleLogOut,
+            pickBountyWinner: this.pickBountyWinner
         };
 
         return (

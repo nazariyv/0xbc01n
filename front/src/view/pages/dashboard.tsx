@@ -1,29 +1,41 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../../controller/context';
-import { Bounty } from '../../types/type';
+import {Bounty, Submission} from '../../types/type';
+import {getBountyById, getUserByAddr} from '../../utils/utils';
 
 const Dashboard: React.FC = () => {
-    const { user, userBounties, bounties, bountySubmissions } = useContext(ApplicationContext);
-    // useEffect(() => {
-    //     getBountySubmissions();
-    // })
-
-    const currentUserBounties = bounties.filter(({ issuer }: Bounty) => String(user.addr).toLowerCase() === String(issuer).toLowerCase());
-    let currentUserHasSubmission: Bounty[] = [];
-    let currentUserWorkOnBounties: Bounty[] = [];
-
-    userBounties.forEach(({ bounty_id }) => {
-        const bounty = bounties.find(item => item.id === bounty_id);
-        if (bounty) {
-            currentUserWorkOnBounties.push(bounty);
-        }
+    const { user, users, userBounties, bounties, bountySubmissions, pickBountyWinner, getBountySubmissions } = useContext(ApplicationContext);
+    const [state, setState] = useState<{
+        usrBounties: Bounty[];
+        usrBountySubmission: Submission[];
+        usrWorkOnBounties: Bounty[];
+        isLoading: boolean;
+    }>({
+        usrBounties: [],
+        usrBountySubmission: [],
+        usrWorkOnBounties: [],
+        isLoading: false
     });
-    currentUserBounties.forEach((item) => {
-        if (bountySubmissions[item.id]) {
-            currentUserHasSubmission.push(bountySubmissions[item.id]);
+
+    useEffect(() => {
+        if (user) {
+            setState({...state, isLoading: true });
+            const usrBounties = bounties.filter(({ issuer }: Bounty) => String(user.addr).toLowerCase() === String(issuer).toLowerCase());
+            const usrWorkOnBounties = userBounties.map(({ bounty_id }) => getBountyById(bounties, bounty_id)).filter(Boolean);
+            usrBounties.forEach(bounty => {
+                getBountySubmissions(bounty.id);
+            });
+            setState({
+                ...state,
+                usrBounties,
+                usrWorkOnBounties,
+                isLoading: false
+            });
         }
-    });
+    }, []);
+
+    const hasUsrSubmissions = Object.keys(bountySubmissions).length !== 0;
 
     return (
         <div className='dashboard'>
@@ -31,9 +43,9 @@ const Dashboard: React.FC = () => {
                 <div className='dashboard_row'>
                     <div className='widget l'>
                         <div className='widget__title'>My Bounties</div>
-                        {currentUserBounties.length !== 0 && (
+                        {state.usrBounties.length !== 0 && (
                             <div className='widget__content'>
-                                {currentUserBounties.map(bounty => (
+                                {state.usrBounties.map(bounty => (
                                     <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
                                         <div className='item_wrapper'>
                                             <div className='item'>
@@ -46,7 +58,7 @@ const Dashboard: React.FC = () => {
                                 ))}
                             </div>
                         )}
-                        {currentUserBounties.length === 0 && (
+                        {state.usrBounties.length === 0 && (
                             <div className='widget__content_empty'>
                                 <h2>You have no active bounties</h2>
                                 <p>It looks like you don't have any active bounties at the moment.
@@ -58,7 +70,7 @@ const Dashboard: React.FC = () => {
                         <div className='widget__title'>My Activity</div>
                         {userBounties.length !== 0 && (
                             <div className='widget__content'>
-                                {currentUserWorkOnBounties.map(bounty => (
+                                {state.usrWorkOnBounties.map(bounty => (
                                     <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
                                         <div className='item_wrapper'>
                                             <div className='item'>
@@ -71,7 +83,7 @@ const Dashboard: React.FC = () => {
                                 ))}
                             </div>
                         )}
-                        {userBounties.length === 0 && (
+                        {state.usrWorkOnBounties.length === 0 && (
                             <div className='widget__content_empty'>
                                 <h2>You have no activity yet</h2>
                                 <p>Once you start using the platform, your activity will show up here.</p>
@@ -82,12 +94,12 @@ const Dashboard: React.FC = () => {
                 <div className='dashboard_row'>
                     <div className='widget xl'>
                         <div className='widget__title'>Submissions</div>
-                        {currentUserHasSubmission.length !== 0 && (
+                        {hasUsrSubmissions && (
                             <div className='widget__content'>
                                 content
                             </div>
                         )}
-                        {currentUserHasSubmission.length === 0 && (
+                        {!hasUsrSubmissions && (
                             <div className='widget__content_empty'>
                                 <h2>You have received 0 submissions</h2>
                                 <p>It looks like you don't have any submissions. Come back after you have received a fulfillment!</p>

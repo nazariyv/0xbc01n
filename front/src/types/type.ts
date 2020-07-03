@@ -53,6 +53,16 @@ export type SubmissionData = {
     price: number;
 };
 
+export type Submission = {
+    name: string;
+    addr: string;
+    created: number;
+    did: string;
+    bounty_id: number;
+    id: number;
+    price: number;
+};
+
 export type ApplicationRepresentation = {
     bounties: Bounty[];
     handleLogIn: () => void;
@@ -61,6 +71,7 @@ export type ApplicationRepresentation = {
     startWorkOnBounty: (bountyId: number, addr: string) => void;
     getBountiesUserWorksOn: (addr: string) => void;
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => void;
+    pickBountyWinner: (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => void;
     getBountySubmissions: (bountyId: number) => void;
     handleLogOut: () => void;
     actionAuthRequired: () => void;
@@ -69,6 +80,6 @@ export type ApplicationRepresentation = {
     modalAction: () => void;
     users: User[];
     user?: User;
-    userBounties: [];
+    userBounties: Bounty[];
     bountySubmissions: Record<string, any>;
 };

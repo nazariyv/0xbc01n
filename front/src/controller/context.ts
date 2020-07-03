@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApplicationRepresentation, SubmissionData } from '../types/type';
+import {ApplicationRepresentation, Bounty, Submission, SubmissionData, User} from '../types/type';
 
 export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
@@ -9,6 +9,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     startWorkOnBounty: (bountyId: number, addr: string) => {},
     getBountiesUserWorksOn: (addr: string) => {},
     submitSubmissionForBounty: (bountyId: number, data: SubmissionData) => {},
+    pickBountyWinner: (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => {},
     getBountySubmissions: (bountyId: number) => {},
     handleLogOut: () => {},
     actionAuthRequired: () => {},
