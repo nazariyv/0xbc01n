@@ -1,22 +1,27 @@
-import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
-import {ApplicationContext} from '../../controller/context';
-import {Bounty} from '../../types/type';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ApplicationContext } from '../../controller/context';
+import { Bounty } from '../../types/type';
 
 const Dashboard: React.FC = () => {
-    const {user, userBounties, bounties, bountySubmissions} = useContext(ApplicationContext);
-    const currentUserBounties = bounties.filter(({issuer}: Bounty) => String(user.addr).toLowerCase() === String(issuer).toLowerCase());
-    let currentUserHaveSubmission: Bounty[] = [];
+    const { user, userBounties, bounties, bountySubmissions } = useContext(ApplicationContext);
+    // useEffect(() => {
+    //     getBountySubmissions();
+    // })
+
+    const currentUserBounties = bounties.filter(({ issuer }: Bounty) => String(user.addr).toLowerCase() === String(issuer).toLowerCase());
+    let currentUserHasSubmission: Bounty[] = [];
     let currentUserWorkOnBounties: Bounty[] = [];
-    userBounties.forEach(({bounty_id}) => {
-         const bounty = bounties.find(item => item.id === bounty_id);
-         if (bounty) {
-             currentUserWorkOnBounties.push(bounty);
-         }
+
+    userBounties.forEach(({ bounty_id }) => {
+        const bounty = bounties.find(item => item.id === bounty_id);
+        if (bounty) {
+            currentUserWorkOnBounties.push(bounty);
+        }
     });
     currentUserBounties.forEach((item) => {
-        if(bountySubmissions[item.id]) {
-            currentUserHaveSubmission.push(bountySubmissions[item.id]);
+        if (bountySubmissions[item.id]) {
+            currentUserHasSubmission.push(bountySubmissions[item.id]);
         }
     });
 
@@ -77,12 +82,12 @@ const Dashboard: React.FC = () => {
                 <div className='dashboard_row'>
                     <div className='widget xl'>
                         <div className='widget__title'>Submissions</div>
-                        {currentUserHaveSubmission.length !== 0 && (
+                        {currentUserHasSubmission.length !== 0 && (
                             <div className='widget__content'>
                                 content
                             </div>
                         )}
-                        {currentUserHaveSubmission.length === 0 && (
+                        {currentUserHasSubmission.length === 0 && (
                             <div className='widget__content_empty'>
                                 <h2>You have received 0 submissions</h2>
                                 <p>It looks like you don't have any submissions. Come back after you have received a fulfillment!</p>
