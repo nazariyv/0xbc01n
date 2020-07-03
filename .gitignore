@@ -6,6 +6,7 @@ yarn.lock\
 .env
 db
 package-lock.json
+artifacts/
 
 # ----- FRONT ----
 node_modules/
