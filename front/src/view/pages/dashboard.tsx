@@ -5,7 +5,7 @@ import {Bounty} from '../../types/type';
 
 const Dashboard: React.FC = () => {
     const {user, userBounties, bounties, bountySubmissions} = useContext(ApplicationContext);
-    const currentUserBounties = bounties.filter(({issuer}: Bounty) => user.addr === issuer);
+    const currentUserBounties = bounties.filter(({issuer}: Bounty) => String(user.addr).toLowerCase() === String(issuer).toLowerCase());
     let currentUserHaveSubmission: Bounty[] = [];
     let currentUserWorkOnBounties: Bounty[] = [];
     userBounties.forEach(({bounty_id}) => {
