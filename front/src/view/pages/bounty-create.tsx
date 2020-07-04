@@ -96,7 +96,7 @@ const BountyCreatePage: React.FC = ({ children }) => {
                         <div className='form__label'>
                             <label htmlFor='type'>Bounty Type</label>
                         </div>
-                        <div className='form__row'>
+                        <div className='form__field'>
                             <select className='form__select form__field' id='type' name='type'>
                                 <option value='contest'>Contest</option>
                                 <option value='traditional'>Traditional</option>

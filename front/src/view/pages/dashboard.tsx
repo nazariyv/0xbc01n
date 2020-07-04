@@ -2,10 +2,10 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../../controller/context';
 import {Bounty, Submission} from '../../types/type';
-import {getBountyById, getUserByAddr} from '../../utils/utils';
+import {getBountyById} from '../../utils/utils';
 
 const Dashboard: React.FC = () => {
-    const { user, users, userBounties, bounties, bountySubmissions, pickBountyWinner, getBountySubmissions } = useContext(ApplicationContext);
+    const { user, userBounties, bounties, bountySubmissions, pickBountyWinner, getBountySubmissions } = useContext(ApplicationContext);
     const [state, setState] = useState<{
         usrBounties: Bounty[];
         usrBountySubmission: Submission[];
@@ -17,7 +17,6 @@ const Dashboard: React.FC = () => {
         usrWorkOnBounties: [],
         isLoading: false
     });
-
     useEffect(() => {
         if (user) {
             setState({...state, isLoading: true });
@@ -38,7 +37,6 @@ const Dashboard: React.FC = () => {
     const onApprove = useCallback((bountyId, submissionId, addr) => {
         pickBountyWinner(bountyId, submissionId, addr);
     }, []);
-
     const hasUsrSubmissions = Object.keys(bountySubmissions).length !== 0;
 
     return (
@@ -50,7 +48,7 @@ const Dashboard: React.FC = () => {
                         {state.usrBounties.length !== 0 && (
                             <div className='widget__content'>
                                 {state.usrBounties.map(bounty => (
-                                    <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
+                                    <Link key={bounty.id} className='pseudo-link no-link' to={`/bounty/${bounty.id}/description`}>
                                         <div className='item_wrapper'>
                                             <div className='item'>
                                                 <div className='item__title'>{bounty.title}</div>
@@ -75,7 +73,7 @@ const Dashboard: React.FC = () => {
                         {userBounties.length !== 0 && (
                             <div className='widget__content'>
                                 {state.usrWorkOnBounties.map(bounty => (
-                                    <Link key={bounty.id} className='pseudo-link' to={`/bounty/${bounty.id}/description`}>
+                                    <Link key={bounty.id} className='pseudo-link no-link' to={`/bounty/${bounty.id}/description`}>
                                         <div className='item_wrapper'>
                                             <div className='item'>
                                                 <div className='item__title'>{bounty.title}</div>

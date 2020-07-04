@@ -2,14 +2,17 @@ import React, {useContext, useCallback, useEffect, useState} from 'react';
 import {Switch, Route, NavLink, useRouteMatch, useParams} from 'react-router-dom';
 import {ApplicationContext} from '../../controller/context';
 import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
+import {toAmount, getUserByAddr, getUserName, toData, getDateFormatted} from '../../utils/utils';
 import Main from '../main';
 
 const BountyPage: React.FC = () => {
     const {
         bounties,
         user,
+        users,
         startWorkOnBounty,
         userBounties,
+        bountyApplicant,
         getBountiesUserWorksOn,
         submitSubmissionForBounty,
         getBountySubmissions,
@@ -22,6 +25,7 @@ const BountyPage: React.FC = () => {
     const bountyInfo = bounties.find(({id}) => id === Number(bountyId));
     const currentUserWorkOnThisBounty = userBounties.filter(({bounty_id}) => bounty_id === Number(bountyId)).length !== 0;
     const countOfSubmission = bountySubmissions[bountyId] && bountySubmissions[bountyId].length;
+    const bountyApplicants = bountyApplicant[bountyId];
 
     useEffect(() => {
         getBountySubmissions(Number(bountyId));
@@ -33,8 +37,7 @@ const BountyPage: React.FC = () => {
             getBountiesUserWorksOn(user.addr);
             getBountySubmissions(Number(bountyId));
         }
-    }, [bountyId, user]);
-
+    }, [bountyId, user, userBounties]);
     const sedSubmission = useCallback((evt) => {
         evt.preventDefault();
 
@@ -52,11 +55,14 @@ const BountyPage: React.FC = () => {
     });
 
     if (bountyInfo) {
-        const {title, short_desc, price, expiry, type, complexity, desc, issuer} = bountyInfo;
+        const {title, short_desc, price, expiry, type, complexity, desc, issuer, created} = bountyInfo;
         const now = new Date();
         const diffDays = new Date(expiry).getDate() - now.getDate();
         const typeKey =  type.split('.').pop().toUpperCase();
         const complexityKey = complexity.split('.').pop().toUpperCase();
+        const issuerInfo = getUserByAddr(users, issuer);
+        const issuerName = getUserName(issuerInfo);
+
         return (
             <Main>
                 <div className='bounty'>
@@ -72,12 +78,12 @@ const BountyPage: React.FC = () => {
                     <div className='bounty__content'>
                         <div className='bounty__content bounty__content_left'>
                             <div className='tabs'>
-                                <NavLink className='tab' activeClassName='active' to={`${url}/description`}>Description</NavLink>
-                                <NavLink className='tab' activeClassName='active' to={`${url}/contributors`}>Contributors</NavLink>
-                                <NavLink className='tab' activeClassName='active' to={`${url}/submissions`}>Submissions</NavLink>
-                                <NavLink className='tab' activeClassName='active' to={`${url}/activity`}>All Activity</NavLink>
+                                <NavLink className='tab no-link' activeClassName='active' to={`${url}/description`}>Description</NavLink>
+                                <NavLink className='tab no-link' activeClassName='active' to={`${url}/contributors`}>Contributors</NavLink>
+                                <NavLink className='tab no-link' activeClassName='active' to={`${url}/submissions`}>Submissions</NavLink>
+                                <NavLink className='tab no-link' activeClassName='active' to={`${url}/activity`}>All Activity</NavLink>
                                 {currentUserWorkOnThisBounty && (
-                                    <NavLink className='tab' activeClassName='active' to={`${url}/fulfill`}>Fulfill</NavLink>
+                                    <NavLink className='tab no-link' activeClassName='active' to={`${url}/fulfill`}>Fulfill</NavLink>
                                 )}
                                 <div className='spacer'/>
                                 {user && user.addr !== bountyInfo.issuer && !currentUserWorkOnThisBounty && (
@@ -97,13 +103,53 @@ const BountyPage: React.FC = () => {
                                         </div>
                                     </Route>
                                     <Route path={`${path}/submissions`}>
-                                        <div className='tabs_content__empty'>
-                                            Bounty doesn't have any Submissions
-                                        </div>
+                                        <>
+                                            {bountySubmissions[bountyId] && bountySubmissions[bountyId].length !== 0 && (
+                                                <div className='tabs_content'>
+                                                    {bountySubmissions[bountyId].map(item => (
+                                                        <div className='submission' key={item.id}>
+                                                            <div className='submission_content'>
+                                                                <div className='submission__meta'>
+                                                                    Author: <b>{item.addr}</b>
+                                                                </div>
+                                                                <div className='submission__title'>{item.name}</div>
+                                                                <div className='submission_short_url'>
+                                                                    <input type='text' className='form__input' value={item.sample_url} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {bountySubmissions[bountyId] && bountySubmissions[bountyId].length === 0 && (
+                                                <div className='tabs_content__empty'>
+                                                    Bounty doesn't have any Submissions
+                                                </div>
+                                            )}
+                                        </>
                                     </Route>
                                     <Route path={`${path}/activity`}>
-                                        <div className='tabs_content__empty'>
-                                            Bounty doesn't have any Activities
+                                        <div className='tabs_content'>
+                                            <div className='list'>
+                                                {bountyApplicants && bountyApplicants.length !== 0 && bountyApplicants.map(item => (
+                                                    <div key={item.worker_id} className='list__item'>
+                                                        <div className='author'>
+                                                            {getUserName(getUserByAddr(users, item.worker_id))}
+                                                        </div>
+                                                        <div className='title'>Work Started</div>
+                                                        <div className='date'>-/-/-</div>
+                                                    </div>
+                                                ))}
+                                                <div className='list__item'>
+                                                    <div className='author'>
+                                                        {getUserName(getUserByAddr(users, issuer))}
+                                                    </div>
+                                                    <div className='title'>Bounty Created</div>
+                                                    <div className='date'>
+                                                        {getDateFormatted(toData(created))}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </Route>
                                     <Route path={`${path}/fulfill`}>
@@ -155,10 +201,9 @@ const BountyPage: React.FC = () => {
                         </div>
                         <div className='bounty__content bounty__content_right'>
                             <div className='bounty__price'>
-                                <div className='bounty__price_origin'>{price}&nbsp;OCEAN</div>
-                                {/*<div className='bounty__price_from'>Converted from:&nbsp;USD 22489,00, EUR 20047,16, GBP
-                                    18226,69
-                                </div>*/}
+                                <div className='bounty__price_origin'>
+                                    {toAmount(price)}&nbsp;OCEAN
+                                </div>
                             </div>
                             <div className='bounty__info'>
                                 <div className='bounty__info_item'>
@@ -178,8 +223,10 @@ const BountyPage: React.FC = () => {
                                     <div className='label'>Type</div>
                                 </div>
                                 <div className='bounty__info_item'>
-                                    <div className='value'>-</div>
-                                    <div className='label'>Applicants</div>
+                                    <div className='value'>
+                                        {bountyApplicants === undefined ? <>-</> : <>{bountyApplicants.length}</>}
+                                    </div>
+                                    <div className='label'>Work Started</div>
                                 </div>
                                 <div className='bounty__info_item'>
                                     <div className='value'>{countOfSubmission ? <>{countOfSubmission}</> : <>-</>}</div>
@@ -193,8 +240,7 @@ const BountyPage: React.FC = () => {
                                         <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img'/>
                                     </div>
                                     <div className='founder__info_detail'>
-                                        <div>{issuer}</div>
-                                        <div>-//-</div>
+                                        <div>{issuerName}</div>
                                     </div>
                                 </div>
                             </div>

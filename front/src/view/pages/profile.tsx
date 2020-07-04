@@ -1,10 +1,12 @@
 import React, {useContext, useCallback} from 'react';
 import Main from '../main';
+import {getUserName} from '../../utils/utils';
 import {ApplicationContext} from '../../controller/context';
 import { useHistory } from 'react-router-dom';
 
 const UserProfilePage: React.FC = ({ children }) => {
     const {user, updateUser} = useContext(ApplicationContext);
+    const userName = getUserName(user);
     const history = useHistory();
     const onFormSubmit = useCallback((evt) => {
         evt.preventDefault();
@@ -31,7 +33,7 @@ const UserProfilePage: React.FC = ({ children }) => {
             <div className='bounty__create_form'>
                 <form onSubmit={onFormSubmit}>
                     <div className='form__row'>
-                        <div className='header'>Hi {user && user.addr}, it is your profile</div>
+                        <div className='header'>Hi {userName}, it is your profile</div>
                     </div>
                     <div className='form__row'>
                         <div className='title'>What would you like people to know about you?</div>
@@ -68,7 +70,7 @@ const UserProfilePage: React.FC = ({ children }) => {
                             <label htmlFor='about_me'>About me</label>
                         </div>
                         <div className='form__field'>
-                            <textarea className='form__textarea form__field' id='about_me' name='about_me'  value={user && user.about_me}/>
+                            <textarea className='form__textarea form__field' rows={8} id='about_me' name='about_me'  value={user && user.about_me}/>
                         </div>
                     </div>
                     <div className='button_container'>

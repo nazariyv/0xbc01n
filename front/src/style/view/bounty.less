@@ -84,10 +84,12 @@
 
         &_block {
           display: flex;
+          align-items: center;
         }
 
         &_avatar {
           margin-right: 8px;
+          height: 32px;
 
           .img {
             width: 32px;
@@ -140,11 +142,8 @@
   }
 
   &__create_form {
-    background: #E6FAF1;
     width: 800px;
     margin: 0 auto;
-    border-radius: 4px;
-    // height: 500px;
 
     .button_container {
       background: #fff;
@@ -158,4 +157,20 @@
       margin-right: 16px;
     }
   }
+}
+
+.list__item {
+  display: flex;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 16px 0;
+
+  .author {
+    width: 30%;
+    font-weight: bold;
+  }
+
+  .title {
+    flex-grow: 1;
+  }
+
 }

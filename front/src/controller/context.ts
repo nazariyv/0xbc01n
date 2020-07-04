@@ -1,8 +1,11 @@
 import React from 'react';
-import {ApplicationRepresentation, Bounty, Submission, SubmissionData, User} from '../types/type';
+import {ApplicationRepresentation, Bounty, SortModel, Submission, SubmissionData, User} from '../types/type';
+import {toData} from '../utils/utils';
 
 export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
+    bountyApplicant: {},
+    originalData: [],
     handleLogIn: () => {},
     createBounty: (formData: any) => {},
     updateUser: (addr: string, formData: any) => {},
@@ -12,7 +15,6 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     pickBountyWinner: (bountyId: Bounty['id'], submissionId: Submission['id'], publicAddress: User['addr']) => {},
     getBountySubmissions: (bountyId: number) => {},
     onSort: (fieldId: string) => {},
-    onFilter: (filter: any, type: string) => {},
     handleLogOut: () => {},
     actionAuthRequired: () => {},
     isLoading: false,
@@ -23,7 +25,22 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     userBounties: [],
     sortKey: 'created',
     bountySubmissions: {},
-    filterFields: [],
+
+    onFilter: (field: string, value: string) => {},
+    filterModel: {
+        type: [],
+        complexity: []
+    }
+};
+
+// TODO: Fix me!
+export const sortModel: SortModel = {
+    // @ts-ignore
+    created: (a, b) => toData(b.created) - toData(a.created),
+    // @ts-ignore
+    expiry: (a, b) => toData(a.expiry) - toData(b.expiry),
+    priceHi: (a, b) => b.price - a.price,
+    priceLow: (a, b) => a.price - b.price
 };
 
 export const ApplicationContext = React.createContext<ApplicationRepresentation>(

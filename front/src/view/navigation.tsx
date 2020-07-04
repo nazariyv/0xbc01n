@@ -4,9 +4,10 @@ import {ROUTES} from '../types/type';
 import {ApplicationContext} from '../controller/context';
 
 const FILTERS = [
-    { fieldId: 'created', name: 'Most Recent' },
-    { fieldId: 'expiry', name: 'Expiry' },
-    { fieldId: 'price', name: 'High Value' }
+    { fieldId: 'created', value: 'Created:Recent' },
+    { fieldId: 'expiry', value: 'Expiry' },
+    { fieldId: 'priceHi', value: 'High Value'},
+    { fieldId: 'priceLow', value: 'Low Value'}
 ];
 
 const Navigation: React.FC = () => {
@@ -21,7 +22,7 @@ const Navigation: React.FC = () => {
                         onClick={() => handleClick(item.fieldId)}
                         className={`quick_filters_item ${sortKey === item.fieldId && 'active'}`}
                     >
-                        {item.name}
+                        {item.value}
                     </div>
                 ))}
             </div>

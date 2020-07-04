@@ -10,10 +10,9 @@ const Header: React.FC = () => {
             <div className='header__content'>
                 <div className='header__section header__section_nav_left'>
                     <Link className='header__link' to={ROUTES.MAIN}>Explore</Link>
-                    {/*<Link className='header__link' to={ROUTES.MARKETPLACE}>Marketplace</Link>*/}
                 </div>
                 <div className='header__section header__section_logo'>
-                    <Link className='header__link' to={ROUTES.MAIN}>
+                    <Link className='no-link' to={ROUTES.MAIN}>
                         <div className='logo'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='149' height='40' viewBox='0 0 149 40'>
                                 <defs>
@@ -51,11 +50,11 @@ const Header: React.FC = () => {
                                     </span>
                                 </div>
                             </Link>
-                            <div onClick={handleLogOut} className='header__link'>Logout</div>
+                            <div onClick={handleLogOut} className='link header__link'>Logout</div>
                         </>
                     )}
                     {user === undefined && (
-                        <div className='header__link' onClick={handleLogIn}>Log in</div>
+                        <div className='header__link link' onClick={handleLogIn}>Log in</div>
                     )}
                 </div>
             </div>
