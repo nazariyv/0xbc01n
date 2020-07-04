@@ -70,7 +70,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
-                bounties,
+                originalData: bounties,
+                bounties
             }
         });
     }
@@ -113,7 +114,16 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
     submitSubmissionForBounty = async (bountyId: number, data: SubmissionData) => {
         await this.api.postUserSubmitsToBounty(bountyId, data);
-        await this.getBountySubmissions(bountyId);
+        const bountySubmissions = await this.api.getSubmissionsForBounty(bountyId);
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bountySubmissions: {
+                    ...this.state.renderContext.bountySubmissions,
+                    [bountyId]: bountySubmissions
+                }
+            }
+        });
     }
 
     getBountySubmissions = async (bountyId: number) => {
@@ -123,7 +133,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 ...this.state.renderContext,
                 bountySubmissions: {
                     ...this.state.renderContext.bountySubmissions,
-                    [bountyId]: bountySubmissions,
+                    [bountyId]: bountySubmissions
                 }
             }
         });
