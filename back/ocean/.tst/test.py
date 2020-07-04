@@ -44,6 +44,9 @@ consumer_account = Account(
 # It is also possible to initialize account as follows bypassing the creation of environment variables
 # account = Account(Web3.toChecksumAddress(address), pswrd, key_file, encr_key, key)
 
+metadata["author"] = str(uuid.uuid4())
+metadata["checksum"] = str(uuid.uuid4())
+
 ddo = ocean.assets.create(
     metadata,
     account,

@@ -213,8 +213,8 @@ class PickWinner:
         # ! in prod we would get a signature to confirm that consumer owns the consumer account
         # ! for this hack, I will just pull out the private key from the dict above ;)
         consumer_account = Account(addr, private_key=PKS[addr])
-        publisher_addr = submission.addr
-        publisher_account = Account(publisher_addr, private_key=PKS[publisher_addr])
+        # publisher_addr = submission.addr
+        # publisher_account = Account(publisher_addr, private_key=PKS[publisher_addr])
 
         ocean.accounts.request_tokens(consumer_account, 1000)
 
@@ -230,19 +230,19 @@ class PickWinner:
         event = ocean.keeper.agreement_manager.subscribe_agreement_created(
             service_agreement_id, event_wait_time, None, (), wait=True
         )
-        # if not event:
-        #     resp.status = falcon.HTTP_400
-        #     l.warn("escrow agreement not created")
-        #     return
+        if not event:
+            resp.status = falcon.HTTP_502
+            l.error("escrow agreement not created")
+            return
 
         #  check if the lock reward goes through
         event = ocean.keeper.lock_reward_condition.subscribe_condition_fulfilled(
             service_agreement_id, 120, None, (), wait=True
         )
-        # if not event:
-        #     resp.status = falcon.HTTP_400
-        #     l.warn("conditions of the escrow not fulfilled")
-        #     return
+        if not event:
+            resp.status = falcon.HTTP_502
+            l.error("conditions of the escrow not fulfilled")
+            return
 
         brizo = BrizoProvider.get_brizo()
         sa = ServiceAgreement.from_ddo(ServiceTypes.ASSET_ACCESS, ddo)
@@ -250,7 +250,8 @@ class PickWinner:
 
         # ! once again, this needs to change for prod
         signature = Keeper.get_instance().sign_hash(
-            add_ethereum_prefix_and_hash_msg(service_agreement_id), publisher_account
+            msg_hash=add_ethereum_prefix_and_hash_msg(service_agreement_id),
+            account=consumer_account,
         )
 
         url = brizo._create_consume_url(

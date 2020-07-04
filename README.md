@@ -59,6 +59,8 @@ API docs: https://documenter.getpostman.com/view/3718078/T17FCUqu?version=latest
 
 ## YouTube video
 
+Will upload as soon as my laptop gets back to me. My screen went kaput after 2 months of use
+
 ### Non-technical
 
 ### Technical
