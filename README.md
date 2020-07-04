@@ -12,12 +12,38 @@
 - [YouTube video](#youtube-video)
   - [Non-technical](#non-technical)
   - [Technical](#technical)
+- [Dispute resolution](#dispute-resolution)
 
-## Problem
+## Problem Outline
+
+Full description is [here](https://gitcoin.co/issue/oceanprotocol/ocean-bounties/24/4379).
+
+Brief description:
+
+Ocean Protocol defines a set of rules that govern secure share, use and monetization of datasets. This is achieved by using Squid libray (python and js maintained implementations) which communicates with lower level components.
+
+Ocean Protocol wants us to build a Data Bounty platform for them.
+
+> What is a data bounty platform, you ask?
+
+It is a **website**, in this case, that facilitates **data seekers** (machine learning enthusiasts, companies, students, etc.) in better discovering and obtaining the data from **data providers**. A concrete example follows, taken from my own experience.
+
+You are a machine learning enthusiast that has just learned about this cool new neural network that trades Chinese stocks very well. You learn about its workings and decide to give it a shot. You quickly come to realize that you need a **ton** of data to train the model, since the number of degrees of freedom in it is astronomical. You try to scrape a few sites, you quickly learn that they start banning your ip. Meh, I will just use VPN and try it again. They start to ban your VPN ips. Hmm, lets call a couple of data providers and get the data. You say you are a poor student and you need a discount, they quote you `$10k`.  Oh well, I will get a freelancer do it for me. Initially, somewhat successful but it starts getting expensive. Alright, see how the freelancer did it and do it yourself. !!`2`!! years later, you have a good amount of data, but machine learning is now at a stage where you do perfect interpolation between different human faces based on a number of different features. Well, that was a bummer. You have spent 2 yars of your life, collecting the data for the model that you wanted to implement on the weekend. Imagine this now, you visit our data bounty platform, post the "bounty" saying: "Yo, fellow bounty hunters, you will probably hack this out in a day, or maybe you already have it. I need plenty of news articles for this model that I will be training to trade stocks and get $$$. I offer you `10000` OCEAN tokens for it. Please autosample your dataset, so that I can be confident in the data you got". And now every bounty hunter on the platform sees it and starts competing for your request. This is a great mechanic and is sure to:
+
+(i) get you the top quality data you need, provided the price is set right
+
+(ii) save you a ton of time, and maybe you do actually get to make a dollar or two on your sleek state-of-the art bi-directional GRU with attention layer neural network (this would have happened in the parallel universe, surely)
+
+Now that we have a good overview of the problem at hand and how we can solve it using Ocean Protocol, let's review the solution implementation
 
 ## Solution Overview
 
-**!!!The solution currently only works for three accounts that are hardcoded in the code. These are the first three accounts derived from Ocean's seed phrase for Spree!!!**
+[![banner](.assets/solution-1.png)](https://oceanprotocol.com)
+
+
+**!!!The solution currently only "works" for three accounts that are hardcoded in the code. These are the first three accounts derived from Ocean's seed phrase for Spree!!!**
+
+Works is in double quotes there because the consumption of the url, the final step in the data bounty workflow, where the consumer (bounty creator) gets access to the data, does not pass the brizo (access control proxy server for Ocean Protocol) authorization checks. Since I am running out of time, I postpone finding the issue in this. For now, the consumer simply can't get access to the data. I do not foresee this, however, to take much time to resolve, especially with someone from Ocean Protocol's dev team helping out from time to time.
 
 ```
 taxi music thumb unique chat sand crew more leg another off lamp
@@ -31,15 +57,34 @@ the three accounts' private keys are
 0x5D75837394B078CE97BC289FA8D75E21000573520BFA7784A9D28CCAAE602BF8
 ```
 
-Also, note, that you need to be running localhost:8545 network in MetaMask. To use the above accounts, simply log out of your current wallet in MetaMask and restore a new one with the above seedphrase. It does not matter what password you choose.
+---
 
-You need to start barge with the following options
+This application separates the front and the back. You can find these here `front/` and `back/` in the root of this repo. The front is written in `React` with bare-metal `HTML` elements.
 
-```bash
-./start_ocean.sh --no-commons --no-agent --local-spree-node
-```
+The backend uses Python's [Falcon](https://falcon.readthedocs.io/en/stable/index.html) [WSGI](https://wsgi.readthedocs.io/en/latest/what.html) library running on [Gunicorn](https://gunicorn.org/) [WSGI](https://wsgi.readthedocs.io/en/latest/what.html) server. Everything is tied together with docker-compose `yaml` file with network hosting to be able to talk to [barge](https://github.com/oceanprotocol/barge) (that needs to be separately git cloned and spun up)
 
-This solution will likely not work on Mac due to its host networking limitations, not even mentioning Windows :)
+The end-to-end workflow is as follows
+
+1. Bounty creator / data seeker comes to the platform and creates a "bounty" specifying what exactly he needs
+
+2. Every bounty hunter (data provider) on the website sees this and can register their desire to work on it (start work button)
+
+3. After some time, if they need to collect, or immediately they fulfill the bounty. This means that they provide the full dataset url as well as sample dataset url to the bounty
+
+4. It is up to bounty creator to pick the winner (in the future, multiple types of bounties will be implemented)
+
+**What is missing and not-working**
+
+1. Pay the price for data. All is free, irrespective of the price indicated on the bounty
+
+2. The final consumption URL link is generated, but the consumer always fails brizo authorization
+
+3. The final step where the bounty creator "picks winner" is not complete. The workflow needs to be different. It can as described by Manan [here](https://medium.com/@manan.patel/f4b630063b90), be of the form: bounty creator likes the sample, and then requests the full access. Upon authorizing that the money has been spent into the escrow contract that acts as an intermediary in the transaction (data access authorization), access is granted to the data, that is **streamed** by Ocean Protocol directly to the data consumer, in order to keep the data source private
+
+---
+**Word of Caution**
+
+This solution will likely not work on Mac due to its host networking limitations in Docker, not even mentioning Windows :)
 
 ### Docker to link back and front
 
@@ -64,3 +109,5 @@ Will upload as soon as my laptop gets back to me. My screen went kaput after 2 m
 ### Non-technical
 
 ### Technical
+
+## Dispute Resolution
