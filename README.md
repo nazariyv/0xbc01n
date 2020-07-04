@@ -4,7 +4,10 @@
 
 ## TOC
 
-- [Problem](#problem)
+- [Quickstart](#quickstart)
+  - [Quicker version](#quicker-version)
+  - [Detailed version](#detailed-version)
+- [Problem Outline](#problem-outline)
 - [Solution Overview](#solution-overview)
   - [Docker to link back and front](#docker-to-link-back-and-front)
   - [Backend](#backend)
@@ -13,6 +16,58 @@
   - [Non-technical](#non-technical)
   - [Technical](#technical)
 - [Dispute resolution](#dispute-resolution)
+
+## Quickstart
+
+### Quicker version
+
+```bash
+git clone https://github.com/oceanprotocol/barge.git
+
+cd barge
+
+./start_ocean.sh --no-commons --no-agent --local-spree-node
+
+cd ..
+
+git clone https://github.com/nazariyv/0xbc01n
+
+cd 0xbc01n
+
+make start-dev
+
+open localhost
+```
+
+### Detailed version
+
+You will need to git clone the [`barge`](https://github.com/oceanprotocol/barge) repo first. Now go into its root and run
+
+```bash
+./start_ocean.sh --no-commons --no-agent --local-spree-node
+```
+
+This will deploy the local network (Spree) keeper smart contracts for you (the blockchain part of the Ocean Protocol), as well as move their artifacts to
+
+```
+~/.ocean/keeper-contracts/artifacts
+```
+
+so that we can use these ABIs (interface signatures, basically the metadata about the contents of the smart contract) to communicate with them on the Python backend). Note that I have found the escrow contract missing. Meaning it was not compiled and deployed, and no log traces either. Perhaps, this was part of the reason for why this solution is not complete.
+
+I have then defined two `Dockerfile`s, for backend and frontend and "glued" them up in the `docker-compose.yaml` utilising network hosting for easy communication with host's numerous barge containers. For this reason, this soulution will not work on Macs. Haven't tested Windows, but I bet my grandma it won't work there either.
+
+```bash
+git clone https://github.com/nazariyv/0xbc01n
+```
+
+cd `0xbc01n` and then run
+
+```bash
+make start-dev
+```
+
+now you can simply navigate to `localhost` in your browser's URL and interact with the application
 
 ## Problem Outline
 
@@ -81,6 +136,8 @@ The end-to-end workflow is as follows
 
 3. The final step where the bounty creator "picks winner" is not complete. The workflow needs to be different. It can as described by Manan [here](https://medium.com/@manan.patel/f4b630063b90), be of the form: bounty creator likes the sample, and then requests the full access. Upon authorizing that the money has been spent into the escrow contract that acts as an intermediary in the transaction (data access authorization), access is granted to the data, that is **streamed** by Ocean Protocol directly to the data consumer, in order to keep the data source private
 
+I hastily coded the backend up and so the code quality is not as sleek as in my filter pod hack. Provided the extra time, it can easily be polished
+
 ---
 **Word of Caution**
 
@@ -88,17 +145,15 @@ This solution will likely not work on Mac due to its host networking limitations
 
 ### Docker to link back and front
 
-I define a Dockerfile for both the backend and frontend. These can be started separately. There is a command in Makefile that will get it up for you
+I define a Dockerfile for both the backend and tje frontend. These can be started separately. There is a command in Makefile that will get the backend up for you
 
 ```bash
 make back-dev
 ```
 
-this will forward your host's `5050` port to the backend inside of docker running on port `8080` (guinicorn server)
-
 ### Backend
 
-API docs: https://documenter.getpostman.com/view/3718078/T17FCUqu?version=latest
+[API docs](https://documenter.getpostman.com/view/3718078/T17FCUqu?version=latest)
 
 ### Frontend
 
@@ -108,6 +163,11 @@ Will upload as soon as my laptop gets back to me. My screen went kaput after 2 m
 
 ### Non-technical
 
+Coming as soon as my laptop gets back from repair
+
 ### Technical
 
+Coming as soon as my laptop gets back from repair
+
 ## Dispute Resolution
+
