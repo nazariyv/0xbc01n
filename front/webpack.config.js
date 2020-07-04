@@ -30,21 +30,13 @@ module.exports = {
     ]
   },
   devServer: {
-    // host: '0.0.0.0',
-    // proxy: {
-    //   "/api": {
-    //     "target": "http://localhost:8080",
-    //     "secure": false,
-    //   },
-    // },
-    proxy: [
-      {
-        path: '/api/',
-        target: 'http://localhost:5050'
-      }
-    ],
-    historyApiFallback: true,
-    hot: true
+    host: '0.0.0.0',
+    proxy: {
+      "/api": {
+        "target": "http://localhost:8080",
+        "secure": false,
+      },
+    },
   },
   // TODO: below is for how to serve the production
   // https://stackoverflow.com/questions/43907196/proxying-request-from-webpack-2-using-webpack-dev-server-to-backend-api-in-docke
