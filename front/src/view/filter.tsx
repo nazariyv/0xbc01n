@@ -6,25 +6,25 @@ const FIELDS = [
         id: 'type',
         title: 'Bounty Type',
         fields: [
-            {  id: 'type', name: 'BountyTypes.traditional', title: 'Traditional' },
-            {  id: 'type', name: 'BountyTypes.contest', title: 'Contest' },
-            {  id: 'type', name: 'BountyTypes.cooperative', title: 'Cooperative' }
+            {  id: 'type', value: 'BountyTypes.traditional', title: 'Traditional' },
+            {  id: 'type', value: 'BountyTypes.contest', title: 'Contest' },
+            {  id: 'type', value: 'BountyTypes.cooperative', title: 'Cooperative' }
         ]
     },
     {
         id: 'complexity',
         title: 'Complexity',
         fields: [
-            { id: 'complexity', name: 'Complexities.beginner', title: 'Beginner' },
-            { id: 'complexity', name: 'Complexities.advanced', title: 'Advanced' },
-            { id: 'complexity', name: 'Complexities.intermediate', title: 'Intermediate' },
+            { id: 'complexity', value: 'Complexities.beginner', title: 'Beginner' },
+            { id: 'complexity', value: 'Complexities.advanced', title: 'Advanced' },
+            { id: 'complexity', value: 'Complexities.intermediate', title: 'Intermediate' }
         ]
-    },
+    }
 ];
 
 const Filter: React.FC = () => {
-    const {onFilter, filterFields} = useContext(ApplicationContext);
-    const handleClick = useCallback((field, type) => onFilter(field, type), [onFilter]);
+    const {onFilter} = useContext(ApplicationContext);
+    const handleChange = useCallback((field, value) => onFilter(field, value), [onFilter]);
 
     return (
         <div className='filter'>
@@ -36,9 +36,15 @@ const Filter: React.FC = () => {
                         <div className='filter__row_field'>
                             <div className='filter__row_field'>
                                 {item.fields.map(field => (
-                                    <label key={field.name} htmlFor={field.name}>
+                                    <label key={field.value} htmlFor={field.value}>
                                         {field.title}
-                                        <input onChange={() => handleClick(field, item.id)} type='checkbox' value='false' name={field.name} id={field.name}/>
+                                        <input
+                                            onChange={() => handleChange(item.id, field.value)}
+                                            type='checkbox'
+                                            value='false'
+                                            name={field.value}
+                                            id={field.value}
+                                        />
                                     </label>
                                 ))}
                             </div>

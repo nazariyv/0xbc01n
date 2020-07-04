@@ -35,6 +35,7 @@ export type Bounty = {
     expiry: number;
     desc: string;
     complexity: string;
+    created: number;
 };
 
 export type User = {
@@ -63,8 +64,18 @@ export type Submission = {
     price: number;
 };
 
+export type FilterModel = Record<string, string[]>;
+
+export type SortModel = Record<string, (a: Bounty, b: Bounty) => number>;
+
+export type UserInfo = {
+    bounty_id: string;
+};
+
 export type ApplicationRepresentation = {
     bounties: Bounty[];
+    bountyApplicant: Record<Bounty['id'], UserInfo[]>;
+    originalData: Bounty[];
     handleLogIn: () => void;
     createBounty: (formData: any) => void;
     updateUser: (addr: string, formData: any) => void;
@@ -84,6 +95,7 @@ export type ApplicationRepresentation = {
     userBounties: Bounty[];
     bountySubmissions: Record<string, any>;
     sortKey?: string;
-    onFilter: (filter: any, type: string) => void;
-    filterFields: [];
+    // Filter
+    onFilter: (field: string, value: string) => void;
+    filterModel: FilterModel;
 };

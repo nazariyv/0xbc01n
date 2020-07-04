@@ -5,7 +5,7 @@ import GridPanel from './grid-panel';
 import GridItem from './grid-item';
 
 const Grid: React.FC = () => {
-    const {bounties, isLoading} = useContext(ApplicationContext);
+    const {bounties, isLoading, bountyApplicant} = useContext(ApplicationContext);
     if (isLoading) {
         return (
             <div className='wrapper'>
@@ -30,7 +30,7 @@ const Grid: React.FC = () => {
             <GridPanel/>
             <div className='grid__content'>
                 {bounties.map((bounty: Bounty) => (
-                    <GridItem key={bounty.id} {...bounty}/>
+                    <GridItem key={bounty.id} {...bounty} bountyApplicants={bountyApplicant[bounty.id]}/>
                 ))}
             </div>
         </div>

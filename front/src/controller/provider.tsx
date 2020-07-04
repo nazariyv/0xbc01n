@@ -1,8 +1,9 @@
 import React from 'react';
 import Web3 from 'web3';
-import { defaultApplicationRepresentation, ApplicationContext } from './context';
-import {ApplicationRepresentation, User, SubmissionData, Bounty, Submission} from '../types/type';
+import { defaultApplicationRepresentation, ApplicationContext, sortModel } from './context';
+import {ApplicationRepresentation, User, SubmissionData, Bounty, Submission, UserInfo} from '../types/type';
 import apiService from '../service/api-service';
+import {filterArray, getUserByAddr} from '../utils/utils';
 
 type ApplicationProps = {};
 type ApplicationState = {
@@ -27,11 +28,26 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         const users = await this.api.getUsers();
         const currentUser = this.getCurrentUser(users);
         const userBounties = currentUser && await this.api.getBountiesUserWorksOn(currentUser.addr) || [];
+
+        const promisesGetBountyApplicants = users.map((usr: User) => this.api.getBountiesUserWorksOn(usr.addr));
+        const usersWorkOn = await Promise.all(promisesGetBountyApplicants);
+
+        const bountyApplicant: Record<Bounty['id'], UserInfo[]> = usersWorkOn.flat()
+            .reduce<UserInfo[]>((result, currentValue) => {
+                (result[currentValue['bounty_id']] = result[currentValue['bounty_id']] || []).push(currentValue);
+                return result;
+        }, {});
+
+        // const promisesGetBountySubmission = bounties.map((bounty: Bounty) => this.api.getSubmissionsForBounty(bounty.id));
+        // const bountySubmissions = await Promise.all(promisesGetBountySubmission);
+
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
                 modalContent: undefined,
+                originalData: bounties,
                 user: currentUser,
+                bountyApplicant,
                 userBounties,
                 bounties,
                 users
@@ -194,9 +210,13 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     }
 
     handleSort = (fieldId: string) => {
+        const comparator = sortModel[fieldId];
+        if (!comparator) {
+            throw new Error('Bad fieldId');
+        }
         const bountiesSorted = this.state.renderContext.bounties
             .slice(0)
-            .sort((a, b) => b[fieldId] - a[fieldId]);
+            .sort(comparator);
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
@@ -206,30 +226,26 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
-    handleFilter = (field: any, type: string) => {
-        let filterFields = this.state.renderContext.filterFields.slice(0);
-        const filterIndex = filterFields.findIndex((item) => item.name === field.name);
-        if (filterIndex !== -1) {
-            filterFields.splice(filterIndex, 1);
+    handleFilter = (field: any, value: string) => {
+        const filterModel = this.state.renderContext.filterModel;
+        const existFilter = filterModel[field] && filterModel[field].includes(value);
+        if (existFilter) {
+            const index = filterModel[field].indexOf(value);
+            filterModel[field].splice(index, 1);
         } else {
-            filterFields.push(field);
+            filterModel[field].push(value);
         }
-        console.log(filterFields);
-        const bountiesFiltered = this.state.renderContext.bounties.slice(0).filter((item) => {
-            for (let i = 0; i < filterFields.length -1; i++) {
-                const filter = filterFields[i];
-                if (item[filter.id] === filter.name) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        console.log(bountiesFiltered);
+
+        let result = filterArray(this.state.renderContext.originalData.slice(0), filterModel);
+        if (filterModel.type.length === 0 && filterModel.complexity.length === 0) {
+            result = this.state.renderContext.originalData;
+        }
 
         this.setState({
             renderContext: {
                 ...this.state.renderContext,
-                filterFields,
+                bounties: result,
+                filterModel
             }
         });
     }

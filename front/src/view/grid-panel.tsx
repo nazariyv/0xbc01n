@@ -6,7 +6,7 @@ const GridPanel: React.FC = () => {
     return (
         <div className='grid-panel'>
             <div className='grid-panel__section grid-panel__section_left'>
-                <span className='number'>{bounties.length}</span>bounties
+                {bounties.length} bounties
             </div>
         </div>
     );

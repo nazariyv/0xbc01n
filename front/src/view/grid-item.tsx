@@ -1,21 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {toAmount, toData} from '../utils/utils';
+import {Bounty, BOUNTY_TYPES, COMPLEXITIES, UserInfo} from '../types/type';
 
-import { Bounty, BOUNTY_TYPES, COMPLEXITIES } from '../types/type';
+type GridItemProps = Bounty & {
+    bountyApplicants: UserInfo[];
+};
 
-const GridItem: React.FC<Bounty> = (props) => {
-    const { id, title, short_desc, price, expiry, type, complexity } = props;
+const GridItem: React.FC<GridItemProps> = (props) => {
+    const { id, title, short_desc, price, expiry, type, complexity, bountyApplicants } = props;
     const daysDiff = (dt1, dt2) => {
         var diffTime = (dt1.getTime() - dt2.getTime());
         var daysDiff = diffTime / (1000 * 3600 * 24);
         return parseInt(daysDiff, 10);
-    }
-    const diffDays = daysDiff(new Date(expiry * 1000), new Date());
+    };
+    const diffDays = daysDiff(toData(expiry), new Date());
     // const diffDays = new Date(expiry * 1000).getDate() - now.getDate();
     const typeKey = type.split('.').pop().toUpperCase();
     const complexityKey = complexity.split('.').pop().toUpperCase();
+
     return (
-        <Link to={`/bounty/${id}/description`} className='pseudo-link'>
+        <Link to={`/bounty/${id}/description`} className='pseudo-link no-link'>
             <div className='grid_item'>
                 <div className='grid_item__content'>
                     <div className='grid_item__section grid_item__section_left'>
@@ -36,7 +41,7 @@ const GridItem: React.FC<Bounty> = (props) => {
                         <div className='grid_item__info'>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Status</div>
-                                <div className='value'>-</div>
+                                <div className='value'>Ready to work</div>
                             </div>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Time Left</div>
@@ -47,8 +52,10 @@ const GridItem: React.FC<Bounty> = (props) => {
                                 <div className='value'>{COMPLEXITIES[complexityKey]}</div>
                             </div>
                             <div className='grid_item__info_item'>
-                                <div className='label'>Applicants</div>
-                                <div className='value'>-</div>
+                                <div className='label'>Work Started</div>
+                                <div className='value'>
+                                    {bountyApplicants === undefined ? <>-</> : <>{bountyApplicants.length}</>}
+                                </div>
                             </div>
                             <div className='grid_item__info_item'>
                                 <div className='label'>Type</div>
@@ -57,10 +64,7 @@ const GridItem: React.FC<Bounty> = (props) => {
                         </div>
                     </div>
                     <div className='grid_item__section grid_item__section_right'>
-                        <div className='price l'>{price}&nbsp;OCEAN</div>
-                        {/*<div className='price m'>22489,00 USD</div>
-                        <div className='price s'>20047,16 EUR</div>
-                        <div className='price xs'>18226,69 GBP</div>*/}
+                        <div className='price l'>{toAmount(price)}&nbsp;OCEAN</div>
                     </div>
                 </div>
             </div>
