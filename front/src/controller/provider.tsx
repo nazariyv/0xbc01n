@@ -236,6 +236,19 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         });
     }
 
+    handleResetFilter = () => {
+        this.setState({
+            renderContext: {
+                ...this.state.renderContext,
+                bounties: this.state.renderContext.originalData,
+                filterModel: {
+                    type: [],
+                    complexity: []
+                }
+            }
+        });
+    }
+
     handleFilter = (field: any, value: string) => {
         const filterModel = this.state.renderContext.filterModel;
         const existFilter = filterModel[field] && filterModel[field].includes(value);
@@ -295,7 +308,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             handleLogOut: this.handleLogOut,
             pickBountyWinner: this.pickBountyWinner,
             onSort: this.handleSort,
-            onFilter: this.handleFilter
+            onFilter: this.handleFilter,
+            onResetFilter: this.handleResetFilter
         };
 
         return (

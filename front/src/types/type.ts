@@ -86,6 +86,7 @@ export type ApplicationRepresentation = {
     getBountySubmissions: (bountyId: number) => void;
     onSort: (fieldId: string) => void;
     handleLogOut: () => void;
+    onResetFilter: () => void;
     actionAuthRequired: () => void;
     isLoading: boolean;
     modalContent: React.ReactNode | undefined;
