@@ -177,4 +177,6 @@ Kleros is a decentralized court. They have jurors that get assigned to cases and
 
 Reaching out to Kleros, their developer would be happy to guide us in the integration of it with this bounty platform, if we proceed to the next stage.
 
-`http://resolve.kleros.io/` will be used as the front-end for the 'arbitable' side, i.e. all the created dispute cases on our data bounty platform would go here. This would save us the time of implementing the front-end.
+`http://resolve.kleros.io/` will be used as the front-end for the 'arbitable' side, i.e. all the created dispute cases on our data bounty platform would go here. This would save us the time of implementing the front-end. It appears that the 'arbitrator' side would not need to be implemented at all, since we would leverage Kleros' jurors.
+
+To enable the integration, [arbitable interface](https://developer.kleros.io/en/latest/implementing-an-arbitrable.html) would have to be implemented in the escrow contract that is responsible for giving the bounty creator the permission to use the data upon fulfillment of the conditions (paying the price indicated by the bounty hunter). When I worked on the bounty, this contract did not get created in barge, and it probably also, part of the reason for why the last step that is responsible for granting the permission to the bounty creator is not going through the authorization part of the code in brizo
