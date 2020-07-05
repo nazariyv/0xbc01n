@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react';
+import React, {useContext, useCallback, useEffect} from 'react';
 import {ApplicationContext} from '../controller/context';
 
 const FIELDS = [
@@ -23,8 +23,14 @@ const FIELDS = [
 ];
 
 const Filter: React.FC = () => {
-    const {onFilter} = useContext(ApplicationContext);
+    const {onFilter, onResetFilter} = useContext(ApplicationContext);
     const handleChange = useCallback((field, value) => onFilter(field, value), [onFilter]);
+
+    useEffect(() => {
+        return () => {
+            onResetFilter();
+        };
+    }, []);
 
     return (
         <div className='filter'>

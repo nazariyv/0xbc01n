@@ -17,6 +17,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     onSort: (fieldId: string) => {},
     handleLogOut: () => {},
     actionAuthRequired: () => {},
+    onResetFilter: () => {},
     isLoading: false,
     modalAction: () => {},
     modalContent: undefined,
