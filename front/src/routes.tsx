@@ -4,11 +4,9 @@ import {Switch, Route} from 'react-router-dom';
 import {ROUTES} from './types/type';
 import BountyPage from './view/pages/bounty';
 import BountyCreatePage from './view/pages/bounty-create';
-import BountyEditPage from './view/pages/bounty-edit';
 import Dashboard from './view/pages/dashboard';
 import ExplorePage from './view/pages/explore';
 import MainPage from './view/pages/main';
-import MarketplacePage from './view/pages/marketplace';
 import PrivacyPage from './view/pages/privacy';
 import UserProfilePage from './view/pages/profile';
 import TermsPage from './view/pages/terms';
@@ -18,17 +16,11 @@ const Routes = () => (
         <Route exact path={ROUTES.MAIN}>
             <MainPage />
         </Route>
-        <Route exact path={ROUTES.MARKETPLACE}>
-            <MarketplacePage />
-        </Route>
         <Route exact path={ROUTES.EXPLORE}>
             <ExplorePage />
         </Route>
         <Route path={ROUTES.BOUNTY}>
             <BountyPage />
-        </Route>
-        <Route exact path={ROUTES.BOUNTY_EDIT}>
-            <BountyEditPage />
         </Route>
         {/* Extra static pages */}
         <Route exact path={ROUTES.TERMS}>

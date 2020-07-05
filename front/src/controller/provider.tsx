@@ -1,9 +1,10 @@
 import React from 'react';
 import Web3 from 'web3';
-import { defaultApplicationRepresentation, ApplicationContext, sortModel } from './context';
+import { defaultApplicationRepresentation, ApplicationContext } from './context';
 import {ApplicationRepresentation, User, SubmissionData, Bounty, Submission, UserInfo} from '../types/type';
 import apiService from '../service/api-service';
-import {filterArray, getUserByAddr} from '../utils/utils';
+import {filterArray} from '../utils/utils';
+import {sortModel} from '../utils/sort-model';
 
 type ApplicationProps = {};
 type ApplicationState = {
@@ -33,13 +34,10 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         const usersWorkOn = await Promise.all(promisesGetBountyApplicants);
 
         const bountyApplicant: Record<Bounty['id'], UserInfo[]> = usersWorkOn.flat()
-            .reduce<UserInfo[]>((result, currentValue) => {
+            .reduce((result, currentValue) => {
                 (result[currentValue['bounty_id']] = result[currentValue['bounty_id']] || []).push(currentValue);
                 return result;
         }, {});
-
-        // const promisesGetBountySubmission = bounties.map((bounty: Bounty) => this.api.getSubmissionsForBounty(bounty.id));
-        // const bountySubmissions = await Promise.all(promisesGetBountySubmission);
 
         this.setState({
             renderContext: {
@@ -199,6 +197,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         }
 
         window.localStorage.setItem('pa', publicAddress);
+        // FIXME: get nonce from backend
         const nonceFromBack = 'ed5080e7-0795-4785-9ba1-af75aab20ba6';
 
         try {
@@ -222,7 +221,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
     handleSort = (fieldId: string) => {
         const comparator = sortModel[fieldId];
         if (!comparator) {
-            throw new Error('Bad fieldId');
+            throw new Error('sortModel: Bad fieldId');
         }
         const bountiesSorted = this.state.renderContext.bounties
             .slice(0)

@@ -3,9 +3,6 @@ import {ApplicationRepresentation, Bounty, SortModel, Submission, SubmissionData
 import {toData} from '../utils/utils';
 
 export const defaultApplicationRepresentation: ApplicationRepresentation = {
-    bounties: [],
-    bountyApplicant: {},
-    originalData: [],
     handleLogIn: () => {},
     createBounty: (formData: any) => {},
     updateUser: (addr: string, formData: any) => {},
@@ -18,30 +15,22 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     handleLogOut: () => {},
     actionAuthRequired: () => {},
     onResetFilter: () => {},
-    isLoading: false,
     modalAction: () => {},
+    onFilter: (field: string, value: string) => {},
+    bounties: [],
+    bountyApplicant: {},
+    originalData: [],
+    isLoading: false,
     modalContent: undefined,
     users: [],
     user: undefined,
     userBounties: [],
     sortKey: 'created',
     bountySubmissions: {},
-
-    onFilter: (field: string, value: string) => {},
     filterModel: {
         type: [],
         complexity: []
     }
-};
-
-// TODO: Fix me!
-export const sortModel: SortModel = {
-    // @ts-ignore
-    created: (a, b) => toData(b.created) - toData(a.created),
-    // @ts-ignore
-    expiry: (a, b) => toData(a.expiry) - toData(b.expiry),
-    priceHi: (a, b) => b.price - a.price,
-    priceLow: (a, b) => a.price - b.price
 };
 
 export const ApplicationContext = React.createContext<ApplicationRepresentation>(

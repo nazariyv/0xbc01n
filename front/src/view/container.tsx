@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Container: React.FC = ({ children }) => (
-    <div className="app-container">
+    <div className='app-container'>
         {children}
     </div>
 );

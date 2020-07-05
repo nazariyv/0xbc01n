@@ -157,6 +157,8 @@ make back-dev
 
 ### Frontend
 
+[Overview docs](front/README.md)
+
 ## YouTube video
 
 Will upload as soon as my laptop gets back to me. My screen went kaput after 2 months of use
