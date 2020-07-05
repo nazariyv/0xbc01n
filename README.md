@@ -175,7 +175,12 @@ Coming as soon as my laptop gets back from repair
 
 For dispute resolution we propose to use a ready solution instead of coming up with own mechanics. [Kleros.io](https://kleros.io/static/onepager_en-3165e4676c4ed1529064608a83967c23.pdf) is one such solution.
 
-Kleros is a decentralized court. They have jurors that get assigned to cases and they are financially incentivized to make the right decision. There are a number of limitations that I came up with that may pertain to this solution, these may not be completely accurate, since I have had very limited time to explore. I discuss these in the YouTube video that will be uploaded soon.
+Kleros is a decentralized court. They have jurors that get assigned to cases and they are financially incentivized to make the right decision. There are a number of limitations that I came up with that may pertain to this solution, these may not be completely accurate, since I have had very limited time to explore. Some of the limitations that I could think of without exploring Kleros too deeply
+
+1. Who decides who gets approved to be the juror?
+2. Anyone can become a juror. Can this be games? By, for example, staking just enough `PNK` across the multiple jurors that you control such that the expected value of the payoff is always positive?
+3. It looks like there are only `50` jurors right now, is this enough?
+4. What is the mechanism that decides how many jurors work on any particular case? It would obviously be more beneficial if more jurors work on our cases.
 
 Reaching out to Kleros, their developer would be happy to guide us in the integration of it with this bounty platform, if we proceed to the next stage.
 
