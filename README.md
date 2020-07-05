@@ -157,7 +157,7 @@ make back-dev
 
 ### Frontend
 
-[Overview docs](front/README.md)
+[Overview docs](front)
 
 ## YouTube video
 
