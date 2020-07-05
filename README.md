@@ -93,7 +93,7 @@ Now that we have a good overview of the problem at hand and how we can solve it 
 
 ## Solution Overview
 
-[![banner](.assets/solution-1.png)](https://oceanprotocol.com)
+![banner](.assets/home-page.png)
 
 
 **!!!The solution currently only "works" for three accounts that are hardcoded in the code. These are the first three accounts derived from Ocean's seed phrase for Spree!!!**
@@ -173,3 +173,10 @@ Coming as soon as my laptop gets back from repair
 
 ## Dispute Resolution
 
+For dispute resolution we propose to use a ready solution instead of coming up with own mechanics. [Kleros.io](https://kleros.io/static/onepager_en-3165e4676c4ed1529064608a83967c23.pdf) is one such solution.
+
+Kleros is a decentralized court. They have jurors that get assigned to cases and they are financially incentivized to make the right decision. There are a number of limitations that I came up with that may pertain to this solution, these may not be completely accurate, since I have had very limited time to explore. I discuss these in the YouTube video that will be uploaded soon.
+
+Reaching out to Kleros, their developer would be happy to guide us in the integration of it with this bounty platform, if we proceed to the next stage.
+
+`http://resolve.kleros.io/` will be used as the front-end for the 'arbitable' side, i.e. all the created dispute cases on our data bounty platform would go here. This would save us the time of implementing the front-end.
