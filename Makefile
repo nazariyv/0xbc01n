@@ -1,7 +1,5 @@
 THISDIR=$(PWD)
 
-# docker run -p 5050:8080 \
-
 back-dev:
 	docker build ./back/ -t dbp:latest
 	docker run \
