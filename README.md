@@ -143,6 +143,8 @@ I hastily coded the backend up and so the code quality is not as sleek as in my 
 
 This solution will likely not work on Mac due to its host networking limitations in Docker, not even mentioning Windows :)
 
+You can make it work on Mac if you follow this gist written up by one of my co-workers: https://gist.github.com/excavador/1a12c491e9057f4a8936a5aa50207099.
+
 ### Docker to link back and front
 
 I define a Dockerfile for both the backend and tje frontend. These can be started separately. There is a command in Makefile that will get the backend up for you
