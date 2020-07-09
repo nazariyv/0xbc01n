@@ -163,15 +163,7 @@ make back-dev
 
 ## YouTube video
 
-Will upload as soon as my laptop gets back to me. My screen went kaput after 2 months of use
-
-### Non-technical
-
-Coming as soon as my laptop gets back from repair
-
-### Technical
-
-Coming as soon as my laptop gets back from repair
+https://www.youtube.com/watch?v=5HNe_VgnL6c
 
 ## Dispute Resolution
 
