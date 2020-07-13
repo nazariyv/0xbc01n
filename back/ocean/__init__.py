@@ -1,24 +1,23 @@
+# from ocean_keeper.utils import get_account
 import uuid
 import json
-from dotenv import load_dotenv
 from typing import Dict
+from ocean_keeper.account import Account  # type: ignore
+from squid_py import Ocean, ConfigProvider, Config  # type: ignore
+from dotenv import load_dotenv  # type: ignore
 
 load_dotenv()
 
-# from ocean_keeper.utils import get_account
-from ocean_keeper.account import Account
-from squid_py import Ocean, ConfigProvider, Config
-
 
 def Metadata(
-    name: str, created: int, addr: str, price: int, full_url: str, sample_url: str
+    name: str, created: str, addr: str, price: int, full_url: str, sample_url: str
 ) -> Dict:
     # sample goes into the links section in the additionalInformation
     # https://github.com/oceanprotocol/squid-js/blob/master/src/ddo/MetaData.ts#L212
     return {
         "main": {
             "name": name,
-            "dateCreated": str(created),
+            "dateCreated": created,
             "author": addr,
             "license": "Public Domain",
             "price": str(price),
@@ -46,7 +45,7 @@ class Oceaned:
         ConfigProvider.set_config(Config("", config_dict))
         self.ocean = Ocean()
 
-    def register_asset(self, metadata: Metadata, publisher_account: Account):
+    def register_asset(self, metadata, publisher_account: Account):
         ddo = self.ocean.assets.create(
             metadata,
             publisher_account,

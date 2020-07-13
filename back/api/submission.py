@@ -1,21 +1,22 @@
 import json
-import falcon  # type: ignore
 import logging
-from datetime import datetime
 import time
-from squid_py import Ocean
-from ocean_utils.agreements.service_types import ServiceTypes
-from ocean_keeper.utils import add_ethereum_prefix_and_hash_msg
-from squid_py.brizo import BrizoProvider
-from ocean_utils.agreements.service_agreement import ServiceAgreement
-from squid_py.ocean.keeper import SquidKeeper as Keeper
-from squid_py import ConfigProvider, Config
+from datetime import datetime
+from squid_py import Ocean, ConfigProvider, Config  # type: ignore
+from squid_py.brizo import BrizoProvider  # type: ignore
+from squid_py.ocean.keeper import SquidKeeper as Keeper  # type: ignore
+from ocean_utils.agreements.service_types import ServiceTypes  # type: ignore
+from ocean_utils.agreements.service_agreement import ServiceAgreement  # type: ignore
+from ocean_keeper.utils import add_ethereum_prefix_and_hash_msg  # type: ignore
+from ocean_keeper.account import Account  # type: ignore
+import falcon  # type: ignore
+
 
 from back.orm.models.bounty import Bounty as BountyORM
 from back.orm.models.user import User as UserORM
 from back.orm.models.submission import Submission as SubmissionORM
 from back.ocean import Oceaned, Metadata
-from ocean_keeper.account import Account
+
 
 l = logging.getLogger("api.submission")
 

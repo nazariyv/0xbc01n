@@ -1,4 +1,4 @@
-import falcon
+import falcon  # type: ignore
 import json
 import logging
 

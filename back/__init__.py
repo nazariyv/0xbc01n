@@ -2,7 +2,7 @@ __author__ = "Nazariy Vavryk"
 __version__ = "0.1.0"
 __maintainer__ = "Nazariy Vavryk"
 __email__ = "nazariy@inbox.ru"
-__status__ = "Protorype"
+__status__ = "Prototype"
 
 import logging
 import sys

@@ -1,8 +1,7 @@
-version: "3.4"
+version: "3"
 services:
   backend:
     restart: unless-stopped
-    network_mode: host
     build:
       context: back
     ports:
@@ -15,7 +14,6 @@ services:
 
   frontend:
     restart: unless-stopped
-    network_mode: host
     build:
       context: front
     ports:

@@ -36,9 +36,6 @@ http --ignore-stdin PUT localhost:8080/api/bounty title='Homomorphic Encryption 
 issuer=0xe2DD09d719Da89e5a3D0F2549c7E24566e947260 price=21500 expiry=1600455693 type='contest' \
 desc='If you implement this, it will enable dozens of data scientists around the world to run the algorithms on our data' \
 short_desc='We need you to implement homomorphic encryption of time-series data' complexity='beginner'
-http --ignore-stdin PUT localhost:8080/api/bounty \
-title='Do greatest at in learning steepest' issuer=0xBE5449a6A97aD46c8558A3356267Ee5D2731ab5e price=1000 \
-expiry=1593425683 type='contest' complexity='advanced'
 http --ignore-stdin PUT localhost:8080/api/bounty title='Ask especially collecting terminated may son' \
 issuer=0xBE5449a6A97aD46c8558A3356267Ee5D2731ab5e price=100000 expiry=1693455693 type='traditional'
 http --ignore-stdin PUT localhost:8080/api/bounty title='He do subjects prepared bachelor juvenile' \
@@ -49,8 +46,6 @@ http --ignore-stdin PUT localhost:8080/api/bounty title='Extended kindness trifl
 issuer=0xBE5449a6A97aD46c8558A3356267Ee5D2731ab5e price=33000 expiry=1693455693 type='traditional' complexity='beginner'
 http --ignore-stdin PUT localhost:8080/api/bounty title='Assistance sentiments' issuer=0xe49b55119D6a74783CA23482e8dc5a3DE21085f5 \
 price=40000 expiry=1693455693 type='cooperative' complexity='beginner'
-http --ignore-stdin PUT localhost:8080/api/bounty title='He at no nothing forbade up moments' \
-issuer=0xA78deb2Fa79463945C247991075E2a0e98Ba7A09 price=1000 expiry=1593425683 type='contest' complexity='advanced'
 http --ignore-stdin PUT localhost:8080/api/bounty title='Open they an busy they my such high' \
 issuer=0xA78deb2Fa79463945C247991075E2a0e98Ba7A09 price=100000 expiry=1693455693 type='traditional' complexity='advanced'
 http --ignore-stdin PUT localhost:8080/api/bounty title='Men received far his dashwood subjects' \

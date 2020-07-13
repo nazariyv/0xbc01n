@@ -170,10 +170,6 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         }
 
         const baseProvider = await this.web3.eth.getCoinbase();
-        if (!baseProvider) {
-            window.alert('Please activate MetaMask');
-            return;
-        }
 
         this.setState({
             renderContext: {

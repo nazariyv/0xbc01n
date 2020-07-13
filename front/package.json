@@ -1,14 +1,14 @@
 {
   "name": "0xbc01n",
-  "version": "0.1.0",
-  "description": "Yet Another 0xbc01n App",
+  "version": "0.2.0",
+  "description": "Data Bounty Platform built on top of the Ocean Protocol",
   "main": "index.js",
-  "author": "Dmitry & Nazariy",
+  "author": "Nazariy & Dmitry",
   "license": "MIT",
   "scripts": {
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development --open --hot",
+    "start": "webpack-dev-server --display-reasons --display-error-details --history-api-fallback --progress --colors -d --hot --inline --host=0.0.0.0 --port=8080",
     "build": "webpack --mode production",
     "serve-prod": "webpack --mode production && cd dist && http-server",
     "check-types": "tsc"
