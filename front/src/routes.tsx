@@ -13,15 +13,9 @@ import TermsPage from './view/pages/terms';
 
 const Routes = () => (
     <Switch>
-        <Route exact path={ROUTES.MAIN}>
-            <MainPage />
-        </Route>
-        <Route exact path={ROUTES.EXPLORE}>
-            <ExplorePage />
-        </Route>
-        <Route path={ROUTES.BOUNTY}>
-            <BountyPage />
-        </Route>
+        <Route exact path={ROUTES.MAIN} component={MainPage} />
+        <Route exact path={ROUTES.EXPLORE} component={ExplorePage} />
+        <Route path={ROUTES.BOUNTY} component={BountyPage} />
         {/* Extra static pages */}
         <Route exact path={ROUTES.TERMS}>
             <TermsPage />
@@ -30,15 +24,9 @@ const Routes = () => (
             <PrivacyPage />
         </Route>
         {/* Auth required */}
-        <Route exact path={ROUTES.CREATE}>
-            <BountyCreatePage />
-        </Route>
-        <Route exact path={ROUTES.USER_PROFILE}>
-            <UserProfilePage />
-        </Route>
-        <Route exact path={ROUTES.USER_DASHBOARD}>
-            <Dashboard />
-        </Route>
+        <Route exact path={ROUTES.CREATE} component={BountyCreatePage} />
+        <Route exact path={ROUTES.USER_PROFILE} component={UserProfilePage} />
+        <Route exact path={ROUTES.USER_DASHBOARD} component={Dashboard} />
     </Switch>
 );
 
