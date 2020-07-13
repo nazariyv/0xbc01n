@@ -4,18 +4,18 @@
 
 ## TOC
 
-- [Quickstart](#quickstart)
-  - [Quicker version](#quicker-version)
-  - [Detailed version](#detailed-version)
-- [Problem Outline](#problem-outline)
-- [Solution Overview](#solution-overview)
-  - [Docker to link back and front](#docker-to-link-back-and-front)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-- [YouTube video](#youtube-video)
-  - [Non-technical](#non-technical)
-  - [Technical](#technical)
-- [Dispute resolution](#dispute-resolution)
+- [Ocean Protocol Data Bounty Platform](#ocean-protocol-data-bounty-platform)
+  - [TOC](#toc)
+  - [Quickstart](#quickstart)
+    - [Quicker version](#quicker-version)
+    - [Detailed version](#detailed-version)
+  - [Problem Outline](#problem-outline)
+  - [Solution Overview](#solution-overview)
+    - [Docker to link back and front](#docker-to-link-back-and-front)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [YouTube video](#youtube-video)
+  - [Dispute Resolution](#dispute-resolution)
 
 ## Quickstart
 
@@ -141,7 +141,7 @@ I hastily coded the backend up and so the code quality is not as sleek as in my 
 ---
 **Word of Caution**
 
-This solution will likely not work on Mac due to its host networking limitations in Docker, not even mentioning Windows :)
+For this solution to work correctly cross-platform (Linux and OS X), please follow the steps described [here](https://gist.github.com/nazariyv/ae4467f26ff251d4933c5463f1315169). There is a known Docker Mac host networking limitation, the linked gist will fix this issue.
 
 You can make it work on Mac if you follow this gist written up by one of my co-workers: https://gist.github.com/excavador/1a12c491e9057f4a8936a5aa50207099.
 
