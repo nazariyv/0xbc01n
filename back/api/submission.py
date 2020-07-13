@@ -31,27 +31,11 @@ PKS = {
     ACC3_ADDR: 0x5D75837394B078CE97BC289FA8D75E21000573520BFA7784A9D28CCAAE602BF8,
 }
 
-# ! when environment is NOT local development, change the 10.200.10.1 to proper urls
-# ! remove from here
-CONFIG = {
-    "keeper-contracts": {
-        "keeper.url": "http://10.200.10.1:8545/",
-        "keeper.path": "/.ocean/keeper-contracts/artifacts",
-        "secret_store.url": "http://10.200.10.1:12001/",
-        "parity.url": "http://10.200.10.1:8545/",
-        "parity.address": "0x00bd138abd70e2f00903268f3db08f2d25677c9e",
-        "parity.password": "node0",
-        "parity.address1": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
-        "parity.password1": "secret",
-    },
-    "resources": {
-        "aquarius.url": "http://10.200.10.1:5000/",
-        "brizo.url": "http://10.200.10.1:8030/",
-        "provider.address": "0x068ed00cf0441e4829d9784fcbe7b9e26d4bd8d0",
-        "storage.path": "squid_py.db",
-        "downloads.path": "consume-downloads",
-    },
-}
+
+# ! TODO: different file for production
+CONFIG = dict()
+with open("/back/ocean/config.json", "r") as f:
+    CONFIG = json.loads(f.read())
 
 
 class Submission:
@@ -96,7 +80,8 @@ class Submission:
         bty = bty_qry.first()
         # usr = usr_qry.first()
 
-        # ! TODO: in the future need to use usr to make submissions. not doing that now because don't know how keyfiles are generated in test.py
+        # ! TODO: in the future need to use usr to make submissions. not doing that now because don't know how
+        # ! keyfiles are generated in test.py
 
         created = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
