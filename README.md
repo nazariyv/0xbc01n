@@ -93,9 +93,6 @@ Now that we have a good overview of the problem at hand and how we can solve it 
 
 ## Solution Overview
 
-![banner](.assets/home-page.png)
-
-
 **!!!The solution currently only "works" for three accounts that are hardcoded in the code. These are the first three accounts derived from Ocean's seed phrase for Spree!!!**
 
 Works is in double quotes there because the consumption of the url, the final step in the data bounty workflow, where the consumer (bounty creator) gets access to the data, does not pass the brizo (access control proxy server for Ocean Protocol) authorization checks. Since I am running out of time, I postpone finding the issue in this. For now, the consumer simply can't get access to the data. I do not foresee this, however, to take much time to resolve, especially with someone from Ocean Protocol's dev team helping out from time to time.
