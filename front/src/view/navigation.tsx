@@ -1,7 +1,15 @@
 import React, {useContext, useCallback} from 'react';
-import {Link} from 'react-router-dom';
-import {ROUTES} from '../types/type';
 import {ApplicationContext} from '../controller/context';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+const useStyles = makeStyles({
+    root: {
+      flexGrow: 1,
+    },
+  });
 
 const FILTERS = [
     { fieldId: 'created', value: 'Created:Recent' },
@@ -11,39 +19,26 @@ const FILTERS = [
 ];
 
 const Navigation: React.FC = () => {
-    const {actionAuthRequired, user, sortKey, onSort} = useContext(ApplicationContext);
-    const handleClick = useCallback((key) => onSort(key), [onSort]);
+    const classes = useStyles();
+    const {sortKey, onSort} = useContext(ApplicationContext);
+    const active = FILTERS.findIndex(item => item.fieldId === sortKey);
+    const handleChange = useCallback((event: React.ChangeEvent<{}>, newValue: number) => {
+        const current = FILTERS[newValue];
+        onSort(current.fieldId);
+    }, []);
+
     return (
-        <div className='navigation'>
-            <div className='quick_filters'>
-                {FILTERS.map(item => (
-                    <div
-                        key={item.fieldId}
-                        onClick={() => handleClick(item.fieldId)}
-                        className={`quick_filters_item ${sortKey === item.fieldId && 'active'}`}
-                    >
-                        {item.value}
-                    </div>
-                ))}
-            </div>
-            <div className='extra'>
-                {user && (
-                    <Link className='header__link' to={ROUTES.CREATE}>
-                        <button className='action-button'>
-                            Create a Bounty
-                        </button>
-                    </Link>
-                )}
-                {!user && (
-                    <button
-                        className='action-button'
-                        onClick={actionAuthRequired}
-                    >
-                        Create a Bounty
-                    </button>
-                )}
-            </div>
-        </div>
+        <Paper className={classes.root}>
+            <Tabs
+                value={active}
+                onChange={handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+            >
+                {FILTERS.map(item => (<Tab key={item.fieldId} label={item.value} />))}
+            </Tabs>
+        </Paper>
     );
 };
 

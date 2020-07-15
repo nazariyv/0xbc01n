@@ -2,12 +2,41 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {toAmount, toData} from '../utils/utils';
 import {Bounty, BOUNTY_TYPES, COMPLEXITIES, UserInfo} from '../types/type';
+import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        cursor: 'pointer'
+    },
+    paper: {
+        width: '100%',
+        margin: `${theme.spacing(1)}px auto`,
+        padding: theme.spacing(2),
+    },
+    chip: {
+        margin: theme.spacing(0.5),
+    },
+    img: {
+        width: 84
+    },
+    grid: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+    }
+}));
 
 type GridItemProps = Bounty & {
     bountyApplicants: UserInfo[];
 };
 
 const GridItem: React.FC<GridItemProps> = (props) => {
+    const history = useHistory();    
+    const classes = useStyles();
     const { id, title, short_desc, price, expiry, type, complexity, bountyApplicants } = props;
     const daysDiff = (dt1, dt2) => {
         var diffTime = (dt1.getTime() - dt2.getTime());
@@ -18,57 +47,58 @@ const GridItem: React.FC<GridItemProps> = (props) => {
     // const diffDays = new Date(expiry * 1000).getDate() - now.getDate();
     const typeKey = type.split('.').pop().toUpperCase();
     const complexityKey = complexity.split('.').pop().toUpperCase();
+    const handleBountyOpen = (id: string) => history.push(`/bounty/${id}/description`);
 
     return (
-        <Link to={`/bounty/${id}/description`} className='pseudo-link no-link'>
-            <div className='grid_item'>
-                <div className='grid_item__content'>
-                    <div className='grid_item__section grid_item__section_left'>
-                        <div className='grid_item__header'>
-                            <div className='grid_item__header_avatar'>
-                                <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className='img' />
-                            </div>
-                            <div className='grid_item__header_info'>
-                                <div className='grid_item__title'>{title}</div>
-                                <div className='grid_item__description'>{short_desc}</div>
-                            </div>
-                        </div>
-                        <div className='grid_item__tags tags'>
-                            <div className='tag'>privacy</div>
-                            <div className='tag'>oceanprotocol</div>
-                            <div className='tag'>databounty</div>
-                        </div>
-                        <div className='grid_item__info'>
-                            <div className='grid_item__info_item'>
-                                <div className='label'>Status</div>
-                                <div className='value'>Ready to work</div>
-                            </div>
-                            <div className='grid_item__info_item'>
-                                <div className='label'>Time Left</div>
-                                <div className='value'>{diffDays} Days</div>
-                            </div>
-                            <div className='grid_item__info_item'>
-                                <div className='label'>Experience Level</div>
-                                <div className='value'>{COMPLEXITIES[complexityKey]}</div>
-                            </div>
-                            <div className='grid_item__info_item'>
-                                <div className='label'>Work Started</div>
-                                <div className='value'>
-                                    {bountyApplicants === undefined ? <>-</> : <>{bountyApplicants.length}</>}
-                                </div>
-                            </div>
-                            <div className='grid_item__info_item'>
-                                <div className='label'>Type</div>
-                                <div className='value'>{BOUNTY_TYPES[typeKey]}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='grid_item__section grid_item__section_right'>
-                        <div className='price l'>{toAmount(price)}&nbsp;OCEAN</div>
-                    </div>
-                </div>
-            </div>
-        </Link>
+        <Grid container item xs={12} onClick={() => handleBountyOpen(id)} className={classes.container}>
+            <Paper className={classes.paper}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm container spacing={2}>
+                        <Grid item>
+                            <img src='https://gitcoin.co/dynamic/avatar/oceanprotocol' className={classes.img} />
+                        </Grid>
+                        <Grid item xs container direction="column" spacing={2}>
+                            <Grid item xs>
+                                <Typography variant="h6">{title}</Typography>
+                                <Typography variant="body2">{short_desc}</Typography>
+                                <Grid item container spacing={2} className={classes.grid}>
+                                    <Grid item xs={2}>
+                                        <Typography variant="subtitle2">Status</Typography>
+                                        <Typography variant="subtitle1">Ready to work</Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Typography variant="subtitle2">Time Left</Typography>
+                                        <Typography variant="subtitle1">{diffDays} Days</Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Typography variant="subtitle2">Experience Level</Typography>
+                                        <Typography variant="subtitle1">{COMPLEXITIES[complexityKey]}</Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Typography variant="subtitle2">Work Started</Typography>
+                                        <Typography variant="subtitle1">
+                                            {bountyApplicants === undefined ? <>-</> : <>{bountyApplicants.length}</>}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Typography variant="subtitle2">Type</Typography>
+                                        <Typography variant="subtitle1">{BOUNTY_TYPES[typeKey]}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid item container spacing={2}>
+                                    <Chip className={classes.chip} label="privacy" />
+                                    <Chip className={classes.chip} label="oceanprotocol" />
+                                    <Chip className={classes.chip} label="databounty" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="subtitle1">{toAmount(price)}&nbsp;OCEAN</Typography>
+                        </Grid>
+                    </Grid>    
+                </Grid>
+            </Paper>
+        </Grid>
     );
 };
 

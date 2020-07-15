@@ -1,17 +1,11 @@
 import React from 'react';
-import FilterView from '../filter';
+import Grid from '@material-ui/core/Grid';
 import GridView from '../grid';
-import Main from '../main';
-import Navigation from '../navigation';
 
-const MainPage: React.FC = ({ children }) => (
-    <>
-        <Navigation/>
-        <Main>
-            <FilterView/>
-            <GridView/>
-        </Main>
-    </>
-);
+const MainPage: React.FC = () => (
+    <Grid container spacing={1}>
+        <GridView/>
+    </Grid>
+)
 
 export default MainPage;

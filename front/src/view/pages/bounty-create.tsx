@@ -1,5 +1,4 @@
 import React, {useContext, useCallback} from 'react';
-import Main from '../main';
 import {ApplicationContext} from '../../controller/context';
 import { useHistory } from 'react-router-dom';
 
@@ -31,7 +30,7 @@ const BountyCreatePage: React.FC = ({ children }) => {
     }, []);
 
     return (
-        <Main>
+        <>
             <div className='bounty__create_form'>
                 <form name='create' onSubmit={onFormSubmit}>
                     {user && <input name='issuer' type='hidden' className='form__field' value={user.addr}/>}
@@ -142,7 +141,7 @@ const BountyCreatePage: React.FC = ({ children }) => {
                     </div>
                 </form>
             </div>
-        </Main>
+        </>
     );
 };
 

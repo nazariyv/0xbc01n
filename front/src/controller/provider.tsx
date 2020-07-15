@@ -45,6 +45,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 modalContent: undefined,
                 originalData: bounties,
                 user: currentUser,
+                isLoading: false,
                 bountyApplicant,
                 userBounties,
                 bounties,

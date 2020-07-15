@@ -12,6 +12,7 @@ artifacts/
 # ----- FRONT ----
 node_modules/
 .DS_Store/
+.pnp.js
 
 # ------------ PYTHON -----------------
 # Byte-compiled / optimized / DLL files

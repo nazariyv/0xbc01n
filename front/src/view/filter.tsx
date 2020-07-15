@@ -1,5 +1,11 @@
 import React, {useContext, useCallback, useEffect} from 'react';
 import {ApplicationContext} from '../controller/context';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 const FIELDS = [
     {
@@ -23,7 +29,7 @@ const FIELDS = [
 ];
 
 const Filter: React.FC = () => {
-    const {onFilter, onResetFilter} = useContext(ApplicationContext);
+    const {onFilter, onResetFilter, filterModel} = useContext(ApplicationContext);
     const handleChange = useCallback((field, value) => onFilter(field, value), [onFilter]);
 
     useEffect(() => {
@@ -33,32 +39,27 @@ const Filter: React.FC = () => {
     }, []);
 
     return (
-        <div className='filter'>
-            <div className='filter__content'>
-                <div className='title'>Refine by</div>
-                {FIELDS.map(item => (
-                    <div className='filter__row' key={item.id}>
-                        <div className='filter__row_label'>{item.title}</div>
-                        <div className='filter__row_field'>
-                            <div className='filter__row_field'>
-                                {item.fields.map(field => (
-                                    <label key={field.value} htmlFor={field.value}>
-                                        {field.title}
-                                        <input
-                                            onChange={() => handleChange(item.id, field.value)}
-                                            type='checkbox'
-                                            value='false'
-                                            name={field.value}
-                                            id={field.value}
-                                        />
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <>
+            <ListSubheader>Refine by</ListSubheader>
+            {FIELDS.map(item => (
+                <List key={item.title}>
+                    <ListSubheader>{item.title}</ListSubheader>                        
+                    {item.fields.map(field => (
+                        <ListItem key={field.value} button onClick={() => handleChange(item.id, field.value)}>
+                            <ListItemText id={field.value} primary={field.title} />
+                            <ListItemSecondaryAction>
+                                <Checkbox
+                                    edge="end"
+                                    onChange={() => handleChange(item.id, field.value)}
+                                    checked={filterModel[item.id].indexOf(field.value) !== -1}
+                                    inputProps={{ 'aria-labelledby': field.value }}
+                                />
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    ))}
+                </List>
+            ))}
+        </>
     );
 };
 

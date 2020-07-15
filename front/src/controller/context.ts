@@ -20,7 +20,7 @@ export const defaultApplicationRepresentation: ApplicationRepresentation = {
     bounties: [],
     bountyApplicant: {},
     originalData: [],
-    isLoading: false,
+    isLoading: true,
     modalContent: undefined,
     users: [],
     user: undefined,

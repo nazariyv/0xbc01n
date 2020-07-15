@@ -1,40 +1,54 @@
 import React, {useContext} from 'react';
 import {ApplicationContext} from '../controller/context';
 import {Bounty} from '../types/type';
-import GridPanel from './grid-panel';
+//import GridPanel from './grid-panel';
 import GridItem from './grid-item';
+import Navigation from './navigation';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-const Grid: React.FC = () => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  }),
+);
+
+const GridView: React.FC = () => {
+    const classes = useStyles();
     const {bounties, isLoading, bountyApplicant} = useContext(ApplicationContext);
+
     if (isLoading) {
         return (
-            <div className='wrapper'>
-                <div className='loader'/>
-            </div>
+            <Backdrop className={classes.backdrop} open>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         );
     }
 
     if (bounties.length === 0) {
         return (
-            <div className='grid__empty'>
-                <div>
-                    <h2>Sorry, you don't have any bounties</h2>
-                    <p>Please try again or change filter criteria.</p>
-                </div>
-            </div>
+            <Grid container item xs={12}>
+                <Typography variant="h5">Sorry, you don't have any bounties</Typography>
+                <Typography variant="body1">Please try again or change filter criteria.</Typography>
+            </Grid>
         );
     }
 
     return (
-        <div className='grid'>
-            <GridPanel/>
-            <div className='grid__content'>
-                {bounties.map((bounty: Bounty) => (
-                    <GridItem key={bounty.id} {...bounty} bountyApplicants={bountyApplicant[bounty.id]}/>
-                ))}
-            </div>
-        </div>
+        <>
+            <Navigation/>
+            {/*<GridPanel/>*/}
+            {bounties.map((bounty: Bounty) => (
+                <GridItem key={bounty.id} {...bounty} bountyApplicants={bountyApplicant[bounty.id]}/>
+            ))}
+        </>
     );
 };
 
-export default Grid;
+export default GridView;

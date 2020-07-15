@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
 import {ApplicationContext} from '../controller/context';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const GridPanel: React.FC = () => {
     const {bounties} = useContext(ApplicationContext);
     return (
-        <div className='grid-panel'>
-            <div className='grid-panel__section grid-panel__section_left'>
-                {bounties.length} bounties
-            </div>
-        </div>
+        <Grid container spacing={1}>
+            <Typography gutterBottom variant="subtitle1">{bounties.length} bounties</Typography>
+        </Grid>
     );
 };
 

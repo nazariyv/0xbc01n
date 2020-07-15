@@ -1,5 +1,4 @@
 import React, {useContext, useCallback} from 'react';
-import Main from '../main';
 import {getUserName} from '../../utils/utils';
 import {ApplicationContext} from '../../controller/context';
 import { useHistory } from 'react-router-dom';
@@ -29,7 +28,7 @@ const UserProfilePage: React.FC = ({ children }) => {
     }, [history]);
 
     return (
-        <Main>
+        <>
             <div className='bounty__create_form'>
                 <form onSubmit={onFormSubmit}>
                     <div className='form__row'>
@@ -83,7 +82,7 @@ const UserProfilePage: React.FC = ({ children }) => {
                     </div>
                 </form>
             </div>
-        </Main>
+        </>
     );
 };
 

@@ -3,7 +3,6 @@ import {Switch, Route, NavLink, useRouteMatch, useParams} from 'react-router-dom
 import {ApplicationContext} from '../../controller/context';
 import {BOUNTY_TYPES, COMPLEXITIES} from '../../types/type';
 import {toAmount, getUserByAddr, getUserName, toData, getDateFormatted} from '../../utils/utils';
-import Main from '../main';
 
 const BountyPage: React.FC = () => {
     const {
@@ -64,7 +63,7 @@ const BountyPage: React.FC = () => {
         const issuerName = getUserName(issuerInfo);
 
         return (
-            <Main>
+            <div>
                 <div className='bounty'>
                     <div className='bounty__header'>
                         <div className='bounty__header_title'>{title}</div>
@@ -247,7 +246,7 @@ const BountyPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </Main>
+            </div>
         );
     }
 
